@@ -42,7 +42,7 @@ class addLink extends Component {
             }
         componentDidMount(){
             var data = {
-                urlValue: 'give',
+                urlValue: 'give', //нужно доделать
                 descrVal: 'data'
             }
             fetch('/addlink', {
