@@ -23,7 +23,7 @@ class App extends Component {
                 <Route path="/server_stat" component={ServerStat} />
                 <Route path="/test" component={addLink} />
                 <Route path="/link" component={LinkToDownload} />
-
+                <Footer/>
             </div>
         </Router>
     );

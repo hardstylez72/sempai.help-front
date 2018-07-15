@@ -1,0 +1,15 @@
+.custom-modal {
+    width: 70%;
+}
+.bozdo{
+    width: 200px;
+    height: 1530px;
+    
+}
+
+.playButton {
+    width: 70px;
+    height: 70px;
+    border-radius: 200px;
+    background: yellow;
+}

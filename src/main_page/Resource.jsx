@@ -23,6 +23,7 @@ class Resource extends Component {
                     <p><a href="https://certbot.eff.org">Немного про сертификаты</a> </p>
                     <p><a href="https://abraxabra.ru/react.js/bystryy-start/react-js-formy/">REACT гайды на русском </a> </p>
                     <p><a href="https://postgrespro.ru/docs/postgresql/9.6/ddl-alter.html"> PostgreSQL </a> </p>
+                    <p><a href="https://www.npmjs.com/package/react-media-player"> audio/video player </a> </p>
                 </Jumbotron>
             </Grid>
 
