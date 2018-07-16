@@ -1,159 +1,193 @@
-import React, { Component } from 'react';
-import {Grid, 
-        Jumbotron,
-        FormGroup, 
-        ControlLabel, 
-        FormControl, 
-        Modal, 
-        Button, 
-        Form,
-        ListGroup,
-        ListGroupItem,
-        Table,
-        Alert
-    } from 'react-bootstrap';
-import { Link } from 'react-router-dom';
-import addLink_btn from './Addlink_btn.jsx';
+import React, {Component} from 'react';
+import {Grid, Jumbotron, FormGroup, ControlLabel, FormControl, Alert} from 'react-bootstrap';
+
+import {Table, Icon, Modal} from 'antd';
+import {Drawer, Form, Button, Col, Row, Input, Select, message} from 'antd';
 import './AddLink.css';
-import alertError from './alert.jsx';
+const {TextArea} = Input;
+const FormItem = Form.Item;
 
-
+const msg = (messageType, messageText) => {
+    switch(messageType) {
+        case 'err':
+            message.error(messageText);
+            break;
+        case 'ok':
+            message.success(messageText);
+            break;
+        case 'load':
+            message.info(messageText);
+            break;
+    }
+};
 
 class addLink extends Component {
+	constructor(props, context) {
+		super(props, context);
+		this.state = {
+			descrVal: '',
+			urlValue: '',
+			articles: [],
+			createPostVisible: false,
+			showAlert: false,
+		};
 
-        constructor(props, context) {
-          super(props, context);
-          this.state = {
-            descrVal: '',
-            urlValue: '',
-            articles: [],
-            showCreatePost: false,
-            showAlert: false
-          };
-
-          this.handleClickBtnCreatePost = this.handleClickBtnCreatePost.bind(this);
-          this.handleClick = this.handleClick.bind(this);
-          this.handleChangeUrl = this.handleChangeUrl.bind(this);
-          this.handleChangeDescr = this.handleChangeDescr.bind(this);
-          this.handleClickClose = this.handleClickClose.bind(this);
-
-        }
-
-        handleClickClose(e) {
-            this.setState({showCreatePost: false});
-        }
-        handleClickBtnCreatePost(e) {
-            this.setState({showCreatePost: true});
-        }
-        handleChangeUrl(event) {
-            this.setState({urlValue: event.target.value});
-          }
-
-          handleChangeDescr(event) {
-            this.setState({descrVal: event.target.value});
-          }
-
-
-        handleClick(e) {
-            this.setState({showCreatePost: false});
-            var data = this.state;
-            fetch('/addlink', {
-                method: 'post',
-                headers: {
-                  'Accept': 'application/json, text/plain, */*',
-                  'Content-Type': 'application/json'
-                },
-                body: JSON.stringify({data})
-              }).then(res=>res.json())
-                .then(dataFromServer => this.setState({articles: dataFromServer.articles}))
-            }
-        componentDidMount(){
-            var data = {
-                urlValue: 'give', //нужно доделать
-                descrVal: 'data'
-            }
-            fetch('/addlink', {
-                method: 'post',
-                headers: {
-                  'Accept': 'application/json, text/plain, */*',
-                  'Content-Type': 'application/json'
-                },
-                body: JSON.stringify({data})
-              }).then(res=>res.json())
-                .then(dataFromServer => {
-                    if (dataFromServer.sucsess === "1") {
-                        this.setState({articles: dataFromServer.articles})
-                    } else {
-                        this.setState({showAlert: true})
-                    }
-                })
-        }
-    
-        render() {
-        return(
-            <Jumbotron>
-            <Grid>
-                <Modal
-                    show={this.state.showCreatePost}
-                    dialogClassName="custom-modal"
-                >
-                <Modal.Title>
-                    Создание нового поста
-                </Modal.Title>
-                <Form>                    
-                    <FormGroup controlId="formBasicText">
-                    <ControlLabel>Введите ссылку</ControlLabel>
-                            <FormControl
-                                bsSize="large"
-                                componentClass="textarea"
-                                placeholder="Введите ссылку"
-                                onChange={this.handleChangeUrl}
-                            />
-                   </FormGroup>
-
-                   <FormGroup controlId="formInlineEmail">
-                    <ControlLabel>Введите описание</ControlLabel>
-
-                            <FormControl
-                                bsSize="large"
-                                componentClass="textarea"
-                                placeholder="Введите описание"
-                                onChange={this.handleChangeDescr}
-                                className="bozdo"
-                            />
-                    </FormGroup>
-                </Form>
-                 <Button type="submit" onClick={this.handleClick}>Отпавить</Button>
-                 <Button type="submit" onClick={this.handleClickClose}>Закрыть</Button>
-                 </Modal>
-
-                <Button 
-                    type="submit" 
-                    onClick={this.handleClickBtnCreatePost}
-                >
-                    Создать запись
-                </Button>
-
-
-                <Alert bsStyle="warning">
-                    <strong>Holy guacamole!</strong> Best check yo self, you're not looking too
-                    good.
-                </Alert>
-
-                {(this.state.articles) ? 
-                (this.state.articles.map(articles =>
-                        <div key={articles.id}> 
-                            <a href={articles.link}>{articles.descr} </a> 
-                            {articles.createdAt}
-                        </div> 
-                ))
-                : ('') }
-
-
-            </Grid>
-            </Jumbotron>
-        );
+		this.handleClickBtnCreatePost = this.handleClickBtnCreatePost.bind(this);
+		this.handleClick = this.handleClick.bind(this);
+		this.handleChangeUrl = this.handleChangeUrl.bind(this);
+		this.handleChangeDescr = this.handleChangeDescr.bind(this);
+		this.handleClickClose = this.handleClickClose.bind(this);
+        this.handleCancel = this.handleCancel.bind(this);
+        this.changeArticleButton = this.changeArticleButton.bind(this);
     }
+    
+    changeArticleButton(e) {
+        console.log('ti xuy', e);
+    }
+
+	handleCancel(e) {
+		this.setState({createPostVisible: false});
+	}
+
+	handleClickClose(e) {
+		this.setState({createPostVisible: false});
+	}
+	handleClickBtnCreatePost(e) {
+		this.setState({createPostVisible: true});
+	}
+	handleChangeUrl(event) {
+		this.setState({urlValue: event.target.value});
+	}
+
+	handleChangeDescr(event) {
+		this.setState({descrVal: event.target.value});
+	}
+
+	handleClick(e) {
+		this.setState({createPostVisible: false});
+		var data = this.state;
+		fetch('/addlink', {
+			method: 'post',
+			headers: {
+				Accept: 'application/json, text/plain, */*',
+				'Content-Type': 'application/json',
+			},
+			body: JSON.stringify({data}),
+		})
+			.then(res => res.json())
+			.then(dataFromServer => {
+                msg('ok','Запись успено заружена');
+                this.setState({articles: dataFromServer.articles})
+            })
+			.catch(err => {
+                msg('err','Ошибка при загрузке данных с сервера');
+				console.log(err);
+			});
+    }
+    
+	componentDidMount() {
+		var data = {
+			urlValue: '', //нужно доделать
+			descrVal: '',
+			preload: true,
+		};
+		fetch('/addlink', {
+			method: 'post',
+			headers: {
+				Accept: 'application/json, text/plain, */*',
+				'Content-Type': 'application/json',
+			},
+			body: JSON.stringify({data}),
+		})
+			.then(res => res.json())
+			.then(dataFromServer => {
+				if (dataFromServer.sucsess === '1') {
+                    msg('ok','Данные успешно загружены');
+					this.setState({articles: dataFromServer.articles});
+				} else {
+                    msg('err','Ошибка при загрузке данных с сервера');
+					this.setState({showAlert: true});
+				}
+			})
+			.catch(err => {
+                msg('err','Ошибка при загрузке данных с сервера');
+				console.log(err);
+            });  
+	}
+
+	render() {
+
+		const columns = [
+			{
+				title: 'Описание',
+				dataIndex: 'descr',
+				key: 'name',
+			},
+			{
+				title: 'Ссылка',
+				dataIndex: 'link',
+				key: 'age',
+			},
+			{
+				title: 'Дата создания',
+				dataIndex: 'createdAt',
+				key: 'address',
+			},
+			{
+				title: 'Action',
+                key: 'action',
+                render: () => { return (<button onClick={this.changeArticleButton}>Изменить</button>);}
+			},
+		];
+
+		return (
+			<Jumbotron>
+				<Grid>
+					<Button type="submit" onClick={this.handleClickBtnCreatePost}>
+						Создать запись
+					</Button>
+
+					<Table
+						hideOnSinglePage="true"
+						columns={columns}
+						dataSource={this.state.articles}
+					/>
+					<Modal
+						onOk={this.handleClick}
+						title="Создание статьи"
+						visible={this.state.createPostVisible}
+						onCancel={this.handleCancel}
+					>
+						<Form>
+							<FormItem>
+								<div className="link-input">
+									<TextArea
+										placeholder="http://"
+										autosize={{minRows: 1, maxRows: 3}}
+										onChange={this.handleChangeUrl}
+									/>
+								</div>
+								<div className="short-descr-input">
+									<TextArea
+										placeholder="Описание"
+										autosize={{minRows: 1, maxRows: 2}}
+										wh
+									/>
+								</div>
+								<div className="descr-input">
+									<TextArea
+										placeholder="Подробное описание"
+										autosize={{minRows: 2, maxRows: 8}}
+										onChange={this.handleChangeDescr}
+									/>
+								</div>
+							</FormItem>
+						</Form>
+					</Modal>
+				</Grid>
+			</Jumbotron>
+		);
+	}
 }
 
 export default addLink;

@@ -8,7 +8,7 @@ import Navbar from './main_page/NavBar/NavBar';
 import Footer from './main_page/Footer/Footer';
 import Resource from './main_page/Resource';
 import addLink from './main_page/AddLink';
-import LinkToDownload from './main_page/Link_1'
+import 'antd/dist/antd.css'; 
 
 
 class App extends Component {
@@ -22,7 +22,6 @@ class App extends Component {
                 <Route path="/res" component={Resource} />
                 <Route path="/server_stat" component={ServerStat} />
                 <Route path="/test" component={addLink} />
-                <Route path="/link" component={LinkToDownload} />
                 <Footer/>
             </div>
         </Router>
