@@ -8,6 +8,7 @@ import Navbar from './main_page/NavBar/NavBar';
 import Footer from './main_page/Footer/Footer';
 import Resource from './main_page/Resource';
 import addLink from './main_page/AddLink';
+import music from './main_page/Music';
 import 'antd/dist/antd.css'; 
 
 
@@ -22,6 +23,7 @@ class App extends Component {
                 <Route path="/res" component={Resource} />
                 <Route path="/server_stat" component={ServerStat} />
                 <Route path="/test" component={addLink} />
+                <Route path="/music" component={music} />
                 <Footer/>
             </div>
         </Router>

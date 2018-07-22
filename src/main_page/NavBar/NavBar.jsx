@@ -19,6 +19,7 @@ class NavPan extends Component {
                      <NavItem eventKey={2} componentClass={Link} href="/webm" to="/webm" >Webm</NavItem>
                      <NavItem eventKey={3} componentClass={Link} href="/res" to="/res">Resources</NavItem>
                      <NavItem eventKey={4} componentClass={Link} href="/test" to="/test">addLink</NavItem>
+                     <NavItem eventKey={5} componentClass={Link} href="/music" to="/music">Music</NavItem>
                  </Nav>
             </Navbar.Collapse>
         </Navbar>

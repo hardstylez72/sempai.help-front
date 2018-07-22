@@ -10,18 +10,17 @@ class Footer extends Component {
 		return (
 			<Navbar fixedBottom>
 				<Navbar.Text>Ramen company ltd.</Navbar.Text>
-				<Media>
+				{/* <Media>
 					<div className="media">
 						<div className="media-player">
 							<Player src="/radio" vendor="audio" />
 						</div>
 						<div className="media-controls">
-							<PlayPause className="playButton" />
-							<MuteUnmute />
+							<PlayPause className="playButton"/>
 							<SeekBar />
 						</div>
 					</div>
-				</Media>
+				</Media> */}
 			</Navbar>
 		);
 	}

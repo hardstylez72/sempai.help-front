@@ -4,32 +4,35 @@ import {Grid, Jumbotron, FormGroup, ControlLabel, FormControl, Alert} from 'reac
 import {Table, Icon, Modal} from 'antd';
 import {Drawer, Form, Button, Col, Row, Input, Select, message} from 'antd';
 import './AddLink.css';
+import {putNewArticle, getArticles, deleteArticle, updateArticle} from '../transport/addLinkTr.jsx';
 const {TextArea} = Input;
 const FormItem = Form.Item;
 
 const msg = (messageType, messageText) => {
-    switch(messageType) {
-        case 'err':
-            message.error(messageText);
-            break;
-        case 'ok':
-            message.success(messageText);
-            break;
-        case 'load':
-            message.info(messageText);
-            break;
-    }
+	switch (messageType) {
+		case 'err':
+			message.error(messageText);
+			break;
+		case 'ok':
+			message.success(messageText);
+			break;
+		case 'load':
+			message.info(messageText);
+			break;
+	}
 };
 
 class addLink extends Component {
 	constructor(props, context) {
 		super(props, context);
 		this.state = {
-			descrVal: '',
-			urlValue: '',
+			descr: '',
+			url: '',
+			abstract: '',
 			articles: [],
 			createPostVisible: false,
 			showAlert: false,
+			descrValue: ''
 		};
 
 		this.handleClickBtnCreatePost = this.handleClickBtnCreatePost.bind(this);
@@ -37,18 +40,48 @@ class addLink extends Component {
 		this.handleChangeUrl = this.handleChangeUrl.bind(this);
 		this.handleChangeDescr = this.handleChangeDescr.bind(this);
 		this.handleClickClose = this.handleClickClose.bind(this);
-        this.handleCancel = this.handleCancel.bind(this);
-        this.changeArticleButton = this.changeArticleButton.bind(this);
-    }
-    
-    changeArticleButton(e) {
-        console.log('ti xuy', e);
-    }
+		this.handleCancel = this.handleCancel.bind(this);
+		this.changeArticleButton = this.changeArticleButton.bind(this);
+		this.handleChangeAbstract = this.handleChangeAbstract.bind(this);
+		this.deleteArticleButton = this.deleteArticleButton.bind(this);
+		this.handleClickOutside = this.handleClickOutside.bind(this);
+	}
 
+	changeArticleButton(e, data) {
+		this.setState({createPostVisible: true});
+		// try {
+		// 	const updatedArticleData = {
+		// 		descr: this.state.descr,
+		// 		abstract: this.state.abstract,
+		// 		url: this.state.url,
+		// 		user: 'hardstylez72',
+		// 	};
+		// 	await updateArticle('/addlink', updatedArticleData);
+		// 	msg('ok', 'Данные успешно обновлены');
+		// } catch(err) {
+		// 	msg('err', 'Ошибка при загрузке данных с сервера');
+		// }
+		console.log('ti xuy', data);
+		console.log('ti xuy', e);
+	}
+	async deleteArticleButton(e, data) {
+		try {
+			await deleteArticle('/addlink', data);
+				//todo update() для обновления данных новой статьи
+				{
+					const amount = 10;
+					const offset = 0;
+					const articles = await getArticles('/addlink', amount, offset);
+					this.setState({articles: articles});
+				}
+		} catch(err) {
+			msg('ok', 'Данные успешно удалены');
+			msg('err', 'Ошибка при загрузке данных с сервера');
+		}
+	}
 	handleCancel(e) {
 		this.setState({createPostVisible: false});
 	}
-
 	handleClickClose(e) {
 		this.setState({createPostVisible: false});
 	}
@@ -56,71 +89,64 @@ class addLink extends Component {
 		this.setState({createPostVisible: true});
 	}
 	handleChangeUrl(event) {
-		this.setState({urlValue: event.target.value});
+		this.setState({url: event.target.value});
 	}
-
 	handleChangeDescr(event) {
-		this.setState({descrVal: event.target.value});
+		this.setState({descr: event.target.value});
+	}
+	handleChangeAbstract(event) {
+		this.setState({abstract: event.target.value});
+	}
+	handleClickOutside(event) {
+		console.log(event);
+	}
+	async handleClick(e) {
+		try {
+			const newArticleData = {
+				descr: this.state.descr,
+				abstract: this.state.abstract,
+				url: this.state.url,
+				user: 'hardstylez72',
+			};
+			await putNewArticle('/addlink', newArticleData);
+			this.setState({createPostVisible: false});
+			msg('ok', 'Данные успешно загружены');
+			this.setState({
+				descr: '',
+				url: '',
+				abstract: '',
+			});
+
+			//todo update() для обновления данных новой статьи
+			{
+				const amount = 10;
+				const offset = 0;
+				const articles = await getArticles('/addlink', amount, offset);
+				this.setState({articles: articles});
+			}
+		} catch (err) {
+			msg('err', 'Ошибка при загрузке данных с сервера');
+		}
 	}
 
-	handleClick(e) {
-		this.setState({createPostVisible: false});
-		var data = this.state;
-		fetch('/addlink', {
-			method: 'post',
-			headers: {
-				Accept: 'application/json, text/plain, */*',
-				'Content-Type': 'application/json',
-			},
-			body: JSON.stringify({data}),
-		})
-			.then(res => res.json())
-			.then(dataFromServer => {
-                msg('ok','Запись успено заружена');
-                this.setState({articles: dataFromServer.articles})
-            })
-			.catch(err => {
-                msg('err','Ошибка при загрузке данных с сервера');
-				console.log(err);
-			});
-    }
-    
 	componentDidMount() {
-		var data = {
-			urlValue: '', //нужно доделать
-			descrVal: '',
-			preload: true,
-		};
-		fetch('/addlink', {
-			method: 'post',
-			headers: {
-				Accept: 'application/json, text/plain, */*',
-				'Content-Type': 'application/json',
-			},
-			body: JSON.stringify({data}),
-		})
-			.then(res => res.json())
-			.then(dataFromServer => {
-				if (dataFromServer.sucsess === '1') {
-                    msg('ok','Данные успешно загружены');
-					this.setState({articles: dataFromServer.articles});
-				} else {
-                    msg('err','Ошибка при загрузке данных с сервера');
-					this.setState({showAlert: true});
-				}
-			})
-			.catch(err => {
-                msg('err','Ошибка при загрузке данных с сервера');
-				console.log(err);
-            });  
+		(async () => {
+			try {
+				const amount = 10;
+				const offset = 0;
+				const articles = await getArticles('/addlink', amount, offset);
+				this.setState({articles: articles});
+			} catch (err) {
+				msg('err', 'Ошибка при загрузке данных с сервера');
+			}
+		})();
 	}
 
 	render() {
-
 		const columns = [
 			{
 				title: 'Описание',
-				dataIndex: 'descr',
+				dataIndex: 'abstract',
 				key: 'name',
 			},
 			{
@@ -135,8 +161,22 @@ class addLink extends Component {
 			},
 			{
 				title: 'Action',
-                key: 'action',
-                render: () => { return (<button onClick={this.changeArticleButton}>Изменить</button>);}
+				key: 'action',
+				render: dataIndex => {
+					return (
+						<span>
+							<button
+								id={dataIndex.key}
+								onClick={data => this.changeArticleButton(data, dataIndex)}
+							>
+								Изменить
+							</button>
+							<button onClick={data => this.deleteArticleButton(data, dataIndex.key)}>
+								Удалить
+							</button>
+						</span>
+					);
+				},
 			},
 		];
 
@@ -146,8 +186,8 @@ class addLink extends Component {
 					<Button type="submit" onClick={this.handleClickBtnCreatePost}>
 						Создать запись
 					</Button>
-
 					<Table
+						className="table-links"
 						hideOnSinglePage="true"
 						columns={columns}
 						dataSource={this.state.articles}
@@ -159,11 +199,12 @@ class addLink extends Component {
 						onCancel={this.handleCancel}
 					>
 						<Form>
-							<FormItem>
+							<FormItem
+							required={true}>
 								<div className="link-input">
 									<TextArea
 										placeholder="http://"
-										autosize={{minRows: 1, maxRows: 3}}
+										autosize={{minRows: 1, maxRows: 7}}
 										onChange={this.handleChangeUrl}
 									/>
 								</div>
@@ -171,7 +212,7 @@ class addLink extends Component {
 									<TextArea
 										placeholder="Описание"
 										autosize={{minRows: 1, maxRows: 2}}
-										wh
+										onChange={this.handleChangeAbstract}
 									/>
 								</div>
 								<div className="descr-input">
@@ -179,6 +220,7 @@ class addLink extends Component {
 										placeholder="Подробное описание"
 										autosize={{minRows: 2, maxRows: 8}}
 										onChange={this.handleChangeDescr}
+										//value={this.state.descrValue} //todo исправить
 									/>
 								</div>
 							</FormItem>
