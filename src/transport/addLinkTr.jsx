@@ -96,7 +96,7 @@ const updateArticle = (url, data) => {
 };
 
 
-const getMusic = (url) => {
+const getFolderStruct = (url) => {
     return new Promise((resolve, reject) => {
         fetch(url, {
             method: 'post',
@@ -118,8 +118,11 @@ const getMusic = (url) => {
         });
     })
 };
+
+
 module.exports.putNewArticle = putNewArticle;
 module.exports.getArticles = getArticles;
 module.exports.deleteArticle = deleteArticle;
 module.exports.updateArticle = updateArticle;
-module.exports.getMusic = getMusic;
+module.exports.getFolderStruct = getFolderStruct;
+

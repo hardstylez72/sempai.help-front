@@ -10,6 +10,12 @@ import Resource from './main_page/Resource';
 import addLink from './main_page/AddLink';
 import music from './main_page/Music';
 import 'antd/dist/antd.css'; 
+import {createStore} from 'redux'
+
+function player(state = []) {
+    return state;
+}
+const store = createStore(player);
 
 
 class App extends Component {
@@ -19,7 +25,7 @@ class App extends Component {
             <div>
                 < Navbar />
                 <Route exact path="/" component={Home} />
-                <Route path="/webm" component={Webm} />
+                {/* <Route path="/webm" component={Webm} /> */}
                 <Route path="/res" component={Resource} />
                 <Route path="/server_stat" component={ServerStat} />
                 <Route path="/test" component={addLink} />
