@@ -31,4 +31,9 @@ class App extends Component {
   }
 }
 
-export default App;
+export default connect(
+    state => { return {
+        bozdo: 1
+    }},
+    dispatch => ({})
+)(App);

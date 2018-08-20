@@ -1,11 +1,17 @@
 import React, {Component} from 'react';
 import {getFolderStruct} from '../transport/addLinkTr.jsx';
-import {Drawer, Form, Button, Col, Row, Input, Select, message} from 'antd';
-import {Treebeard} from 'react-treebeard';
+import {message, Layout} from 'antd';
+import {Treebeard, decorators} from 'react-treebeard';
 import ReactPlayer from 'react-player';
 import {Base64} from 'js-base64';
-
+// import sempaiTreeStyle from './sempaiTreeStyle';
+import store from '../store/rootStore';
+import {playerActions} from '../store/player/actions';
+import {connect} from 'react-redux';
+//import Tree from './Tree';
+import TreeView from 'react-treeview';
 import './Music.css';
+const { Sider, Content} = Layout;
 
 const msg = (messageType, messageText) => {
 	switch (messageType) {
@@ -21,54 +27,86 @@ const msg = (messageType, messageText) => {
 	}
 };
 
+decorators.Header = ({style, node}) => {
+	const iconType = node.children ? 'folder' : 'file-text';
+	const iconClass = `fa fa-${iconType}`;
+	const iconStyle = {marginRight: '5px'};
+
+	return (
+		<div style={style.base}>
+			<div style={style.title}>
+				<i className={iconClass} style={iconStyle}/>
+				{node.name}
+			</div>
+		</div>
+	);
+};
+
 class music extends Component {
 	constructor(props, context) {
 		super(props, context);
 		this.state = {
-            folderStruct: {},
-            nextTrack: '',
+			folderStruct: {},
 			track: {
-                paying: '',
-                next: '',
-                prev: '',
-                currentPath: '',
-                playingURL: ''
-            },
-			play: false,
-            nowPlaying: '',
-        
+				paying: '',
+				next: '',
+				prev: '',
+				currentPath: '',
+				playingURL: '',
+			},
+			nowPlaying: '',
 		};
 
 		this.onToggle = this.onToggle.bind(this);
-        this.clickHandle = this.clickHandle.bind(this);
-        this.currentMediaFileEndedPlaying = this.currentMediaFileEndedPlaying.bind(this);
-        this.getNextTrack = this.getNextTrack.bind(this);
-        this.getWideDash = this.getWideDash.bind(this);
+		this.clickHandle = this.clickHandle.bind(this);
+		this.currentMediaFileEndedPlaying = this.currentMediaFileEndedPlaying.bind(this);
+		
 	}
 
 	render() {
 		return (
 			<div>
-				<Treebeard data={this.state.folderStruct} onToggle={this.onToggle} />
-                <ReactPlayer url={`/radio/${this.state.track.playingURL}`} 
-                onEnded={this.currentMediaFileEndedPlaying} 
-                playing={this.state.play} 
-                controls 
-                volume="1" />
+				<Layout>
+					<Content>
+						<Treebeard
+							data={this.state.folderStruct}
+							onToggle={this.onToggle}
+							decorators={decorators}
+							// style={sempaiTreeStyle}
+						/>
+					</Content>
+					<Sider 
+					>
+						<div style={{background: 'red', 'min-height': '100px'}} />
+					</Sider>
+				</Layout>
+
+
+				<ReactPlayer
+					url={`/radio/${this.props.player.nowPlayingURL}`}
+					onEnded={this.currentMediaFileEndedPlaying}
+					playing={this.props.player.play}
+					controls
+				/>
 			</div>
 		);
 	}
 
+	
+	onToggle2(e) {
+		console.log('мой тогл дернулся = ', e);
+	}
 	clickHandle(e) {
 		console.log(e);
 	}
 	componentDidMount() {
+		store.dispatch(playerActions.audioPaused);
 		(async () => {
 			try {
 				const folderStruct = await getFolderStruct('/music/');
 				this.setState({folderStruct: folderStruct});
 			} catch (err) {
-				msg('err', 'Ошибка при загрузке данных с сервера');
+				msg('err', 'Ошибка при загрузке данных с сервера', err);
 			}
 		})();
 	}
@@ -81,75 +119,50 @@ class music extends Component {
 			node.toggled = toggled;
 		}
 		this.setState({cursor: node});
-		if ((node.type === 'file' && node.extension === '.flac') || node.extension === '.mp4') {
-			console.log(node.path + node.name);
-			const jsonPath = JSON.stringify({path: node.path});
-			this.setState({track: {
-                playingURL: Base64.encodeURI(jsonPath),
-                playing: node.name,
-                currentPath: node.path,
-            }});
-            const self = this;
-            this.getNextTrack(node.name, (name => {
-                self.setState({nextTrack: name});
-                console.log("nexttarck == ", name);
-            }));
-            this.setState({play: true});
+		if (node.extension === '.flac' || node.extension === '.mp3') {
+
+			
+			const self = this;
+			if (this.props.player.play === true && node.name === this.props.player.nowPlayingName) {
+				store.dispatch(playerActions.audioPaused);
+				return;
+			} else {
+				store.dispatch(playerActions.audioPlaying);
+			}
+			store.dispatch(playerActions.playThisSong(node.name, node.path));
+			store
+				.dispatch(playerActions.getNextTrack(self.state.folderStruct, node.name))
+				.then(nextTrack => {
+					store.dispatch({type: 'GET_NEXT_TRACK', payload: nextTrack});
+				});
+			store
+				.dispatch(playerActions.getPrevTrack(self.state.folderStruct, node.name))
+				.then(getPrevTrack => {
+					console.log('getPrevTrack = ', getPrevTrack);
+					// store.dispatch({type: 'GET_NEXT_TRACK', payload: nextTrack});
+				});
 		}
-    }
+	}
 
-    currentMediaFileEndedPlaying() {
-        const jsonPath = JSON.stringify({path: this.state.nextTrack.path});
-        this.setState({track: {
-            playingURL: Base64.encodeURI(jsonPath),
-        }});
-        this.setState({play: true});
-    }
-
-    getWideDash = (count) => {
-        let result = '|'
-        for (let index = 0; index < count; index++) {
-            result += '__';
-        }
-        return result;
-    }
-    getNextTrack(trackName, cb) {
-        if (trackName == null) {
-            return;
-        }
-
-        let baseNode = this.state.folderStruct;
-        let isPlayingTrackFound = false;
-        let isNextTrackFound = false;
-    
-        (function searchInTree(node) {
-            if (isNextTrackFound) {
-                return;
-            }
-            if (node.children) {
-                for (let index = 0; index < node.children.length; index++) {
-                    let el = node.children[index];
-                    if (isNextTrackFound) {
-                        break;
-                    }
-                    if (isPlayingTrackFound && el.type === 'file' && (el.extension === '.flac' || el.extension === '.mp3')) {
-                        isNextTrackFound = true;
-                        cb(el);
-                        return;
-                    }
-                    if (el.name === trackName) {
-                        console.log('trackIsFound');
-                        isPlayingTrackFound = true;
-                    } 
-                        searchInTree(el);
-                }
-            }
-        })(baseNode);
-    }
-    
-    getPrevTrack() {
-        return 0;
-    }
+	currentMediaFileEndedPlaying() {
+		store.dispatch(playerActions.playThisSong(this.props.player.nextTrack.name, this.props.player.nextTrack.path));
+		store
+			.dispatch(
+				playerActions.getNextTrack(
+					this.state.folderStruct,
+					this.props.player.nextTrack.name,
+				),
+			)
+			.then(nextTrack => {
+				store.dispatch({type: 'GET_NEXT_TRACK', payload: nextTrack});
+			});
+		store.dispatch(playerActions.audioPlaying);
+	}
 }
 
-export default music;
+export default connect(
+	state => ({
+		player: state.palyer,
+	}),
+	dispatch => ({}),
+)(music);

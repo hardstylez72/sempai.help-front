@@ -1,0 +1,42 @@
+
+
+body {
+    background-color: #764e8b;
+    text-align: center;
+}
+
+.page_header {
+    display: flex;
+    align-items:stretch;
+    flex-direction: column;
+    left: 0;
+    top: 0;
+    width: 100%;
+    background-color: #749986;
+    color: white;
+    text-align: center;
+}
+
+.nav_pan {
+    display: flex;
+    flex-direction: column;
+    background-color: #b1c5f5;
+    top: 0;
+    width: 100%;
+    text-align: center;
+}
+
+
+.footer {
+    text-align: center;
+        display: flex;
+    flex-direction: column;
+   background-color: #749986;
+   color: white;
+   text-align: center;
+}
+
+.nav_pan_table {
+    display: flex;
+    justify-content: flex-start;
+}
