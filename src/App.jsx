@@ -13,8 +13,20 @@ import 'antd/dist/antd.css';
 import { connect } from 'react-redux';
 
 class App extends Component { 
+    state = {
+        loading: true
+      };
+      componentDidMount() {
+    this.setState({loading: false})
+    document.getElementById('preloader').remove();
+    //document.body.style.background = "white";
+}
   render() {
-    return ( 
+    const { loading } = this.state;
+    if(loading) { // if your component doesn't have to wait for an async action, remove this block 
+      return null; // render null when app is not ready
+    }
+    return ( <div>
         <Router>
             <div>
                 < Navbar />
@@ -27,6 +39,7 @@ class App extends Component {
                 <Footer/>
             </div>
         </Router>
+        </div>
     );
   }
 }

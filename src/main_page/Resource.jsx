@@ -13,12 +13,12 @@ class Resource extends Component {
 					<p>
 						<a href="https://react-bootstrap.github.io/components/alerts/">
 							React bootstrap
-						</a>{' '}
+						</a>
 					</p>
 					<p>
 						<a href="https://www.w3schools.com/bootstrap/bootstrap_ref_all_classes.asp">
 							React bootstrap css + examples
-						</a>{' '}
+						</a>
 					</p>
 					<p>
 						<a href="http://html5.by/blog/category/articles/">HTML5</a>{' '}
@@ -64,13 +64,12 @@ class Resource extends Component {
 							audio/video player{' '}
 						</a>{' '}
 					</p>
-                    <p>
+					<p>
 						<a href="https://www.digitalocean.com/community/tutorials/nginx-ubuntu-16-04-ru">
 							{' '}
 							NGINX{' '}
 						</a>{' '}
 					</p>
-                    
 				</Jumbotron>
 			</Grid>
 		);

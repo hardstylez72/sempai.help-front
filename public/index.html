@@ -17,7 +17,7 @@
     <!-- Optional theme -->
     <link rel="stylesheet" href="./bootstrap-theme.min.css" integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous">
 
-   
+
 <!--
       Notice the use of %PUBLIC_URL% in the tags above.
       It will be replaced with the URL of the `public` folder during the build.
@@ -28,21 +28,40 @@
       Learn how to configure a non-root public URL by running `npm run build`.
     -->
     <title>SEMPAI DETECTED</title>
+    <style>
+      #preloader {
+          position: absolute;
+          top: calc(50% - 12em);
+          left: calc(50% - 12em);
+          min-width: 10%;
+          min-height: 10%;
+          max-width: 90%;
+          max-height: 90%;
+          transition: 3s;
+      }
+      body {
+        background: black;
+        visibility: visible;
+        opacity: 1;
+        transition: opacity 0.3s, visibility 0s linear 0.3s;
+      }
+
+@keyframes load8 {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+    </style>
   </head>
   <body>
+     <!-- // <div id="app" class="loader"></div> -->
+    <img class ="preloader" id="preloader" src="./oqnfwbC2.gif"/>
     <noscript>
       You need to enable JavaScript to run this app.
     </noscript>
     <div id="root"></div>
-    <!--
-      This HTML file is a template.
-      If you open it directly in the browser, you will see an empty page.
-
-      You can add webfonts, meta tags, or analytics to this file.
-      The build step will place the bundled scripts into the <body> tag.
-
-      To begin the development, run `npm start` or `yarn start`.
-      To create a production bundle, use `npm run build` or `yarn build`.
-    -->
   </body>
 </html>

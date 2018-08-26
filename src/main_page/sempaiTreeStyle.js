@@ -14,13 +14,15 @@ exports.default = {
             color: 'black',
             fontFamily: 'lucida grande ,tahoma,verdana,arial,sans-serif',
             fontSize: '14px',
-            'max-width': '800px',
-            border: '1px solid red;'
+            padding: '10px 0px 10px 5px',
+            'border-radius': '10px',
+            'box-shadow': '0 0 2px',
+            'max-width': '600px',
             
         },
         node: {
             base: {
-                'max-width': '800px',
+                'max-width': '600px',
                 position: 'relative'
             },
             link: {
@@ -30,7 +32,7 @@ exports.default = {
                 display: 'block'
             },
             activeLink: {
-                background: '#E2BF7F' // цвет выделения
+                "text-shadow": "1px 1px #42b3f4"
             },
             toggle: {
                 base: {
@@ -56,11 +58,6 @@ exports.default = {
                 }
             },
             header: {
-                base: {
-                    display: 'inline-block',
-                    verticalAlign: 'top',
-                    color: 'green'
-                },
                 connector: {
                     width: '2px',
                     height: '12px',
@@ -69,10 +66,6 @@ exports.default = {
                     position: 'absolute',
                     top: '0px',
                     left: '-21px'
-                },
-                title: {
-                    lineHeight: '24px',
-                    verticalAlign: 'middle'
                 }
             },
             subtree: {

@@ -8,6 +8,7 @@
     "js-base64": "^2.4.8",
     "react": "^16.4.1",
     "react-bootstrap": "^0.32.1",
+    "react-color": "^2.14.1",
     "react-dom": "^16.4.1",
     "react-dropzone": "^4.2.11",
     "react-player": "^1.6.4",
