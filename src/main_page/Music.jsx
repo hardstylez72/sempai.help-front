@@ -2,16 +2,14 @@ import React, {Component} from 'react';
 import {getFolderStruct} from '../transport/addLinkTr.jsx';
 import {message, Layout, Row, Col, Icon} from 'antd';
 import {Treebeard, decorators} from 'react-treebeard';
-import ReactPlayer from 'react-player';
-
 import sempaiTreeStyle from './sempaiTreeStyle';
 import store from '../store/rootStore';
 import {playerActions} from '../store/player/actions';
 import {connect} from 'react-redux';
 import {bindActionCreators} from 'redux';
 import {SketchPicker} from 'react-color';
-
 import './Music.css';
+
 const {Sider, Content} = Layout;
 
 const msg = (messageType, messageText) => {
@@ -49,28 +47,23 @@ class music extends Component {
 		super(props, context);
 		this.state = {
 			folderStruct: {},
-			seeking: false,
-			seekDuration: '',
+			playedSeconds: null,
 			imagePreviewUrl: '',
 		};
-		const {startPlay} = this.props;
-
 		this.onToggle = this.onToggle.bind(this);
-		this.currentMediaFileEndedPlaying = this.currentMediaFileEndedPlaying.bind(this);
-		this.handleChangeComplete = this.handleChangeComplete.bind(this);
 	}
 
 	render() {
-		const {player, startPlay, stopPlay} = this.props;
+		const {player} = this.props;
 		return (
 			<div>
 				{/* <SketchPicker
 					onChangeComplete={this.handleChangeComplete}
 				/> */}
 				<div className="general-content">
-					<div>
+					<div className={'treebeard-contaiter'}>
 						<Treebeard
-							className={'treebeard-contaiter'}
+							className={'treebeard'}
 							data={player.folderStruct}
 							onToggle={this.onToggle}
 							decorators={decorators}
@@ -79,119 +72,60 @@ class music extends Component {
 					</div>
 
 					<div className={'cover-contaiter'}>
-						{this.props.player.cover ? (
-							<span>
-								<img className={'cover-img'} src={player.cover} />
-							</span>
-						) : (
-							<span>Пусто</span>
-						)}
-					</div>
-				</div>
-
-				<ReactPlayer
-					url={`/radio/${player.nowPlayingURL}`}
-					onEnded={this.currentMediaFileEndedPlaying}
-					playing={player.play}
-					width={0}
-					height={0}
-					ref={this.playerRef}
-					onProgress={this.onProgress.bind(this)}
-					progressInterval={500}
-				/>
-				<div className={'player-container'}>
-					<div className={'player-header'}>
-						{player.nowPlayingName ? player.nowPlayingName : 'Включи песню'}
-					</div>
-					<div className={'player-content'}>
-						<div
-							className={'player-btn-container'}
-							onClick={() => {
-								player.play ? startPlay() : stopPlay();
-							}}
-						>
-							{player.play ? (
-								<Icon
-									type="pause-circle-o"
-									className={'player-btn'}
-									style={{fontSize: 46, color: '#08c'}}
-								/>
+						<ul>
+							<li className={'undercover-list-item'} >{player.cover ? (
+								<span>
+									<img className={'cover-img'} src={player.cover} />
+								</span>
 							) : (
-								<Icon
-									type="play-circle-o"
-									className={'player-btn'}
-									style={{fontSize: 46, color: '#08c'}}
-								/>
+								<span>Пусто</span>
 							)}
-						</div>
-						<div
-							className={'player-btn-container'}
-							onClick={() => {
-								store.dispatch(
-									playerActions.playThisSong(
-										player.prevTrack.name,
-										player.prevTrack.path,
-										player.folderStruct,
-									),
-								);
-							}}
-						>
-							<Icon
-								type="backward"
-								className={'player-btn'}
-								style={{fontSize: 46, color: '#08c'}}
-							/>
-						</div>
-						<div
-							className={'player-btn-container'}
-							onClick={() => {
-								store.dispatch(
-									playerActions.playThisSong(
-										player.nextTrack.name,
-										player.nextTrack.path,
-										player.folderStruct,
-									),
-								);
-							}}
-						>
-							<Icon
-								type="forward"
-								className={'player-btn'}
-								style={{fontSize: 46, color: '#08c'}}
-							/>
-						</div>
+							</li>
+							<li className={'undercover-list-item'}>
+								<b>Трек:</b> {player.nowPlayingName ? player.nowPlayingName : ''}
+							</li>
+							<li className={'undercover-list-item'}>
+
+									<Icon
+										onClick={this.onDownloadClickHandler.bind(this)}
+										type="download"
+										className={'player-btn'}
+										style={{fontSize: 46, color: '#08c'}}
+									/>
+
+							</li>
+						</ul>
 					</div>
-					<div className={'player-footer'} >
-						<input
-							type="range"
-							min="0"
-							max={player.duration}
-							onClick={this.seekHandler.bind(this)} 
-							value={this.state.seeking ? this.state.seekDuration : player.stats.playedSeconds}
-						/>
-						</div>
+
 				</div>
 			</div>
 		);
 	}
-	playerRef = player => {
-		this._player = player
-	}
 
-	onProgress = (event) => {
-		//this.setState({seeking: false});
-		const duration = this._player.getDuration();
-		if (this.state.seeking !== true)
-		store.dispatch(playerActions.setCurStat(event, duration));
-	}
-	seekHandler = (event) => {
-		this._player.seekTo(event.target.value)
-		this.setState({seeking: true});
-		this.setState({seekDuration: event.target.value});
-		
-	} 
-	handleChangeComplete = color => {
-		document.body.style['background-color'] = `${color.hex}`;
+	// handleChangeComplete = color => {
+	// 	document.body.style['background-color'] = `${color.hex}`;
+	// };
+	onDownloadClickHandler = () => {
+		// fetch(`/radio/download/${this.props.player.nowPlayingURL}`).then(res => {
+		// 	const fileStream = streamSaver.createWriteStream('filename.flac')
+		// 	const writer = fileStream.getWriter()
+		// 	// Later you will be able to just simply do
+		// 	// res.body.pipeTo(fileStream)
+		//
+		// 	const reader = res.body.getReader()
+		// 	const pump = () => reader.read()
+		// 		.then(({ value, done }) => done
+		// 			// close the stream so we stop writing
+		// 			? writer.close()
+		// 			// Write one chunk, then get the next one
+		// 			: writer.write(value).then(pump)
+		// 		)
+		//
+		// 	// Start the reader
+		// 	pump().then(() =>
+		// 		console.log('Closed the stream, Done writing')
+		// 	)
+		// })
 	};
 	componentDidMount() {
 		store.dispatch(playerActions.audioPaused);
@@ -221,31 +155,18 @@ class music extends Component {
 			} else {
 				store.dispatch(playerActions.audioPlaying);
 			}
-			store.dispatch(playerActions.getCoverImage(node.path));
-			// .then(imgURL => (document.body.style['background-image'] = `url(${imgURL})`))
-			// .catch(err => msg('err', err));
-
 			store.dispatch(
 				playerActions.playThisSong(node.name, node.path, this.props.player.folderStruct),
 			);
 		}
 	}
 
-	currentMediaFileEndedPlaying() {
-		store.dispatch(
-			playerActions.playThisSong(
-				this.props.player.nextTrack.name,
-				this.props.player.nextTrack.path,
-				this.props.player.folderStruct,
-			),
-		);
-		store.dispatch(playerActions.audioPlaying);
-	}
+
 }
 
 export default connect(
 	state => ({
-		player: state.palyer,
+		player: state.player,
 	}),
 	dispatch => ({
 		startPlay: bindActionCreators(playerActions.audioPaused, dispatch),

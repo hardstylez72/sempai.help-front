@@ -1,0 +1,40 @@
+.player-container{
+    margin: 20px;
+    min-width: 40%;
+    height : 130px;
+    display: flow-root;
+    border: solid black 2px;
+    border-radius: 20px;
+}
+.player-btn-container{
+    display: inline-flex;
+    margin-left: 30px;
+    margin-top: 10px;
+}
+
+.player-btn:hover{
+    box-shadow:  0 0 2px rgba(0,0,0,5.5);
+}
+.player-header {
+    text-shadow: 0 0 1px rgba(0,0,0,2.2);
+    color: #204d74;
+    padding: 5px 10px 0px 10px;
+    text-align: center;
+    font-size: 18px;
+    height: 20px;
+    width: 90%;
+}
+.player-footer {
+    text-align: center;
+    padding: 0px 10px 10px 10px;
+}
+.player-volume-slider{
+    margin-left: 30px;
+    margin-right: 30px;
+    display: inline-flex;
+    scroll-padding-inline: 10px;
+}
+.volume-changer {
+    vertical-align: super;
+    max-width: 100px;
+}

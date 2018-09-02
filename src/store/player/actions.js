@@ -11,34 +11,36 @@ export const playerActions = {
 	VOLUME: 'VOLUME',
 	MUSIC_SEEKBAR_VALUE: 'MUSIC_SEEKBAR_VALUE',
 	DURATION: 'DURATION',
+	IS_SEEKING: 'IS_SEEKING',
+	TRACK_INFO: 'TRACK_INFO',
 
-	setCurStat: (stats, duration) => {
-		store.dispatch({type: 'DURATION', payload: {stats, duration}});
-		return () => {};
+	setTrackInfo: (info) => {
+		return store.dispatch({type: 'TRACK_INFO', payload: info});
+	},
+	setSeeking: (seeking) => {
+		return store.dispatch({type: 'IS_SEEKING', payload: seeking});
+	},
+	setDuration: (duration) => {
+		return store.dispatch({type: 'DURATION', payload: duration});
 	},
 	changeVolume: value => {
-		store.dispatch({type: 'VOLUME', payload: value});
-		return () => {};
-	},
-	changeSeekBar: value => {
-		store.dispatch({type: 'MUSIC_SEEKBAR_VALUE', payload: value});
-		return () => {};
+		value = Number(value)/100;
+		return store.dispatch({type: 'VOLUME', payload: value});
 	},
 	updateStruct: struct => {
-		store.dispatch({type: 'FOLDER_STRUCT', payload: struct});
-		return () => {};
+		return store.dispatch({type: 'FOLDER_STRUCT', payload: struct});
 	},
 	audioPaused: () => {
-		store.dispatch({type: 'PLAY_MUSIC', payload: false});
-		return () => {};
+		return store.dispatch({type: 'PLAY_MUSIC', payload: false});
 	},
 	audioPlaying: () => {
-		store.dispatch({type: 'PLAY_MUSIC', payload: true});
-		return () => {};
+		return store.dispatch({type: 'PLAY_MUSIC', payload: true});
 	},
 	getNextTrack: (baseFolderStruct, trackName) => {
-		if (trackName == null) {
-			return;
+		if (!trackName || !baseFolderStruct) {
+			return () => {
+				return Promise.reject();
+			};
 		}
 
 		let baseNode = baseFolderStruct;
@@ -81,8 +83,10 @@ export const playerActions = {
 		};
 	},
 	getPrevTrack: (baseFolderStruct, trackName) => {
-		if (trackName == null) {
-			return;
+		if (!trackName || !baseFolderStruct) {
+			return () => {
+				return Promise.reject();
+			};
 		}
 
 		let baseNode = baseFolderStruct;
@@ -125,6 +129,9 @@ export const playerActions = {
 		};
 	},
 	playThisSong: (name, path, folderStruct) => {
+		if (!name || !path || !folderStruct) {
+			return () => {};
+		}
 		const jsonPath = JSON.stringify({path: path});
 		const url = Base64.encodeURI(jsonPath);
 		store.dispatch({type: 'SONG_PLAYING_NAME', payload: name});
@@ -135,6 +142,13 @@ export const playerActions = {
 		store.dispatch(playerActions.getPrevTrack(folderStruct, name)).then(prevTrack => {
 			store.dispatch({type: 'GET_PREV_TRACK', payload: prevTrack});
 		});
+		store.dispatch(playerActions.getCoverImage(path))
+			.then(imgURL => {
+				const selector = document.getElementById('footer-background');
+				selector.style['background'] = `url(${imgURL})`;
+				selector.style['background-size'] = '150px 150px';
+			})
+			.catch(err => console.log('err', err));
 		return () => {};
 	},
 	getCoverImage: path => {

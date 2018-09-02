@@ -17,12 +17,12 @@ exports.default = {
             padding: '10px 0px 10px 5px',
             'border-radius': '10px',
             'box-shadow': '0 0 2px',
-            'max-width': '600px',
+            'max-width': '800px',
             
         },
         node: {
             base: {
-                'max-width': '600px',
+                'max-width': '800px',
                 position: 'relative'
             },
             link: {
