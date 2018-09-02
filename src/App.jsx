@@ -14,8 +14,9 @@ import 'antd/dist/antd.css';
 import './App.css';
 import './slider.css'
 import { connect } from 'react-redux';
-import {bindActionCreators} from 'redux';
 import {playerActions} from './store/player/actions';
+import store from './store/rootStore';
+import {loginActions} from './store/login/actions';
 
 class App extends Component {
 
@@ -25,6 +26,9 @@ class App extends Component {
 componentDidMount() {
     this.setState({loading: false});
     document.getElementById('preloader').remove();
+}
+componentWillUpdate() {
+
 }
   render() {
   	let {login} = this.props;
@@ -60,7 +64,7 @@ componentDidMount() {
 }
 
 const Wrapper = ({component: Cmponent, login}) => {
-	if (login.pwd) {
+	if (authCheck()) {
 		return (
 			<Cmponent/>
 		)
@@ -74,7 +78,7 @@ const PrivateRoute = ({ component: Component, ...rest, login}) => (
 	<Route
 		{...rest}
 		render={props =>
-			login.pwd ? (
+			authCheck() ? (
 				<Component {...props} />
 			) : (
 				<Redirect
@@ -86,6 +90,12 @@ const PrivateRoute = ({ component: Component, ...rest, login}) => (
 		}
 	/>
 );
+
+const authCheck = async () => {
+	const data = await store.dispatch(loginActions.checkAuth());
+	return Promise.resolve(data);
+
+};
 
 export default connect(
 	state => ({

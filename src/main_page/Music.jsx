@@ -1,5 +1,4 @@
 import React, {Component} from 'react';
-import {getFolderStruct} from '../transport/addLinkTr.jsx';
 import {message, Layout, Row, Col, Icon} from 'antd';
 import {Treebeard, decorators} from 'react-treebeard';
 import sempaiTreeStyle from './sempaiTreeStyle';
@@ -131,7 +130,7 @@ class music extends Component {
 		store.dispatch(playerActions.audioPaused);
 		(async () => {
 			try {
-				const folderStruct = await getFolderStruct('/music/');
+				const folderStruct = await store.dispatch(playerActions.getFolderStruct('/music/'));
 				store.dispatch(playerActions.updateStruct(folderStruct));
 			} catch (err) {
 				msg('err', 'Ошибка при загрузке данных с сервера', err);

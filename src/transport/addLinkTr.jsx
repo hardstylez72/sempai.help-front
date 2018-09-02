@@ -96,33 +96,12 @@ const updateArticle = (url, data) => {
 };
 
 
-const getFolderStruct = (url) => {
-    return new Promise((resolve, reject) => {
-        fetch(url, {
-            method: 'post',
-            headers: {
-                'Accept': 'application/json, text/plain, */*',
-                'Content-Type': 'application/json',
-            }
-        })
-        .then(res => res.json())
-        .then(dataFromServer => {
-            if (dataFromServer.sucsess === '1') {
-                resolve(dataFromServer.data);
-            } else {
-                reject('Ошибка при обмене с сервером');
-            }
-        })
-        .catch(err => {
-            reject(err);
-        });
-    })
-};
+
 
 
 module.exports.putNewArticle = putNewArticle;
 module.exports.getArticles = getArticles;
 module.exports.deleteArticle = deleteArticle;
 module.exports.updateArticle = updateArticle;
-module.exports.getFolderStruct = getFolderStruct;
+// module.exports.getFolderStruct = getFolderStruct;
 

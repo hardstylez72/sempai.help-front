@@ -1,5 +1,7 @@
 import store from '../rootStore';
 import {Base64} from 'js-base64';
+const {login} = store.getState();
+
 export const playerActions = {
 	PLAY_MUSIC: 'PLAY_MUSIC',
 	GET_NEXT_TRACK: 'GET_NEXT_TRACK',
@@ -152,7 +154,7 @@ export const playerActions = {
 		return () => {};
 	},
 	getCoverImage: path => {
-		return async (dispatch, getState) => {
+		return async () => {
 			try {
 				const jsonPath = JSON.stringify({path: path});
 				const url = Base64.encodeURI(jsonPath);
@@ -162,6 +164,7 @@ export const playerActions = {
 						Accept: 'application/json, text/plain, */*',
 						'Content-Type': 'application/json',
 					},
+					body: JSON.stringify(login)
 				})
 					.then(res => res.json())
 					.then(dataFromServer => {
@@ -179,4 +182,29 @@ export const playerActions = {
 			}
 		};
 	},
+	getFolderStruct: (url) => {
+		return async () => {
+			try {
+				const data = await fetch(url, {
+					method: 'post',
+					headers: {
+						'Accept': 'application/json, text/plain, */*',
+						'Content-Type': 'application/json',
+					},
+					body: JSON.stringify(login)
+				})
+					.then(res => res.json())
+					.then(dataFromServer => {
+						if (dataFromServer.sucsess === '1') {
+							return Promise.resolve(dataFromServer.data);
+						} else {
+							return Promise.reject('Ошибка при обмене с сервером');
+						}
+					});
+				return Promise.resolve(data);
+			} catch(err) {
+				return Promise.reject(err);
+			}
+		}
+	}
 };
