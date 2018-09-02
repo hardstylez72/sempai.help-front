@@ -13,7 +13,7 @@ class Login extends Component {
 		};
 	}
 	render() {
-		if (this.props.login.pwd) {
+		if (this.props.login.authState) {
 			return null;
 		}
 		return (

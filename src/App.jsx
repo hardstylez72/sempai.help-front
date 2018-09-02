@@ -14,7 +14,6 @@ import 'antd/dist/antd.css';
 import './App.css';
 import './slider.css'
 import { connect } from 'react-redux';
-import {playerActions} from './store/player/actions';
 import store from './store/rootStore';
 import {loginActions} from './store/login/actions';
 
@@ -28,7 +27,8 @@ componentDidMount() {
     document.getElementById('preloader').remove();
 }
 componentWillUpdate() {
-
+	// const autentithicated =  authCheck(this.props.login);
+	// console.log('Авторизация:', autentithicated);
 }
   render() {
   	let {login} = this.props;
@@ -64,7 +64,8 @@ componentWillUpdate() {
 }
 
 const Wrapper = ({component: Cmponent, login}) => {
-	if (authCheck()) {
+	if (login.authState) {
+
 		return (
 			<Cmponent/>
 		)
@@ -73,28 +74,37 @@ const Wrapper = ({component: Cmponent, login}) => {
 	}
 
 };
-const PrivateRoute = ({ component: Component, ...rest, login}) => (
-
+const PrivateRoute = ({ component: Component, ...rest, login}) => {
+	return(
 	<Route
 		{...rest}
 		render={props =>
-			authCheck() ? (
+			login.authState? (
 				<Component {...props} />
-			) : (
+			) : ( props.location.pathname !== '/login' ? (
 				<Redirect
 					to={{
 						pathname: "/login",
 					}}
 				/>
+			) : ( null)
 			)
 		}
 	/>
-);
+)};
 
-const authCheck = async () => {
-	const data = await store.dispatch(loginActions.checkAuth());
-	return Promise.resolve(data);
 
+const authCheck = async (login) => {
+	if (login.authState) {
+		return true;
+	}
+	try {
+		// const data = await store.dispatch(loginActions.checkAuth());
+		// console.log('uuid = ', data);
+		return true;
+	} catch (e) {
+		return false;
+	}
 };
 
 export default connect(

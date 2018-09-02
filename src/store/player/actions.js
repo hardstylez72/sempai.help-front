@@ -1,6 +1,6 @@
 import store from '../rootStore';
 import {Base64} from 'js-base64';
-const {login} = store.getState();
+
 
 export const playerActions = {
 	PLAY_MUSIC: 'PLAY_MUSIC',
@@ -156,6 +156,7 @@ export const playerActions = {
 	getCoverImage: path => {
 		return async () => {
 			try {
+				const {login} = store.getState();
 				const jsonPath = JSON.stringify({path: path});
 				const url = Base64.encodeURI(jsonPath);
 				const img = await fetch(`/radio/cover/${url}`, {
@@ -185,6 +186,8 @@ export const playerActions = {
 	getFolderStruct: (url) => {
 		return async () => {
 			try {
+				const {login} = store.getState();
+				console.log(store);
 				const data = await fetch(url, {
 					method: 'post',
 					headers: {
@@ -195,6 +198,7 @@ export const playerActions = {
 				})
 					.then(res => res.json())
 					.then(dataFromServer => {
+						const {login} = store.getState();
 						if (dataFromServer.sucsess === '1') {
 							return Promise.resolve(dataFromServer.data);
 						} else {
