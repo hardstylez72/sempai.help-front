@@ -10,7 +10,7 @@ const putNewArticle = (url, data) => {
         })
         .then(res => res.json())
         .then(dataFromServer => {
-            if (dataFromServer.sucsess === '1') {
+            if (dataFromServer.success === '1') {
                 resolve();
             } else {
                 reject('Ошибка при обмене с сервером');
@@ -35,7 +35,7 @@ const getArticles = (url, amount, offset, filter) => {
         })
         .then(res => res.json())
         .then(dataFromServer => {
-            if (dataFromServer.sucsess === '1') {
+            if (dataFromServer.success === '1') {
                 resolve(dataFromServer.data.filter(el => el.deleted === false));
             } else {
                 reject('Ошибка при обмене с сервером');
@@ -59,7 +59,7 @@ const deleteArticle = (url, id) => {
         })
         .then(res => res.json())
         .then(dataFromServer => {
-            if (dataFromServer.sucsess === '1') {
+            if (dataFromServer.success === '1') {
                 resolve();
             } else {
                 reject('Ошибка при обмене с сервером');
@@ -83,7 +83,7 @@ const updateArticle = (url, data) => {
         })
         .then(res => res.json())
         .then(dataFromServer => {
-            if (dataFromServer.sucsess === '1') {
+            if (dataFromServer.success === '1') {
                 resolve();
             } else {
                 reject('Ошибка при обмене с сервером');

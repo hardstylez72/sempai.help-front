@@ -169,7 +169,7 @@ export const playerActions = {
 				})
 					.then(res => res.json())
 					.then(dataFromServer => {
-						if (dataFromServer.sucsess === '1') {
+						if (dataFromServer.success === '1') {
                             store.dispatch({type: 'COVER_IMAGE', payload: dataFromServer.data});
 							return Promise.resolve(dataFromServer.data);
 						} else {
@@ -199,7 +199,7 @@ export const playerActions = {
 					.then(res => res.json())
 					.then(dataFromServer => {
 						const {login} = store.getState();
-						if (dataFromServer.sucsess === '1') {
+						if (dataFromServer.success === '1') {
 							return Promise.resolve(dataFromServer.data);
 						} else {
 							return Promise.reject('Ошибка при обмене с сервером');

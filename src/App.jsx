@@ -14,24 +14,52 @@ import 'antd/dist/antd.css';
 import './App.css';
 import './slider.css'
 import { connect } from 'react-redux';
+import { Alert } from 'antd';
+import _ from 'lodash';
 import store from './store/rootStore';
 import {loginActions} from './store/login/actions';
+
+const ErrorMessage = (messageLog) => {
+	const message = _.get(messageLog, 'error.message', 'Ошибка');
+	const description = _.get(messageLog, 'error.stack', 'Неизвестная ошибка');
+	if (messageLog.errorShow) {
+		return <Alert message={message} description={description} type="error" showIcon banner closable={true}/>;
+	}
+};
+
+
+const InfoMessage = (messageLog) => {
+	return messageLog.infoShow ? <Alert message={messageLog.info} type="info" showIcon closable={true}/> : '';
+};
+
+const WarnMessage = (messageLog) => {
+	return messageLog.warnShow ? <Alert message={messageLog.warn} type="warning" showIcon closable={true}/> : '';
+};
+
+const SuccessMessage = (messageLog) => {
+	return messageLog.successShow ? <Alert message={messageLog.success} type="success" showIcon closable={true}/> : '';
+};
 
 class App extends Component {
 
     state = {
-        loading: true
+        loading: true,
+		path: ''
       };
 componentDidMount() {
-    this.setState({loading: false});
-    document.getElementById('preloader').remove();
+	const nowPath = window.location.pathname;
+	this.setState({path: nowPath});
+	(async () => {
+		await store.dispatch(loginActions.authReq());
+		document.getElementById('preloader').remove();
+		this.setState({loading: false});
+	})();
 }
 componentWillUpdate() {
-	// const autentithicated =  authCheck(this.props.login);
-	// console.log('Авторизация:', autentithicated);
+
 }
   render() {
-  	let {login} = this.props;
+  	let {login, messageLog} = this.props;
     const { loading } = this.state;
     if(loading) {
         return null;
@@ -40,15 +68,19 @@ componentWillUpdate() {
         <div>
             <Router>
                 <div>
+					{ErrorMessage(messageLog)}
+					{InfoMessage(messageLog)}
+					{WarnMessage(messageLog)}
+					{SuccessMessage(messageLog)}
 					<Wrapper component={Navbar} login={login}/>
 					<Route path="/login" component={Login}/>
 					<Switch>
-						<PrivateRoute path="/main" component={Home}  login={login}/>
-						<PrivateRoute path="/res" component={Resource}  login={login}/>
-						<PrivateRoute path="/server_stat" component={ServerStat}  login={login}/>
-						<PrivateRoute path="/test" component={addLink}  login={login}/>
-						<PrivateRoute path="/music" component={music}  login={login}/>
-						<PrivateRoute component={Home} login={login}/> {/*Придумать отлов 404 поумнее*/}
+						<PrivateRoute path="/main" component={Home}  login={login} state={this.state}/>
+						<PrivateRoute path="/res" component={Resource}  login={login} state={this.state}/>
+						<PrivateRoute path="/server_stat" component={ServerStat}  login={login} state={this.state}/>
+						<PrivateRoute path="/test" component={addLink}  login={login} state={this.state}/>
+						<PrivateRoute path="/music" component={music}  login={login} state={this.state}/>
+						<PrivateRoute component={Home} login={login} state={this.state}/> {/*Придумать отлов 404 поумнее*/}
 					</Switch>
                     <div  className={'footer-container'}>
                     <Wrapper component={Footer}  login={login}/>
@@ -74,41 +106,28 @@ const Wrapper = ({component: Cmponent, login}) => {
 	}
 
 };
-const PrivateRoute = ({ component: Component, ...rest, login}) => {
+const PrivateRoute = ({ component: Component, ...rest, login, state}) => {
 	return(
 	<Route
 		{...rest}
-		render={props =>
-			login.authState? (
-				<Component {...props} />
-			) : ( props.location.pathname !== '/login' ? (
-				<Redirect
-					to={{
-						pathname: "/login",
-					}}
-				/>
-			) : ( null)
-			)
-		}
+		render={(props) => {
+			if (state.loading) {
+				return null;
+			}
+			if (login.authState) {
+				props.location.pathname = state.path;
+				return <Component {...props} />;
+			}
+
+			return <Redirect to={{pathname: "/login"}}/>
+		}}
 	/>
 )};
 
 
-const authCheck = async (login) => {
-	if (login.authState) {
-		return true;
-	}
-	try {
-		// const data = await store.dispatch(loginActions.checkAuth());
-		// console.log('uuid = ', data);
-		return true;
-	} catch (e) {
-		return false;
-	}
-};
-
 export default connect(
 	state => ({
 		login: state.login,
+		messageLog: state.message
 	})
 )(App);
