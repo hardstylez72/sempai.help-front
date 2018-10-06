@@ -1,5 +1,5 @@
 import store from '../rootStore';
-const ERROR_DURATION = 20000;
+const ERROR_DURATION = 5000;
 const DURATION = 3000;
 const { message } = store.getState();
 
@@ -15,6 +15,7 @@ export const messagesActions = {
 			setTimeout(() => {
 				store.dispatch({type: 'LOG_ERROR', payload: { error: '', show: false}});
 			}, ERROR_DURATION);
+			return () => {};
 		}
 	},
 	logWarn: (payload) => {

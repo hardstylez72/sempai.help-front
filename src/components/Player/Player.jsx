@@ -104,10 +104,10 @@ class Player extends Component {
 							onMouseDown={this.onSeekMouseDown.bind(this)}
 							onChange={this.onSeekChange.bind(this)}
 							onMouseUp={this.onSeekMouseUp.bind(this)}
-							value={player.trackInfo.playedSeconds}
+							value={Math.round(player.trackInfo.playedSeconds)}
 						/>
-						{player.trackInfo.playedSeconds ? player.trackInfo.playedSeconds : ''}/
-						{player.duration ? player.duration : ''}
+						{player.trackInfo.playedSeconds ? Math.round(player.trackInfo.playedSeconds) : ''}/
+						{player.duration ? Math.round(player.duration) : ''}
 					</div>
 				</div>
 			</div>

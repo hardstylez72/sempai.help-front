@@ -1,0 +1,15 @@
+.add-to-favorite-btn {
+    font-size: 20px;
+    color: #08c;
+    margin: 3px
+}
+.delete-to-favorite-btn {
+    font-size: 20px;
+    color: forestgreen;
+    margin: 3px
+}
+.loading-fav-button {
+    font-size: 20px;
+    color: #08c;
+    margin: 3px
+}

@@ -13,8 +13,6 @@ class Home extends Component {
                     <Link to="/server_stat">
                         <Button bsStyle="primary"> Server stat </Button>
                     </Link>
-                    <Image src="/home.jpg" rounded responsive/>
-                    <Image src="/home.jpg" rounded responsive/>
                 </Grid>
             </div>
 

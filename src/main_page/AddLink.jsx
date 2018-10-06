@@ -1,8 +1,8 @@
 import React, {Component} from 'react';
-import {Grid, Jumbotron, FormGroup, ControlLabel, FormControl, Alert} from 'react-bootstrap';
+import {Grid, Jumbotron} from 'react-bootstrap';
 
-import {Table, Icon, Modal} from 'antd';
-import {Drawer, Form, Button, Col, Row, Input, Select, message} from 'antd';
+import {Table, Modal} from 'antd';
+import {Form, Button, Input, message} from 'antd';
 import './AddLink.css';
 import {putNewArticle, getArticles, deleteArticle, updateArticle} from '../transport/addLinkTr.jsx';
 const {TextArea} = Input;

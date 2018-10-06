@@ -51,5 +51,11 @@
   padding-bottom: 140px;
 }
 
+
+.messages-container {
+    width: 600px;
+    position: absolute;
+    z-index: 3;
+}
 .wrapper {
 }

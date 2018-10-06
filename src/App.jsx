@@ -46,6 +46,8 @@ class App extends Component {
         loading: true,
 		path: ''
       };
+
+
 componentDidMount() {
 	const nowPath = window.location.pathname;
 	this.setState({path: nowPath});
@@ -67,11 +69,13 @@ componentWillUpdate() {
     return (
         <div>
             <Router>
-                <div>
-					{ErrorMessage(messageLog)}
-					{InfoMessage(messageLog)}
-					{WarnMessage(messageLog)}
-					{SuccessMessage(messageLog)}
+                <div className={"content-container"}>
+					<div className={"messages-container"}>
+						{ErrorMessage(messageLog)}
+						{InfoMessage(messageLog)}
+						{WarnMessage(messageLog)}
+						{SuccessMessage(messageLog)}
+					</div>
 					<Wrapper component={Navbar} login={login}/>
 					<Route path="/login" component={Login}/>
 					<Switch>

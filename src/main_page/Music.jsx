@@ -1,11 +1,12 @@
 import React, {Component} from 'react';
-import {message, Layout, Row, Col, Icon} from 'antd';
+import {message, Layout, Icon} from 'antd';
 import {Treebeard, decorators} from 'react-treebeard';
 import sempaiTreeStyle from './sempaiTreeStyle';
 import store from '../store/rootStore';
 import {playerActions} from '../store/player/actions';
 import {connect} from 'react-redux';
 import {bindActionCreators} from 'redux';
+import AddToFavorite from '../components/AddToFavorite/AddToFavorite';
 import {SketchPicker} from 'react-color';
 import './Music.css';
 
@@ -27,12 +28,14 @@ const msg = (messageType, messageText) => {
 
 decorators.Header = ({style, node}) => {
 	const iconType = node.children ? 'folder' : 'file';
+	const isFile = iconType === 'file';
 	const iconClass = `treebeard-list-${iconType}`;
 	const iconStyle = {marginRight: '5px'};
 
 	return (
 		<div className={'base-treebeard-header'}>
 			<div className={'base-treebeard-title'}>
+
 				<div className={iconClass} style={iconStyle}>
 					{node.name}
 				</div>
@@ -81,10 +84,12 @@ class music extends Component {
 							)}
 							</li>
 							<li className={'undercover-list-item'}>
+
+								<b>Добавить в избранное</b> <br/>
 								<b>Трек:</b> {player.nowPlayingName ? player.nowPlayingName : ''}
 							</li>
 							<li className={'undercover-list-item'}>
-
+								<AddToFavorite track={player.nowPlayingName}/>
 									<Icon
 										onClick={this.onDownloadClickHandler.bind(this)}
 										type="download"
