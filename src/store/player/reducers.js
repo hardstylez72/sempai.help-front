@@ -7,6 +7,7 @@ const playerState = {
     nowPlayingURL: '',
     cover: '',
     folderStruct: {},
+    favorite: {},
     volume: 1,
     seekBarValue: 0,
     duration: 0,
@@ -31,7 +32,10 @@ const playerState = {
         case 'COVER_IMAGE':
             return {...state, cover: action.payload};
         case 'FOLDER_STRUCT':
-            return {...state, folderStruct: action.payload};
+            return {...state,
+                folderStruct: action.payload.struct,
+				favorite: action.payload.favorite
+            };
         case 'VOLUME':
             return {...state, volume: action.payload};
         case 'MUSIC_SEEKBAR_VALUE':

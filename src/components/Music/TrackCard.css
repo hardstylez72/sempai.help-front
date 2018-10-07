@@ -1,0 +1,39 @@
+.cover-contaiter{
+    width: 440px;
+    height: 490px;
+    padding: 10px 10px 120px 10px;
+    border: 1px solid grey;
+    border-radius: 10px;
+    box-shadow: 0 0 2px;
+    display: flex;
+    justify-content: center;
+}
+
+.cover--img-container {
+    height: 400px;
+    width: 400px;
+    background-image: url("../../static/tenor.gif");
+    background-position: top;
+}
+
+.cover-img {
+    width: 400px;
+    height: 400px;
+}
+
+.track-card-controls-container {
+    display: flex;
+    justify-content: space-around;
+}
+
+.track-name-info{
+    width: 390px;
+    text-align: center;
+    text-shadow: 0 0 1px rgba(0,0,0,2.2);
+    color: #204d74;
+    font-size: 14px;
+}
+
+.tarck-card-controls {
+    display: -webkit-box;
+}

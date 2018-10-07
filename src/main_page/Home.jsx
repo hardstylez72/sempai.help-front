@@ -3,6 +3,10 @@ import { Link } from 'react-router-dom';
 import { Jumbotron, Grid, Row, Col, Image, Button } from 'react-bootstrap';
 
 class Home extends Component {
+	constructor() {
+		super();
+		this.state = { tabIndex: 0 };
+	}
     render() {
         return(
             <div>
@@ -10,6 +14,8 @@ class Home extends Component {
                     <Jumbotron>
                         <h2> Wellcome Home !</h2>
                     </Jumbotron>
+
+
                     <Link to="/server_stat">
                         <Button bsStyle="primary"> Server stat </Button>
                     </Link>

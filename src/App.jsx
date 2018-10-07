@@ -8,7 +8,7 @@ import Navbar from './main_page/NavBar/NavBar';
 import Footer from './components/Footer/Footer';
 import Resource from './main_page/Resource';
 import addLink from './main_page/AddLink';
-import music from './main_page/Music';
+import music from './components/Music/Music';
 import Login from './components/Login/Login.jsx'
 import 'antd/dist/antd.css';
 import './App.css';

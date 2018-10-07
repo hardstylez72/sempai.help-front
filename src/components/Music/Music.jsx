@@ -1,14 +1,15 @@
 import React, {Component} from 'react';
-import {message, Layout, Icon} from 'antd';
+import {message, Layout} from 'antd';
 import {Treebeard, decorators} from 'react-treebeard';
-import sempaiTreeStyle from './sempaiTreeStyle';
-import store from '../store/rootStore';
-import {playerActions} from '../store/player/actions';
+import sempaiTreeStyle from '../../main_page/sempaiTreeStyle';
+import store from '../../store/rootStore';
+import {playerActions} from '../../store/player/actions';
 import {connect} from 'react-redux';
 import {bindActionCreators} from 'redux';
-import AddToFavorite from '../components/AddToFavorite/AddToFavorite';
 import {SketchPicker} from 'react-color';
+import { Tab, Tabs, Grid, Col, Row } from 'react-bootstrap';
 import './Music.css';
+import  TrackCard from './TrackCard';
 
 const {Sider, Content} = Layout;
 
@@ -59,48 +60,45 @@ class music extends Component {
 		const {player} = this.props;
 		return (
 			<div>
+
 				{/* <SketchPicker
 					onChangeComplete={this.handleChangeComplete}
 				/> */}
+				{/*<Grid>*/}
+					{/*<Row className="show-grid">*/}
+						{/*<Col sm={6} md={3}>*/}
+						{/*</Col>*/}
+						{/*<Col sm={6} md={3}>*/}
+						{/*</Col>*/}
+					{/*</Row>*/}
+				{/*</Grid>*/}
+
 				<div className="general-content">
-					<div className={'treebeard-contaiter'}>
-						<Treebeard
-							className={'treebeard'}
-							data={player.folderStruct}
-							onToggle={this.onToggle}
-							decorators={decorators}
-							style={sempaiTreeStyle}
-						/>
-					</div>
-
-					<div className={'cover-contaiter'}>
-						<ul>
-							<li className={'undercover-list-item'} >{player.cover ? (
-								<span>
-									<img className={'cover-img'} src={player.cover} />
-								</span>
-							) : (
-								<span>Пусто</span>
-							)}
-							</li>
-							<li className={'undercover-list-item'}>
-
-								<b>Добавить в избранное</b> <br/>
-								<b>Трек:</b> {player.nowPlayingName ? player.nowPlayingName : ''}
-							</li>
-							<li className={'undercover-list-item'}>
-								<AddToFavorite track={player.nowPlayingName}/>
-									<Icon
-										onClick={this.onDownloadClickHandler.bind(this)}
-										type="download"
-										className={'player-btn'}
-										style={{fontSize: 46, color: '#08c'}}
-									/>
-
-							</li>
-						</ul>
-					</div>
-
+					<Tabs defaultActiveKey={1} id="uncontrolled-tab-example">
+						<Tab eventKey={1} title="Коллекция">
+							<div className={'treebeard-contaiter'}>
+								<Treebeard
+									className={'treebeard'}
+									data={player.folderStruct}
+									onToggle={this.onToggle}
+									decorators={decorators}
+									style={sempaiTreeStyle}
+								/>
+							</div>
+						</Tab>
+						<Tab eventKey={2} title="Любимое">
+							<div className={'treebeard-contaiter'}>
+								<Treebeard
+									className={'treebeard'}
+									data={player.favorite}
+									onToggle={this.onToggle}
+									decorators={decorators}
+									style={sempaiTreeStyle}
+								/>
+							</div>
+						</Tab>
+					</Tabs>;
+					<TrackCard player={player}/>
 				</div>
 			</div>
 		);
@@ -109,34 +107,13 @@ class music extends Component {
 	// handleChangeComplete = color => {
 	// 	document.body.style['background-color'] = `${color.hex}`;
 	// };
-	onDownloadClickHandler = () => {
-		// fetch(`/radio/download/${this.props.player.nowPlayingURL}`).then(res => {
-		// 	const fileStream = streamSaver.createWriteStream('filename.flac')
-		// 	const writer = fileStream.getWriter()
-		// 	// Later you will be able to just simply do
-		// 	// res.body.pipeTo(fileStream)
-		//
-		// 	const reader = res.body.getReader()
-		// 	const pump = () => reader.read()
-		// 		.then(({ value, done }) => done
-		// 			// close the stream so we stop writing
-		// 			? writer.close()
-		// 			// Write one chunk, then get the next one
-		// 			: writer.write(value).then(pump)
-		// 		)
-		//
-		// 	// Start the reader
-		// 	pump().then(() =>
-		// 		console.log('Closed the stream, Done writing')
-		// 	)
-		// })
-	};
 	componentDidMount() {
 		store.dispatch(playerActions.audioPaused);
 		(async () => {
 			try {
-				const folderStruct = await store.dispatch(playerActions.getFolderStruct('/music/'));
-				store.dispatch(playerActions.updateStruct(folderStruct));
+				const folderStruct = await store.dispatch(playerActions.getFolderStruct('/music/', 'post'));
+				const favoriteTracks = await store.dispatch(playerActions.getFavTracks('/music/favorite'));
+				store.dispatch(playerActions.updateStruct(folderStruct, favoriteTracks));
 			} catch (err) {
 				msg('err', 'Ошибка при загрузке данных с сервера', err);
 			}
@@ -151,7 +128,7 @@ class music extends Component {
 			node.toggled = toggled;
 		}
 		this.setState({cursor: node});
-		if (node.extension === '.flac' || node.extension === '.mp3') {
+		if (node.type !== 'directory') {
 			const self = this;
 			if (this.props.player.play === true && node.name === this.props.player.nowPlayingName) {
 				store.dispatch(playerActions.audioPaused);

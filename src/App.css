@@ -59,3 +59,8 @@
 }
 .wrapper {
 }
+
+body {
+    opacity: 0.9 !important;
+    background-color:  rgba(125, 192, 255, 0.576) !important;
+}

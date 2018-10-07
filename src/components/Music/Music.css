@@ -1,0 +1,61 @@
+
+.general-content{
+    margin: 20px;
+    /*border: 1px solid black;*/
+}
+.treebeard-contaiter{
+    padding-left: 15px;
+    width: 750px;
+    display: flex;
+    justify-content: flex-start;
+}
+.treebeard{
+
+}
+
+.base-treebeard-title{
+    lineHeight: 24px;
+    justify-content: center;
+    display: flex;
+}
+.treebeard-list-folder{
+    box-shadow:  0 0 2px rgba(0,0,0,0.5);
+    margin-left: 5px;
+    padding-left: 5px;
+    padding-right: 5px;
+    word-wrap: break-word;
+    border-radius: 5px;
+}
+
+
+
+@media (min-width: 1000.98px) { 
+    .general-content{ /* tree and image container */
+        display: flex;
+
+        /*justify-content: space-around;*/
+    }
+    .base-treebeard-header {
+        display: inline-block;
+        color: green;
+    }
+ }
+
+@media (max-width: 1000.98px) { 
+    .general-content{ /* tree and image container */
+        display: list-item;
+        justify-content: space-around;
+    }
+    .base-treebeard-header {
+        display: inline-block;
+        color: green;
+    }
+ }
+
+ @media (max-width: 300.98px) {
+    .base-treebeard-header {
+        display: inline-block;
+        color: green;
+        margin-right: 20px;
+    }
+ }

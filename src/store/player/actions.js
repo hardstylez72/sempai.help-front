@@ -1,5 +1,6 @@
 import store from '../rootStore';
 import {Base64} from 'js-base64';
+import {request, getRequest} from '../api/request';
 
 
 export const playerActions = {
@@ -29,8 +30,8 @@ export const playerActions = {
 		value = Number(value)/100;
 		return store.dispatch({type: 'VOLUME', payload: value});
 	},
-	updateStruct: struct => {
-		return store.dispatch({type: 'FOLDER_STRUCT', payload: struct});
+	updateStruct: (struct, favorite) => {
+		return store.dispatch({type: 'FOLDER_STRUCT', payload: {struct: struct, favorite: favorite} });
 	},
 	audioPaused: () => {
 		return store.dispatch({type: 'PLAY_MUSIC', payload: false});
@@ -183,22 +184,28 @@ export const playerActions = {
 			}
 		};
 	},
-	getFolderStruct: (url) => {
+	getFolderStruct: (url, method) => {
 		return async () => {
 			try {
-				const {login} = store.getState();
-				console.log(store);
-				const data = await fetch(url, {
-					method: 'post',
-					headers: {
-						'Accept': 'application/json, text/plain, */*',
-						'Content-Type': 'application/json',
-					},
-					body: JSON.stringify(login)
-				})
-					.then(res => res.json())
+				const data = await request(url, method)
 					.then(dataFromServer => {
-						const {login} = store.getState();
+						if (dataFromServer.success === '1') {
+							return Promise.resolve(dataFromServer.data);
+						} else {
+							return Promise.reject('Ошибка при обмене с сервером');
+						}
+					});
+				return Promise.resolve(data);
+			} catch(err) {
+				return Promise.reject(err);
+			}
+		}
+	},
+	getFavTracks: (url) => {
+		return async () => {
+			try {
+				const data = await getRequest(url)
+					.then(dataFromServer => {
 						if (dataFromServer.success === '1') {
 							return Promise.resolve(dataFromServer.data);
 						} else {
