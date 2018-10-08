@@ -1,16 +1,15 @@
 'use strict';
 
-Object.defineProperty(exports, "__esModule", {
-    value: true
-});
-exports.default = {
+// Object.defineProperty(exports, "__esModule", {
+//     value: true
+// });
+export default {
     tree: {
 
         base: {
             listStyle: 'none',
             backgroundColor: '#b8fcf2',
             margin: '10px',
-            padding: 0,
             color: 'black',
             fontFamily: 'lucida grande ,tahoma,verdana,arial,sans-serif',
             fontSize: '14px',

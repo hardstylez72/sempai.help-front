@@ -110,7 +110,7 @@ const Wrapper = ({component: Cmponent, login}) => {
 	}
 
 };
-const PrivateRoute = ({ component: Component, ...rest, login, state}) => {
+const PrivateRoute = ({ component: Component, login, state,  ...rest}) => {
 	return(
 	<Route
 		{...rest}
