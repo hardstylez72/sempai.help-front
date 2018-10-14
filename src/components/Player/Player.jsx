@@ -13,7 +13,7 @@ class Player extends Component {
 		return (
 			<div>
 				<ReactPlayer
-					url={`/radio/${player.nowPlayingURL}`}
+					url={'/api/' + `/radio/${player.nowPlayingURL}`}
 					volume={player.volume}
 					onEnded={this.currentMediaFileEndedPlaying.bind(this)}
 					playing={player.play}

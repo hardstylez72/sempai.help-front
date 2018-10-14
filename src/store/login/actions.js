@@ -1,5 +1,5 @@
 import store from '../rootStore';
-import { request } from '../api/request.js'
+import { request, makeRequest } from '../api/request.js'
 
 export const loginActions = {
 	GET_UID: 'GET_UID',
@@ -22,7 +22,7 @@ export const loginActions = {
 		return async () => {
 			try {
 				const {login} = store.getState();
-				await request('login/', login)
+				await request('login/', 'post', login)
 					.then(res => {
 						store.dispatch({type: 'LOGIN_PARAMS', payload: {
 							login: res.data.login,
@@ -41,7 +41,7 @@ export const loginActions = {
 	authReq: () => {
 		return async () => {
 			try {
-				await request('login/');
+				await request('login/', 'post', {ok: 1});
 				store.dispatch(loginActions.isAuthsuccess(true));
 			} catch(err) {
 				store.dispatch(loginActions.isAuthsuccess(false));

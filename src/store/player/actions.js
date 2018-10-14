@@ -160,15 +160,7 @@ export const playerActions = {
 				const {login} = store.getState();
 				const jsonPath = JSON.stringify({path: path});
 				const url = Base64.encodeURI(jsonPath);
-				const img = await fetch(`/radio/cover/${url}`, {
-					method: 'post',
-					headers: {
-						Accept: 'application/json, text/plain, */*',
-						'Content-Type': 'application/json',
-					},
-					body: JSON.stringify(login)
-				})
-					.then(res => res.json())
+				const img = await request(`/radio/cover/${url}`, 'post', login)
 					.then(dataFromServer => {
 						if (dataFromServer.success === '1') {
                             store.dispatch({type: 'COVER_IMAGE', payload: dataFromServer.data});

@@ -1,6 +1,45 @@
 import { messagesActions } from '../messages/actions';
 import store from '../rootStore';
-const { login } = store.getState();
+import axios from 'axios';
+
+const makeRequest = async (url, method, data) => {
+	try { // 'http://localhost:4000'
+		const options = {
+			url: url,
+			method: method,
+			headers: {
+				'Accept': 'application/json, text/plain, */*',
+				'Content-Type': 'application/json'
+			},
+			data: (method.toLowerCase() !== 'get' ? data : ''),
+			timeout: 4000,
+			responseType: 'json',
+			withCredentials: true
+		};
+		axios(options)
+			.then(res => {
+				if (authCheck()) {
+					return Promise.resolve(res);
+				}
+				return Promise.reject('Авторизация: ошибка при авторизации');
+			})
+			.catch(err => {
+				return Promise.reject(err.message);
+			});
+
+
+	} catch (err) {
+		console.log(err);
+		return Promise.reject(err.message);
+	}
+};
+
+
+const authCheck = (res) => {
+	console.log(res);
+	return true
+};
+
 
 const request = async (url, method, data) => fetch('/api/' + url, {
 		method: method,
@@ -45,11 +84,12 @@ const request = async (url, method, data) => fetch('/api/' + url, {
 	});
 
 
-const getRequest = async (url) => fetch(url, {
+const getRequest = async (url) => fetch('/api/' + url, {
 	method: 'GET',
 	headers: {
 		'Accept': 'application/json, text/plain, */*',
 		'Content-Type': 'application/json',
+		'Cache-Control': 'no-store, no-cache, must-revalidate, proxy-revalidate, max-age=0'
 		//'Token': login.uuid,
 	},
 	credentials: 'include',
@@ -89,6 +129,6 @@ const getRequest = async (url) => fetch(url, {
 	});
 
 
-export {request, getRequest};
+export {request, getRequest, makeRequest};
 
 

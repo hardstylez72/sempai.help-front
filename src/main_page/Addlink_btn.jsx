@@ -9,6 +9,7 @@ import {
 	Button,
 	Form,
 } from 'react-bootstrap';
+import {request} from '../store/api/request';
 
 class addLink_btn extends Component {
 	constructor(props, context) {
@@ -34,14 +35,7 @@ class addLink_btn extends Component {
 
 	handleClick(e) {
 		var data = this.state;
-		fetch('/addlink', {
-			method: 'post',
-			headers: {
-				Accept: 'application/json, text/plain, */*',
-				'Content-Type': 'application/json',
-			},
-			body: JSON.stringify({data}),
-		})
+		request('/addlink', 'post', data)
 			.then(res => res.json())
 			.then(dataFromServer => this.setState({articles: dataFromServer.articles}));
 	}
