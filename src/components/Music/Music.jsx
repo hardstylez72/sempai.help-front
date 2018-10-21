@@ -7,9 +7,10 @@ import {playerActions} from '../../store/player/actions';
 import {connect} from 'react-redux';
 import {bindActionCreators} from 'redux';
 import {SketchPicker} from 'react-color';
-import { Tab, Tabs, Grid, Col, Row } from 'react-bootstrap';
+import { Tab, Tabs } from 'react-bootstrap';
 import './Music.css';
-import  TrackCard from './TrackCard';
+import TrackCard from './TrackCard';
+import UploadFiles from '../UploadFiles/UploadFiles';
 
 const {Sider, Content} = Layout;
 
@@ -97,16 +98,22 @@ class music extends Component {
 								/>
 							</div>
 						</Tab>
+						<Tab eventKey={3} title="Свое">
+						</Tab>
+						<Tab eventKey={4} title="Загрузка">
+							<UploadFiles paths={player.folderStruct}/>
+						</Tab>
 					</Tabs>;
 					<TrackCard player={player}/>
 				</div>
 			</div>
 		);
+
+
+
 	}
 
-	// handleChangeComplete = color => {
-	// 	document.body.style['background-color'] = `${color.hex}`;
-	// };
+
 	componentDidMount() {
 		store.dispatch(playerActions.audioPaused);
 		(async () => {

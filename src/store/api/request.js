@@ -40,8 +40,9 @@ const authCheck = (res) => {
 	return true
 };
 
+const productionPreffix = (process.env.NODE_ENV === 'production') ? /api/ : '';
 
-const request = async (url, method, data) => fetch('/api/' + url, {
+const request = async (url, method, data) => fetch(productionPreffix + url, {
 		method: method,
 		headers: {
 			'Accept': 'application/json, text/plain, */*',
@@ -84,7 +85,7 @@ const request = async (url, method, data) => fetch('/api/' + url, {
 	});
 
 
-const getRequest = async (url) => fetch('/api/' + url, {
+const getRequest = async (url) => fetch(productionPreffix + url, {
 	method: 'GET',
 	headers: {
 		'Accept': 'application/json, text/plain, */*',

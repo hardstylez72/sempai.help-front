@@ -52,8 +52,7 @@ class AddToFavorite extends Component {
 		);
 	}
 
-
-
+	
 	componentDidUpdate(prevProps) {
 		if (this.props.track !== prevProps.track) {
 			const {track} = this.props;
