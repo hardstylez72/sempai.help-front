@@ -4,9 +4,12 @@ import {request} from '../../store/api/request'
 import { Icon, Progress } from 'antd'
 import Dropzone from 'react-dropzone';
 import socketIOClient from 'socket.io-client';
+import { OverlayTrigger, Popover, ListGroup, ListGroupItem } from 'react-bootstrap';
 import './UploadFiles.css'
 import {message} from 'antd/lib/index';
 import { Select } from 'antd';
+import {connect} from 'react-redux';
+import {playerActions} from '../../store/player/actions';
 const Option = Select.Option;
 
 
@@ -26,6 +29,8 @@ const msg = (messageType, messageText) => {
 };
 
 
+
+
 class UploadFiles extends Component {
 	constructor(props, context) {
 		super(props, context);
@@ -38,12 +43,39 @@ class UploadFiles extends Component {
 			progress: 0,
 			curFile: {},
 			paths: [],
-			pathToUpload: ''
+			pathToUpload: '',
+			DragAndDropEnabled: false,
+			fileList: [],
+			workerUpload: {},
+			fr: new FileReader(),
 		};
 
 	}
 
 	render() {
+		const popover = (
+			<Popover id="popover-positioned-left" title="Важная информация">
+				Если хочешь залить свое музло: <br/>
+				1) Собери его в папку <br/>
+				2) Заархивируй её в zip архив <br/>
+				3) Выбери папку из списка выше, куда хочешь заливать <br/>
+				4) Можешь заливать
+			</Popover>
+		);
+
+
+		const getFileList = list => {
+			if (Array.isArray(list)) {
+				return list.map(el => {
+					if (el.success) {
+						return (<ListGroupItem  bsStyle="success">{el.file} ОК</ListGroupItem>)
+					}
+					return (<ListGroupItem  bsStyle="danger">{el.file} ОШИБКА</ListGroupItem>)
+				});
+			}
+			return null;
+		};
+
 		const uploadButton = (
 			<div>
 				<Icon className={'upload-start-icon'} type={this.state.uploading ? '' : 'upload'} />
@@ -52,33 +84,47 @@ class UploadFiles extends Component {
 			</div>
 		);
 		let children = this.state.paths;
+		let { DragAndDropEnabled, fileList } = this.state;
 		return(
 			<div>
-				<Select
-					style={{ width: '60%' }}
-					placeholder="Выбери папку"
-					onChange={this.onSelectHandler.bind(this)}
-				>
-					{children}
-				</Select>
-				<Dropzone
-					multiple={false}
-					className="dropZone"
-					acceptClassName="dropZone-accept"
-					activeClassName="dropZone-active"
-					rejectClassName="dropZone-reject"
-					accept="application/zip"
-					onDropAccepted={this.onDropAccepted.bind(this)}
-					onDropRejected={this.onDropRejected.bind(this)}
-				>
-					{uploadButton}
+				<div className={'upload-container'}>
+					<Select
+						className={'select-download-folder'}
+						placeholder="Выбери папку"
+						onChange={this.onSelectHandler.bind(this)}
+					>
+						{children}
+					</Select>
+					<OverlayTrigger  placement="right" trigger={['hover', 'focus']} overlay={popover}>
+					<Dropzone
+						disabled={!DragAndDropEnabled}
+						multiple={false}
+						className="dropZone"
+						acceptClassName="dropZone-accept"
+						activeClassName="dropZone-active"
+						rejectClassName="dropZone-reject"
+						accept="application/zip"
+						onDropAccepted={this.onDropAccepted.bind(this)}
+						onDropRejected={this.onDropRejected.bind(this)}
+					>
+						{uploadButton}
+					</Dropzone>
+				</OverlayTrigger>
+				</div>
+					<div className={'uploaded-file-list'}>
+						<ListGroup>
+							{getFileList(fileList)}
+						</ListGroup>
+					</div>
 
-				</Dropzone>
 			</div>
 		);
 	}
 
 	onSelectHandler(selectedPath) {
+		if (selectedPath) {
+			this.setState({DragAndDropEnabled: true});
+		}
 		this.setState({pathToUpload: selectedPath});
 	}
 
@@ -87,7 +133,9 @@ class UploadFiles extends Component {
 	}
 
 	onDropAccepted(evt) {
-
+		
+		this.setState({progress: 0});
+		this.setState({fileList: []});
 		const uploadFile = (file) => {
 			this.setState({uploading: true});
 			this.setState({curFile: file});
@@ -114,6 +162,7 @@ class UploadFiles extends Component {
 					});
 				} else {
 					this.setState({uploading: false});
+					self.state.fr.abort();
 					this.state.socket.emit('UPLOAD_ABORTED', {
 						data: evt.target.result.slice(0, offset),
 						curSize: offset,
@@ -139,10 +188,9 @@ class UploadFiles extends Component {
 				if (_file.size < (length + _offset)) {
 					length = _file.size -_offset;
 				}
-				const r = new FileReader();
 				const blob = _file.slice(_offset, length + _offset);
-				r.onload = readEventHandler;
-				r.readAsBinaryString(blob);
+				self.state.fr.onload = readEventHandler;
+				self.state.fr.readAsBinaryString(blob);
 			};
 
 			chunkReaderBlock(offset, chunkSize, file);
@@ -156,21 +204,36 @@ class UploadFiles extends Component {
 
 	componentDidMount() {
 		const self = this;
+		// if (window.Worker) {
+		// 	console.log('Worker available');
+		// 	this.setState({workerUploader:  new Worker('workerUploader.js')});
+		//
+		//
+		// 	const worker = new Worker('workerUploader.js');
+		// 	worker.postMessage('message data to worker');
+		//
+		// 	worker.onmessage = (f,d) => {
+		// 		console.log(f,d)
+		// 	}
+		// }
+		
 		this.setState({socket: socketIOClient('http://localhost:4001')}, () => {
 			this.state.socket.on('PROGRESS', (data) => {
 				self.setState({progress: data})
 			});
 
+			this.state.socket.on('connect_error', err => {
+				msg('err', `Ошибка при подключении к сокету ${err}`);
+			});
+
 			this.state.socket.on('UPLOAD_ERROR', err => {
-				//alert(err)
+				self.state.fr.abort();
+				msg('err', `${err}`);
 			});
 
-			this.state.socket.on('UPLOAD_SUCCESS', (fileName) => {
-				msg('ok', `Файл ${fileName} загружен`);
-			});
-
-			this.state.socket.on('UPLOAD_FILTERED', (fileName) => {
-				msg('err', `Файл ${fileName} не загружен`);
+			this.state.socket.on('UPLOAD_SUCCESS', (list) => {
+				msg('ok', `${list.length} Файлов успешно загружно`);
+				this.setState({fileList: list});
 			});
 		});
 
@@ -185,6 +248,9 @@ class UploadFiles extends Component {
 	}
 }
 
-//(<Option key={i.toString(36) + i}>{i.toString(36) + i}</Option>)
 
-export default UploadFiles;
+export default connect(
+	state => ({
+		player: state.player,
+	})
+)(UploadFiles);

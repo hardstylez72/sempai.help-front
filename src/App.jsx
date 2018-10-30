@@ -14,7 +14,8 @@ import 'antd/dist/antd.css';
 import './App.css';
 import './slider.css'
 import { connect } from 'react-redux';
-import { Alert } from 'antd';
+import { Alert } from 'react-bootstrap';
+//import { Alert } from 'antd';
 import _ from 'lodash';
 import store from './store/rootStore';
 import {loginActions} from './store/login/actions';
@@ -23,21 +24,21 @@ const ErrorMessage = (messageLog) => {
 	const message = _.get(messageLog, 'error.message', 'Ошибка');
 	const description = _.get(messageLog, 'error.stack', 'Неизвестная ошибка');
 	if (messageLog.errorShow) {
-		return <Alert message={message} description={description} type="error" showIcon banner closable={true}/>;
+		return <Alert bsStyle="danger">{message}</Alert>;
 	}
 };
 
 
 const InfoMessage = (messageLog) => {
-	return messageLog.infoShow ? <Alert message={messageLog.info} type="info" showIcon closable={true}/> : '';
+	return messageLog.infoShow ? <Alert bsStyle="info">{messageLog.info}</Alert>  : '';
 };
 
 const WarnMessage = (messageLog) => {
-	return messageLog.warnShow ? <Alert message={messageLog.warn} type="warning" showIcon closable={true}/> : '';
+	return messageLog.warnShow ? <Alert bsStyle="warning">{messageLog.warn}</Alert> : '';
 };
 
 const SuccessMessage = (messageLog) => {
-	return messageLog.successShow ? <Alert message={messageLog.success} type="success" showIcon closable={true}/> : '';
+	return messageLog.successShow ? <Alert bsStyle="success">{messageLog.success}</Alert> : '';
 };
 
 class App extends Component {
@@ -49,6 +50,7 @@ class App extends Component {
 
 
 componentDidMount() {
+	console.log('Переменные окружения = ', process.env);
 	const nowPath = window.location.pathname;
 	this.setState({path: nowPath});
 	(async () => {

@@ -1,15 +1,27 @@
 .dropZone  {
-    height: 120px;
-    width: 50%;
+    height: 180px;
+    width: 90%;
     display: flex;
     border: 2px dashed #a4a696;
     align-items: center;
     justify-content: center;
     cursor: pointer;
 }
-.dropZone:hover {
-    cursor: pointer;
-    border: 2px dashed #343735;
+/*.dropZone:hover {*/
+    /*cursor: pointer;*/
+    /*border: 2px dashed #343735;*/
+/*}*/
+
+.upload-container {
+    margin: 40px;
+    /*margin-left: 20px;*/
+    min-width: 400px;
+    /*display: contents;*/
+    /*justify-content: center;*/
+}
+
+.select-download-folder {
+    width: 90%;
 }
 
 .dropZone-reject{
@@ -31,4 +43,9 @@
 .upload-start-icon:hover {
     font-size: 40px;
     color: black;
+}
+
+.uploaded-file-list {
+    margin-top: 10px;
+    max-width: 90%;
 }

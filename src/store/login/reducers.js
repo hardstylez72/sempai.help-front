@@ -3,7 +3,8 @@ const loginState = {
     login: null,
     pwd: null,
 	uuid: null,
-	authState: false
+	authState: false,
+	webSocket: {}
 };
 
  const loginReducer = (state = loginState, action) => {

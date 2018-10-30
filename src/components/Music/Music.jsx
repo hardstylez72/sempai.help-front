@@ -99,6 +99,15 @@ class music extends Component {
 							</div>
 						</Tab>
 						<Tab eventKey={3} title="Свое">
+							<div className={'treebeard-contaiter'}>
+								<Treebeard
+									className={'treebeard'}
+									data={player.uploaded}
+									onToggle={this.onToggle}
+									decorators={decorators}
+									style={sempaiTreeStyle}
+								/>
+							</div>
 						</Tab>
 						<Tab eventKey={4} title="Загрузка">
 							<UploadFiles paths={player.folderStruct}/>
@@ -108,9 +117,6 @@ class music extends Component {
 				</div>
 			</div>
 		);
-
-
-
 	}
 
 
@@ -120,7 +126,10 @@ class music extends Component {
 			try {
 				const folderStruct = await store.dispatch(playerActions.getFolderStruct('/music/', 'post'));
 				const favoriteTracks = await store.dispatch(playerActions.getFavTracks('/music/favorite'));
-				store.dispatch(playerActions.updateStruct(folderStruct, favoriteTracks));
+				const uploadedTracks = await store.dispatch(playerActions.getUploadedTracks());
+				store.dispatch(playerActions.setStruct(folderStruct));
+				store.dispatch(playerActions.setFavoriteStruct(favoriteTracks));
+				store.dispatch(playerActions.setUpdateStruct(uploadedTracks));
 			} catch (err) {
 				msg('err', 'Ошибка при загрузке данных с сервера', err);
 			}

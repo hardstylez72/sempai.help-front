@@ -1,8 +1,3 @@
-'use strict';
-
-// Object.defineProperty(exports, "__esModule", {
-//     value: true
-// });
 export default {
     tree: {
 
@@ -14,14 +9,14 @@ export default {
             fontFamily: 'lucida grande ,tahoma,verdana,arial,sans-serif',
             fontSize: '14px',
             padding: '10px 0px 10px 5px',
-            'border-radius': '10px',
-            'box-shadow': '0 0 2px',
-            'max-width': '800px',
+            'borderRadius': '10px',
+            'boxShadow': '0 0 2px',
+            'maxWidth': '800px',
             
         },
         node: {
             base: {
-                'max-width': '800px',
+                'maxWidth': '800px',
                 position: 'relative'
             },
             link: {
@@ -31,7 +26,7 @@ export default {
                 display: 'block'
             },
             activeLink: {
-                "text-shadow": "1px 1px #42b3f4"
+                "textShadow": "1px 1px #42b3f4"
             },
             toggle: {
                 base: {

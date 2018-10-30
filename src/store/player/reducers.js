@@ -7,7 +7,8 @@ const playerState = {
     nowPlayingURL: '',
     cover: '',
     folderStruct: {},
-    favorite: {},
+    favorite: [],
+    uploaded: [],
     volume: 1,
     seekBarValue: 0,
     duration: 0,
@@ -32,10 +33,14 @@ const playerState = {
         case 'COVER_IMAGE':
             return {...state, cover: action.payload};
         case 'FOLDER_STRUCT':
-            return {...state,
-                folderStruct: action.payload.struct,
-				favorite: action.payload.favorite
-            };
+            return {...state, folderStruct: action.payload};
+        case 'FAVORITE_STRUCT':
+			return {...state, favorite: action.payload};
+		case 'ADD_TO_FAVORITE_STRUCT':
+			state.favorite.push(action.payload);
+			return {...state};
+		case 'UPLOADED_STRUCT':
+			return {...state, uploaded: action.payload};
         case 'VOLUME':
             return {...state, volume: action.payload};
         case 'MUSIC_SEEKBAR_VALUE':

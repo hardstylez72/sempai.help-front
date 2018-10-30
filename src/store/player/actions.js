@@ -16,6 +16,9 @@ export const playerActions = {
 	DURATION: 'DURATION',
 	IS_SEEKING: 'IS_SEEKING',
 	TRACK_INFO: 'TRACK_INFO',
+	FAVORITE_STRUCT: 'FAVORITE_STRUCT',
+	UPLOADED_STRUCT: 'UPLOADED_STRUCT',
+	ADD_TO_FAVORITE_STRUCT: 'ADD_TO_FAVORITE_STRUCT',
 
 	setTrackInfo: (info) => {
 		return store.dispatch({type: 'TRACK_INFO', payload: info});
@@ -30,8 +33,17 @@ export const playerActions = {
 		value = Number(value)/100;
 		return store.dispatch({type: 'VOLUME', payload: value});
 	},
-	updateStruct: (struct, favorite) => {
-		return store.dispatch({type: 'FOLDER_STRUCT', payload: {struct: struct, favorite: favorite} });
+	setStruct: (struct, favorite) => {
+		return store.dispatch({type: 'FOLDER_STRUCT', payload: struct});
+	},
+	setFavoriteStruct: (favorite) => {
+		return store.dispatch({type: 'FAVORITE_STRUCT', payload: favorite});
+	},
+	addToFavoriteStruct: (favorite) => {
+		return store.dispatch({type: 'ADD_TO_FAVORITE_STRUCT', payload: favorite});
+	},
+	setUpdateStruct: (uploaded) => {
+		return store.dispatch({type: 'UPLOADED_STRUCT', payload: uploaded});
 	},
 	audioPaused: () => {
 		return store.dispatch({type: 'PLAY_MUSIC', payload: false});
@@ -197,6 +209,40 @@ export const playerActions = {
 		return async () => {
 			try {
 				const data = await getRequest(url)
+					.then(dataFromServer => {
+						if (dataFromServer.success === '1') {
+							return Promise.resolve(dataFromServer.data);
+						} else {
+							return Promise.reject('Ошибка при обмене с сервером');
+						}
+					});
+				return Promise.resolve(data);
+			} catch(err) {
+				return Promise.reject(err);
+			}
+		}
+	},
+	addUploadedTracks: (url) => {
+		return async () => {
+			try {
+				const data = await getRequest(url)
+					.then(dataFromServer => {
+						if (dataFromServer.success === '1') {
+							return Promise.resolve(dataFromServer.data);
+						} else {
+							return Promise.reject('Ошибка при обмене с сервером');
+						}
+					});
+				return Promise.resolve(data);
+			} catch(err) {
+				return Promise.reject(err);
+			}
+		}
+	},
+	getUploadedTracks: () => {
+		return async () => {
+			try {
+				const data = await request('/music/upload/get/', 'post')
 					.then(dataFromServer => {
 						if (dataFromServer.success === '1') {
 							return Promise.resolve(dataFromServer.data);
