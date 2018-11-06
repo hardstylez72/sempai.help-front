@@ -22,7 +22,7 @@ export const loginActions = {
 		return async () => {
 			try {
 				const {login} = store.getState();
-				await request('login/', 'post', login)
+				await request(window.api.AUTH, login)
 					.then(res => {
 						store.dispatch({type: 'LOGIN_PARAMS', payload: {
 							login: res.data.login,
@@ -41,7 +41,7 @@ export const loginActions = {
 	authReq: () => {
 		return async () => {
 			try {
-				await request('login/', 'post', {ok: 1});
+				await request(window.api.AUTH, {ok: 1});
 				store.dispatch(loginActions.isAuthsuccess(true));
 			} catch(err) {
 				store.dispatch(loginActions.isAuthsuccess(false));

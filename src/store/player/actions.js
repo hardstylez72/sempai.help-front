@@ -40,7 +40,8 @@ export const playerActions = {
 		return store.dispatch({type: 'FAVORITE_STRUCT', payload: favorite});
 	},
 	addToFavoriteStruct: (favorite) => {
-		return store.dispatch({type: 'ADD_TO_FAVORITE_STRUCT', payload: favorite});
+		const data = store.getState();
+		return store.dispatch({type: 'FAVORITE_STRUCT', payload: favorite});
 	},
 	setUpdateStruct: (uploaded) => {
 		return store.dispatch({type: 'UPLOADED_STRUCT', payload: uploaded});
@@ -169,10 +170,9 @@ export const playerActions = {
 	getCoverImage: path => {
 		return async () => {
 			try {
-				const {login} = store.getState();
 				const jsonPath = JSON.stringify({path: path});
 				const url = Base64.encodeURI(jsonPath);
-				const img = await request(`/radio/cover/${url}`, 'post', login)
+				const img = await request(window.api.GET_IMAGE, url)
 					.then(dataFromServer => {
 						if (dataFromServer.success === '1') {
                             store.dispatch({type: 'COVER_IMAGE', payload: dataFromServer.data});
@@ -188,10 +188,10 @@ export const playerActions = {
 			}
 		};
 	},
-	getFolderStruct: (url, method) => {
+	getFolderStruct: () => {
 		return async () => {
 			try {
-				const data = await request(url, method)
+				const data = await request(window.api.GET_FOLDER_STRUCT)
 					.then(dataFromServer => {
 						if (dataFromServer.success === '1') {
 							return Promise.resolve(dataFromServer.data);
@@ -205,10 +205,10 @@ export const playerActions = {
 			}
 		}
 	},
-	getFavTracks: (url) => {
+	getFavTracks: () => {
 		return async () => {
 			try {
-				const data = await getRequest(url)
+				const data = await getRequest(window.api.GET_FAVORITE_STRUCT)
 					.then(dataFromServer => {
 						if (dataFromServer.success === '1') {
 							return Promise.resolve(dataFromServer.data);
@@ -242,7 +242,7 @@ export const playerActions = {
 	getUploadedTracks: () => {
 		return async () => {
 			try {
-				const data = await request('/music/upload/get/', 'post')
+				const data = await request(window.api.GET_UPLOADED_STRUCT)
 					.then(dataFromServer => {
 						if (dataFromServer.success === '1') {
 							return Promise.resolve(dataFromServer.data);

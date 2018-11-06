@@ -61,12 +61,10 @@ class addLink extends Component {
 		// } catch(err) {
 		// 	msg('err', 'Ошибка при загрузке данных с сервера');
 		// }
-		console.log('ti xuy', data);
-		console.log('ti xuy', e);
 	}
 	async deleteArticleButton(e, data) {
 		try {
-			await deleteArticle('/addlink', data);
+			await deleteArticle('/api/addlink', data);
 				//todo update() для обновления данных новой статьи
 				{
 					const amount = 10;
@@ -108,7 +106,7 @@ class addLink extends Component {
 				url: this.state.url,
 				user: 'hardstylez72',
 			};
-			await putNewArticle('/addlink', newArticleData);
+			await putNewArticle('/api/addlink', newArticleData);
 			this.setState({createPostVisible: false});
 			msg('ok', 'Данные успешно загружены');
 			this.setState({
@@ -121,7 +119,7 @@ class addLink extends Component {
 			{
 				const amount = 10;
 				const offset = 0;
-				const articles = await getArticles('/addlink', amount, offset);
+				const articles = await getArticles('/api/addlink', amount, offset);
 				this.setState({articles: articles});
 			}
 		} catch (err) {
@@ -134,7 +132,7 @@ class addLink extends Component {
 			try {
 				const amount = 10;
 				const offset = 0;
-				const articles = await getArticles('/addlink', amount, offset);
+				const articles = await getArticles('/api/addlink', amount, offset);
 				this.setState({articles: articles});
 			} catch (err) {
 				msg('err', 'Ошибка при загрузке данных с сервера');

@@ -1,18 +1,16 @@
 import React, {Component} from 'react';
-import {message, Layout} from 'antd';
+import {message} from 'antd';
 import {Treebeard, decorators} from 'react-treebeard';
 import sempaiTreeStyle from '../../main_page/sempaiTreeStyle';
 import store from '../../store/rootStore';
 import {playerActions} from '../../store/player/actions';
 import {connect} from 'react-redux';
 import {bindActionCreators} from 'redux';
-import {SketchPicker} from 'react-color';
 import { Tab, Tabs } from 'react-bootstrap';
 import './Music.css';
 import TrackCard from './TrackCard';
 import UploadFiles from '../UploadFiles/UploadFiles';
 
-const {Sider, Content} = Layout;
 
 const msg = (messageType, messageText) => {
 	switch (messageType) {
@@ -118,23 +116,23 @@ class music extends Component {
 			</div>
 		);
 	}
-
-
+	
 	componentDidMount() {
 		store.dispatch(playerActions.audioPaused);
 		(async () => {
 			try {
-				const folderStruct = await store.dispatch(playerActions.getFolderStruct('/music/', 'post'));
-				const favoriteTracks = await store.dispatch(playerActions.getFavTracks('/music/favorite'));
-				const uploadedTracks = await store.dispatch(playerActions.getUploadedTracks());
+				const folderStruct = await store.dispatch(playerActions.getFolderStruct());
 				store.dispatch(playerActions.setStruct(folderStruct));
+				const favoriteTracks = await store.dispatch(playerActions.getFavTracks());
 				store.dispatch(playerActions.setFavoriteStruct(favoriteTracks));
+				const uploadedTracks = await store.dispatch(playerActions.getUploadedTracks());
 				store.dispatch(playerActions.setUpdateStruct(uploadedTracks));
 			} catch (err) {
 				msg('err', 'Ошибка при загрузке данных с сервера', err);
 			}
 		})();
 	}
+	
 	onToggle(node, toggled) {
 		if (this.state.cursor) {
 			this.state.cursor.active = false;
@@ -157,8 +155,6 @@ class music extends Component {
 			);
 		}
 	}
-
-
 }
 
 export default connect(

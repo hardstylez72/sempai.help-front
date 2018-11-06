@@ -51,7 +51,6 @@ class AddToFavorite extends Component {
 
 		);
 	}
-
 	
 	componentDidUpdate(prevProps) {
 		if (this.props.track !== prevProps.track) {
@@ -60,7 +59,7 @@ class AddToFavorite extends Component {
 			(async () => {
 				try {
 					this.setState({loading: true, included: false});
-					const { included } = await request('/track/favorite/', 'post', {track: track});
+					const { included } = await request(window.api.CHECK_FAVORITE, track);
 					this.setState({loading: false, included: included});
 				} catch (err) {
 					this.setState({loading: false});
@@ -74,7 +73,7 @@ class AddToFavorite extends Component {
 		try {
 			const {track} = this.props;
 			this.setState({loading: true});
-			await request('/track/favorite/', 'delete', {track: track});
+			await request(window.api.DELETE_FAVORITE, track);
 			this.setState({loading: false, included: false});
 		} catch (err) {
 			this.setState({loading: false});
@@ -85,7 +84,7 @@ class AddToFavorite extends Component {
 		try {
 			const {track} = this.props;
 			this.setState({loading: true});
-			await request('/track/favorite/', 'put', {track: track});
+			await request(window.api.CHANGE_FAVORITE, track);
 			this.setState({loading: false, included: true});
 		} catch (err) {
 			this.setState({loading: false});

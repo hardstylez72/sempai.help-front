@@ -7,16 +7,13 @@ import {Icon} from 'antd';
 import store from '../../store/rootStore';
 import './Player.css'
 
-const productionPreffix = (process.env.NODE_ENV === 'production') ? /api/ : '';
-
-
 class Player extends Component {
 	render() {
 		const {player, startPlay, stopPlay} = this.props;
 		return (
 			<div>
 				<ReactPlayer
-					url={productionPreffix + `/radio/${player.nowPlayingURL}`}
+					url={`/api/radio/${player.nowPlayingURL}`}
 					volume={player.volume}
 					onEnded={this.currentMediaFileEndedPlaying.bind(this)}
 					playing={player.play}

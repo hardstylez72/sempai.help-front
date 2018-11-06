@@ -1,15 +1,12 @@
 import React, { Component } from 'react';
-import {request} from '../../store/api/request'
-// import './AddToFavorite.css'
 import { Icon, Progress } from 'antd'
 import Dropzone from 'react-dropzone';
-import socketIOClient from 'socket.io-client';
+
 import { OverlayTrigger, Popover, ListGroup, ListGroupItem } from 'react-bootstrap';
 import './UploadFiles.css'
 import {message} from 'antd/lib/index';
 import { Select } from 'antd';
 import {connect} from 'react-redux';
-import {playerActions} from '../../store/player/actions';
 const Option = Select.Option;
 
 
@@ -27,9 +24,6 @@ const msg = (messageType, messageText) => {
 			break;
 	}
 };
-
-
-
 
 class UploadFiles extends Component {
 	constructor(props, context) {
@@ -140,7 +134,7 @@ class UploadFiles extends Component {
 			this.setState({uploading: true});
 			this.setState({curFile: file});
 			const self = this;
-			this.state.socket.emit('START_UPLOAD', {
+			this.props.socket.emit('START_UPLOAD', {
 				size: file.size,
 				name: file.name,
 				path: self.state.pathToUpload
@@ -154,7 +148,7 @@ class UploadFiles extends Component {
 			const readEventHandler = (evt) => {
 				if (evt.target.error == null) {
 					offset += evt.target.result.length;
-					this.state.socket.emit('UPLOADING', {
+					self.props.socket.emit('UPLOADING', {
 						data: evt.target.result.slice(0, offset),
 						curSize: offset,
 						size: self.state.curFile.size,
@@ -163,7 +157,7 @@ class UploadFiles extends Component {
 				} else {
 					this.setState({uploading: false});
 					self.state.fr.abort();
-					this.state.socket.emit('UPLOAD_ABORTED', {
+					self.props.socket.emit('UPLOAD_ABORTED', {
 						data: evt.target.result.slice(0, offset),
 						curSize: offset,
 						size: self.state.curFile.size,
@@ -173,7 +167,7 @@ class UploadFiles extends Component {
 				}
 				if (offset >= fileSize) {
 					this.setState({uploading: false});
-					this.state.socket.emit('UPLOAD_FINISHED', {
+					self.props.socket.emit('UPLOAD_FINISHED', {
 						data: evt.target.result.slice(0, offset),
 						curSize: offset,
 						size: self.state.curFile.size,
@@ -217,26 +211,23 @@ class UploadFiles extends Component {
 		// 	}
 		// }
 		
-		this.setState({socket: socketIOClient('http://localhost:4001')}, () => {
-			this.state.socket.on('PROGRESS', (data) => {
-				self.setState({progress: data})
-			});
-
-			this.state.socket.on('connect_error', err => {
-				msg('err', `Ошибка при подключении к сокету ${err}`);
-			});
-
-			this.state.socket.on('UPLOAD_ERROR', err => {
-				self.state.fr.abort();
-				msg('err', `${err}`);
-			});
-
-			this.state.socket.on('UPLOAD_SUCCESS', (list) => {
-				msg('ok', `${list.length} Файлов успешно загружно`);
-				this.setState({fileList: list});
-			});
+		this.props.socket.on('PROGRESS', (data) => {
+			self.setState({progress: data})
 		});
 
+		this.props.socket.on('connect_error', err => {
+			msg('err', `Ошибка при подключении к сокету ${err}`);
+		});
+
+		this.props.socket.on('UPLOAD_ERROR', err => {
+			self.state.fr.abort();
+			msg('err', `${err}`);
+		});
+
+		this.props.socket.on('UPLOAD_SUCCESS', (list) => {
+			msg('ok', `${list.length} Файлов успешно загружно`);
+			this.setState({fileList: list});
+		});
 	}
 
 	componentDidUpdate(prevProps) {
@@ -252,5 +243,6 @@ class UploadFiles extends Component {
 export default connect(
 	state => ({
 		player: state.player,
+		socket: state.webSocket.connection
 	})
 )(UploadFiles);

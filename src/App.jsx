@@ -1,24 +1,23 @@
 import React, { Component } from 'react';
 import {BrowserRouter as Router, Route, Redirect, Switch} from 'react-router-dom';
-
-import Webm from './main_page/Webm';
-import ServerStat from './main_page/ServerStat';
-import Home from './main_page/Home'; 
-import Navbar from './main_page/NavBar/NavBar';
-import Footer from './components/Footer/Footer';
-import Resource from './main_page/Resource';
-import addLink from './main_page/AddLink';
-import music from './components/Music/Music';
+import './store/api/routes';
+import ServerStat from './main_page/ServerStat.jsx';
+import Home from './main_page/Home.jsx';
+import Navbar from './main_page/NavBar/NavBar.jsx';
+import Footer from './components/Footer/Footer.jsx';
+import Resource from './main_page/Resource.jsx';
+import addLink from './main_page/AddLink.jsx';
+import music from './components/Music/Music.jsx';
 import Login from './components/Login/Login.jsx'
 import 'antd/dist/antd.css';
 import './App.css';
 import './slider.css'
 import { connect } from 'react-redux';
 import { Alert } from 'react-bootstrap';
-//import { Alert } from 'antd';
 import _ from 'lodash';
 import store from './store/rootStore';
 import {loginActions} from './store/login/actions';
+import {webSocketActions} from './store/webSocket/actions'
 
 const ErrorMessage = (messageLog) => {
 	const message = _.get(messageLog, 'error.message', 'Ошибка');
@@ -42,20 +41,22 @@ const SuccessMessage = (messageLog) => {
 };
 
 class App extends Component {
-
-    state = {
-        loading: true,
-		path: ''
-      };
+	constructor(props, context) {
+		super(props, context);
+		this.state = {
+			loading: true,
+			path: ''
+		};
+	}
 
 
 componentDidMount() {
-	console.log('Переменные окружения = ', process.env);
 	const nowPath = window.location.pathname;
 	this.setState({path: nowPath});
 	(async () => {
 		await store.dispatch(loginActions.authReq());
 		document.getElementById('preloader').remove();
+		store.dispatch(webSocketActions.register());
 		this.setState({loading: false});
 	})();
 }
