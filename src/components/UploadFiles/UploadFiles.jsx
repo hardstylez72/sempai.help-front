@@ -7,6 +7,7 @@ import './UploadFiles.css'
 import {message} from 'antd/lib/index';
 import { Select } from 'antd';
 import {connect} from 'react-redux';
+import  worker from '../../store/webWorkers/worker-uploader.js'
 const Option = Select.Option;
 
 
@@ -42,6 +43,7 @@ class UploadFiles extends Component {
 			fileList: [],
 			workerUpload: {},
 			fr: new FileReader(),
+			uploader: worker
 		};
 
 	}
@@ -107,6 +109,7 @@ class UploadFiles extends Component {
 				</div>
 					<div className={'uploaded-file-list'}>
 						<ListGroup>
+
 							{getFileList(fileList)}
 						</ListGroup>
 					</div>
@@ -127,90 +130,118 @@ class UploadFiles extends Component {
 	}
 
 	onDropAccepted(evt) {
-		
-		this.setState({progress: 0});
-		this.setState({fileList: []});
-		const uploadFile = (file) => {
-			this.setState({uploading: true});
-			this.setState({curFile: file});
-			const self = this;
-			this.props.socket.emit('START_UPLOAD', {
-				size: file.size,
-				name: file.name,
-				path: self.state.pathToUpload
-			});
-			
-			const fileSize = file.size;
-			const chunkSize = 4096 * 1024; // bytes
-			let offset = 0;
-			let chunkReaderBlock = null;
-
-			const readEventHandler = (evt) => {
-				if (evt.target.error == null) {
-					offset += evt.target.result.length;
-					self.props.socket.emit('UPLOADING', {
-						data: evt.target.result.slice(0, offset),
-						curSize: offset,
-						size: self.state.curFile.size,
-						name: self.state.curFile.name
-					});
-				} else {
-					this.setState({uploading: false});
-					self.state.fr.abort();
-					self.props.socket.emit('UPLOAD_ABORTED', {
-						data: evt.target.result.slice(0, offset),
-						curSize: offset,
-						size: self.state.curFile.size,
-						name: self.state.curFile.name
-					});
-					return;
-				}
-				if (offset >= fileSize) {
-					this.setState({uploading: false});
-					self.props.socket.emit('UPLOAD_FINISHED', {
-						data: evt.target.result.slice(0, offset),
-						curSize: offset,
-						size: self.state.curFile.size,
-						name: self.state.curFile.name
-					});
-					return;
-				}
-				chunkReaderBlock(offset, chunkSize, file);
-			};
-
-			chunkReaderBlock = (_offset, length, _file) => {
-				if (_file.size < (length + _offset)) {
-					length = _file.size -_offset;
-				}
-				const blob = _file.slice(_offset, length + _offset);
-				self.state.fr.onload = readEventHandler;
-				self.state.fr.readAsBinaryString(blob);
-			};
-
-			chunkReaderBlock(offset, chunkSize, file);
-		};
-		try {
-			uploadFile(evt[0]);
-		} catch (e) {
-			console.error(e.message);
+		if (this.props.socket.disconnected) {
+			this.props.socket.connect();
 		}
+		console.log('Загрузка файлов началась:', evt);
+		const file = evt[0];
+
+		this.setState({progress: 0});
+		this.setState({fileList: []})
+		this.setState({uploading: true});
+
+		const self = this;
+		this.props.socket.emit('START_UPLOAD', {
+			size: file.size,
+			name: file.name,
+			path: self.state.pathToUpload
+		});
+
+		this.state.uploader.postMessage(evt[0]);
+
+		this.state.uploader.onmessage = async (e) => {
+			const result = e.data;
+			if (result.success === 1) {
+				console.log('result.size = ',result.size, 'result.curSize = ',result.curSize)
+				self.props.socket.emit('UPLOADING', {
+					data: result.data,
+					curSize: result.curSize,
+					size: result.size,
+					name: result.name
+				});
+
+				if (result.size === result.curSize) {
+					self.props.socket.emit('UPLOAD_FINISHED', {
+						curSize: result.curSize,
+						size: result.size,
+						name: result.name
+					});
+
+				}
+				return;
+			}
+			await self.props.socket.emit('UPLOAD_ABORTED', {
+					data: result.data,
+					size: result.size,
+					name: result.name
+				});
+
+
+			console.log('Main (myWorker.onmessage): Message received from worker: ', result);
+		};
+
+
+
+
+		// const uploadFile = (file) => {
+		//
+		//
+		//
+		// 	const readEventHandler = (evt) => {
+		// 		console.log('Событие загрузки: ', evt);
+		// 		console.log('Ошибка: ', evt.target.error);
+		// 		if (evt.target.error == null) {
+		// 			offset += evt.target.result.length;
+		// 			self.props.socket.emit('UPLOADING', {
+		// 				data: evt.target.result.slice(0, offset),
+		// 				curSize: offset,
+		// 				size: self.state.curFile.size,
+		// 				name: self.state.curFile.name
+		// 			});
+		// 		} else {
+		// 			this.setState({uploading: false});
+		// 			self.state.fr.abort();
+		// 			self.props.socket.emit('UPLOAD_ABORTED', {
+		// 				data: evt.target.result.slice(0, offset),
+		// 				curSize: offset,
+		// 				size: self.state.curFile.size,
+		// 				name: self.state.curFile.name
+		// 			});
+		// 			return;
+		// 		}
+		// 		if (offset >= fileSize) {
+		// 			this.setState({uploading: false});
+		// 			self.props.socket.emit('UPLOAD_FINISHED', {
+		// 				data: evt.target.result.slice(0, offset),
+		// 				curSize: offset,
+		// 				size: self.state.curFile.size,
+		// 				name: self.state.curFile.name
+		// 			});
+		// 			return;
+		// 		}
+		// 		chunkReaderBlock(offset, chunkSize, file);
+		// 	};
+		//
+		// 	chunkReaderBlock = (_offset, length, _file) => {
+		// 		if (_file.size < (length + _offset)) {
+		// 			length = _file.size -_offset;
+		// 		}
+		// 		const blob = _file.slice(_offset, length + _offset);
+		// 		self.state.fr.onload = readEventHandler;
+		// 		self.state.fr.readAsBinaryString(blob);
+		// 	};
+		//
+		// 	chunkReaderBlock(offset, chunkSize, file);
+		// };
+		// try {
+		// 	uploadFile(evt[0]);
+		// } catch (e) {
+		// 	console.error(e.message);
+		// }
 	}
 
 	componentDidMount() {
 		const self = this;
-		// if (window.Worker) {
-		// 	console.log('Worker available');
-		// 	this.setState({workerUploader:  new Worker('workerUploader.js')});
-		//
-		//
-		// 	const worker = new Worker('workerUploader.js');
-		// 	worker.postMessage('message data to worker');
-		//
-		// 	worker.onmessage = (f,d) => {
-		// 		console.log(f,d)
-		// 	}
-		// }
-		
 		this.props.socket.on('PROGRESS', (data) => {
 			self.setState({progress: data})
 		});
@@ -220,12 +251,13 @@ class UploadFiles extends Component {
 		});
 
 		this.props.socket.on('UPLOAD_ERROR', err => {
-			self.state.fr.abort();
+			self.setState({uploading: false});
 			msg('err', `${err}`);
 		});
 
 		this.props.socket.on('UPLOAD_SUCCESS', (list) => {
 			msg('ok', `${list.length} Файлов успешно загружно`);
+			self.setState({uploading: false});
 			this.setState({fileList: list});
 		});
 	}

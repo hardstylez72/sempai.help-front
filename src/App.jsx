@@ -56,7 +56,6 @@ componentDidMount() {
 	(async () => {
 		await store.dispatch(loginActions.authReq());
 		document.getElementById('preloader').remove();
-		store.dispatch(webSocketActions.register());
 		this.setState({loading: false});
 	})();
 }
