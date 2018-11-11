@@ -8,9 +8,29 @@ import {message} from 'antd/lib/index';
 import { Select } from 'antd';
 import {connect} from 'react-redux';
 import  worker from '../../store/webWorkers/worker-uploader.js'
+
+import FineUploaderTraditional from 'fine-uploader-wrappers'
+import Gallery from 'react-fine-uploader'
 const Option = Select.Option;
 
 
+const uploader = new FineUploaderTraditional({
+	options: {
+		chunking: {
+			enabled: true
+		},
+		deleteFile: {
+			enabled: false,
+			endpoint: '/api/upload/'
+		},
+		request: {
+			endpoint: '/api/upload/'
+		},
+		retry: {
+			enableAuto: true
+		}
+	}
+})
 
 const msg = (messageType, messageText) => {
 	switch (messageType) {
@@ -83,6 +103,7 @@ class UploadFiles extends Component {
 		let { DragAndDropEnabled, fileList } = this.state;
 		return(
 			<div>
+				<Gallery uploader={ uploader } />
 				<div className={'upload-container'}>
 					<Select
 						className={'select-download-folder'}
@@ -137,107 +158,19 @@ class UploadFiles extends Component {
 		const file = evt[0];
 
 		this.setState({progress: 0});
-		this.setState({fileList: []})
+		this.setState({fileList: []});
 		this.setState({uploading: true});
 
 		const self = this;
-		this.props.socket.emit('START_UPLOAD', {
-			size: file.size,
-			name: file.name,
-			path: self.state.pathToUpload
-		});
 
-		this.state.uploader.postMessage(evt[0]);
+		this.state.uploader.postMessage({file: file, userPath: self.state.pathToUpload});
 
 		this.state.uploader.onmessage = async (e) => {
 			const result = e.data;
 			if (result.success === 1) {
-				console.log('result.size = ',result.size, 'result.curSize = ',result.curSize)
-				self.props.socket.emit('UPLOADING', {
-					data: result.data,
-					curSize: result.curSize,
-					size: result.size,
-					name: result.name
-				});
-
-				if (result.size === result.curSize) {
-					self.props.socket.emit('UPLOAD_FINISHED', {
-						curSize: result.curSize,
-						size: result.size,
-						name: result.name
-					});
-
-				}
-				return;
+				self.setState({progress: result.res.progress, fileList: result.res.fileList});
 			}
-			await self.props.socket.emit('UPLOAD_ABORTED', {
-					data: result.data,
-					size: result.size,
-					name: result.name
-				});
-
-
-			console.log('Main (myWorker.onmessage): Message received from worker: ', result);
 		};
-
-
-
-
-		// const uploadFile = (file) => {
-		//
-		//
-		//
-		// 	const readEventHandler = (evt) => {
-		// 		console.log('Событие загрузки: ', evt);
-		// 		console.log('Ошибка: ', evt.target.error);
-		// 		if (evt.target.error == null) {
-		// 			offset += evt.target.result.length;
-		// 			self.props.socket.emit('UPLOADING', {
-		// 				data: evt.target.result.slice(0, offset),
-		// 				curSize: offset,
-		// 				size: self.state.curFile.size,
-		// 				name: self.state.curFile.name
-		// 			});
-		// 		} else {
-		// 			this.setState({uploading: false});
-		// 			self.state.fr.abort();
-		// 			self.props.socket.emit('UPLOAD_ABORTED', {
-		// 				data: evt.target.result.slice(0, offset),
-		// 				curSize: offset,
-		// 				size: self.state.curFile.size,
-		// 				name: self.state.curFile.name
-		// 			});
-		// 			return;
-		// 		}
-		// 		if (offset >= fileSize) {
-		// 			this.setState({uploading: false});
-		// 			self.props.socket.emit('UPLOAD_FINISHED', {
-		// 				data: evt.target.result.slice(0, offset),
-		// 				curSize: offset,
-		// 				size: self.state.curFile.size,
-		// 				name: self.state.curFile.name
-		// 			});
-		// 			return;
-		// 		}
-		// 		chunkReaderBlock(offset, chunkSize, file);
-		// 	};
-		//
-		// 	chunkReaderBlock = (_offset, length, _file) => {
-		// 		if (_file.size < (length + _offset)) {
-		// 			length = _file.size -_offset;
-		// 		}
-		// 		const blob = _file.slice(_offset, length + _offset);
-		// 		self.state.fr.onload = readEventHandler;
-		// 		self.state.fr.readAsBinaryString(blob);
-		// 	};
-		//
-		// 	chunkReaderBlock(offset, chunkSize, file);
-		// };
-		// try {
-		// 	uploadFile(evt[0]);
-		// } catch (e) {
-		// 	console.error(e.message);
-		// }
 	}
 
 	componentDidMount() {

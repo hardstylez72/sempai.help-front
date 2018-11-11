@@ -1,6 +1,6 @@
 window.api = {
 	AUTH: 				       { url: '/api/login/',         	 method: 'POST' },
-	GET_FOLDER_STRUCT:         { url: '/api/music/', 		 	 method: 'POST' },
+	GET_FOLDER_STRUCT:         { url: '/api/v1/music/all/get/',   method: 'POST' },
 	GET_FAVORITE_STRUCT: 	   { url: '/api/music/favorite/', 	 method: 'GET' },
 	GET_UPLOADED_STRUCT: 	   { url: '/api/music/upload/get/',  method: 'POST' },
 	GET_IMAGE: 	 			   { url: '/api/radio/cover/', 		 method: 'POST' },

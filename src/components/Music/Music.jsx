@@ -125,8 +125,8 @@ class music extends Component {
 				store.dispatch(playerActions.setStruct(folderStruct));
 				const favoriteTracks = await store.dispatch(playerActions.getFavTracks());
 				store.dispatch(playerActions.setFavoriteStruct(favoriteTracks));
-				const uploadedTracks = await store.dispatch(playerActions.getUploadedTracks());
-				store.dispatch(playerActions.setUpdateStruct(uploadedTracks));
+				//const uploadedTracks = await store.dispatch(playerActions.getUploadedTracks());
+				//store.dispatch(playerActions.setUpdateStruct(uploadedTracks));
 			} catch (err) {
 				msg('err', 'Ошибка при загрузке данных с сервера', err);
 			}
