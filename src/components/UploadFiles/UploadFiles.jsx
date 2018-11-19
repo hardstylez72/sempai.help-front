@@ -163,12 +163,13 @@ class UploadFiles extends Component {
 
 		const self = this;
 
-		this.state.uploader.postMessage({file: file, userPath: self.state.pathToUpload});
+		this.state.uploader.postMessage({file: file, userPath: self.state.pathToUpload, api: process.env.REACT_APP_WEBWORKER_UPLOADER_API});
 
 		this.state.uploader.onmessage = async (e) => {
+			console.log(e.data);
 			const result = e.data;
-			if (result.success === 1) {
-				self.setState({progress: result.res.progress, fileList: result.res.fileList});
+			if (result.success) {
+				self.setState({progress: result.data.progress, fileList: result.data.fileList});
 			}
 		};
 	}
