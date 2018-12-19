@@ -1,0 +1,702 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ChangeListManager">
+    <list default="true" id="5f9165c0-1fac-4052-a09d-a8995e9b7040" name="Default Changelist" comment="Обновил апи и доделал вебворкера" />
+    <ignored path="$PROJECT_DIR$/.tmp/" />
+    <ignored path="$PROJECT_DIR$/temp/" />
+    <ignored path="$PROJECT_DIR$/tmp/" />
+    <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
+    <option name="TRACKING_ENABLED" value="true" />
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="FUSProjectUsageTrigger">
+    <session id="690635581">
+      <usages-collector id="statistics.lifecycle.project">
+        <counts>
+          <entry key="project.closed" value="8" />
+          <entry key="project.open.time.10" value="2" />
+          <entry key="project.open.time.2" value="2" />
+          <entry key="project.open.time.3" value="1" />
+          <entry key="project.open.time.5" value="1" />
+          <entry key="project.open.time.6" value="3" />
+          <entry key="project.open.time.7" value="1" />
+          <entry key="project.open.time.8" value="2" />
+          <entry key="project.open.time.9" value="1" />
+          <entry key="project.opened" value="13" />
+        </counts>
+      </usages-collector>
+      <usages-collector id="statistics.file.extensions.open">
+        <counts>
+          <entry key="bootstrap%203a86fcc7be4a30c55be8" value="1" />
+          <entry key="bootstrap%2049ec1fa10be030be4829" value="1" />
+          <entry key="bootstrap%204f3c3a2872186c4cc328" value="1" />
+          <entry key="bootstrap%205fffedac15f1bff29c7d" value="1" />
+          <entry key="bootstrap%2074fe2a825b59fa071fa9" value="1" />
+          <entry key="bootstrap%20b0594e71d270cc3ac8bc" value="1" />
+          <entry key="bootstrap%20c7628256803576605c54" value="1" />
+          <entry key="bootstrap%20cec4517253d2beffcca3" value="1" />
+          <entry key="bootstrap%20ef9420fce4a0b4f5740e" value="1" />
+          <entry key="css" value="11" />
+          <entry key="html" value="1" />
+          <entry key="js" value="50" />
+          <entry key="jsx" value="20" />
+          <entry key="rnc" value="1" />
+          <entry key="ts" value="2" />
+        </counts>
+      </usages-collector>
+      <usages-collector id="statistics.file.types.open">
+        <counts>
+          <entry key="CSS" value="11" />
+          <entry key="HTML" value="1" />
+          <entry key="JSX Harmony" value="20" />
+          <entry key="JavaScript" value="50" />
+          <entry key="RNG Compact" value="1" />
+          <entry key="TypeScript" value="2" />
+          <entry key="UNKNOWN" value="9" />
+        </counts>
+      </usages-collector>
+      <usages-collector id="statistics.file.extensions.edit">
+        <counts>
+          <entry key="css" value="840" />
+          <entry key="js" value="1130" />
+          <entry key="jsx" value="3023" />
+          <entry key="txt" value="84" />
+        </counts>
+      </usages-collector>
+      <usages-collector id="statistics.file.types.edit">
+        <counts>
+          <entry key="CSS" value="840" />
+          <entry key="JSX Harmony" value="3023" />
+          <entry key="JavaScript" value="1130" />
+          <entry key="PLAIN_TEXT" value="84" />
+        </counts>
+      </usages-collector>
+      <usages-collector id="statistics.js.language.service.starts">
+        <counts>
+          <entry key="TypeScriptServerServiceImpl" value="1" />
+        </counts>
+      </usages-collector>
+    </session>
+  </component>
+  <component name="FileColors">
+    <fileColor scope="All" color="285a68" />
+  </component>
+  <component name="FileEditorManager">
+    <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
+      <file leaf-file-name=".env.development" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/../.env.development">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="60">
+              <caret line="4" lean-forward="true" selection-start-line="4" selection-end-line="4" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="default.conf" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/../default.conf">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="30">
+              <caret line="2" column="31" lean-forward="true" selection-start-line="2" selection-start-column="31" selection-end-line="2" selection-end-column="31" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+    </leaf>
+  </component>
+  <component name="FindInProjectRecents">
+    <findStrings>
+      <find>REACT_APP_WEBSOCKET_POST</find>
+      <find>music</find>
+      <find>http://backend</find>
+      <find>http://localhost</find>
+      <find>/music/upload/get/</find>
+      <find>request</find>
+      <find>error_log</find>
+      <find>socket</find>
+      <find>addToFavoriteStruct</find>
+      <find>tenor</find>
+      <find>teno</find>
+      <find>antd</find>
+      <find>bootstrap</find>
+      <find>Это вс</find>
+      <find>console.log</find>
+      <find>updateArticle</find>
+      <find>deleteArticle</find>
+      <find>webSocketActions</find>
+      <find>Готовится подключение к сокету</find>
+      <find>uploader</find>
+      <find>getFileList</find>
+      <find>pathToUpload</find>
+      <find>result.size</find>
+      <find>post</find>
+      <find>ajax</find>
+      <find>GET_FOLDER_STRUCT</find>
+      <find>fs.write</find>
+      <find>fileList</find>
+      <find>GET_FAVORITE_STRUCT</find>
+      <find>children</find>
+    </findStrings>
+    <replaceStrings>
+      <replace>success</replace>
+      <replace>maxWidth</replace>
+      <replace>setStruct</replace>
+      <replace>setFavoriteStruct</replace>
+      <replace>setStructStruct</replace>
+      <replace>setUpdateStruct</replace>
+      <replace>const</replace>
+      <replace>REACT_APP_URL_PREFFIX</replace>
+      <replace>FAVORITE_STRUCT</replace>
+      <replace>REACT_APP_WEBSOCKET_PORT</replace>
+    </replaceStrings>
+    <dirStrings>
+      <dir>$PROJECT_DIR$/build</dir>
+      <dir>$PROJECT_DIR$/node_modules</dir>
+      <dir>$PROJECT_DIR$/src</dir>
+      <dir>$PROJECT_DIR$/</dir>
+      <dir>$PROJECT_DIR$/src/</dir>
+    </dirStrings>
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/.." />
+  </component>
+  <component name="IdeDocumentHistory">
+    <option name="CHANGED_PATHS">
+      <list>
+        <option value="$PROJECT_DIR$/src/main_page/Music.css" />
+        <option value="$PROJECT_DIR$/src/main_page/Music.jsx" />
+        <option value="$PROJECT_DIR$/src/components/Music/TrackCard.css" />
+        <option value="$PROJECT_DIR$/src/components/Music/Music.css" />
+        <option value="$PROJECT_DIR$/src/main_page/Addlink_btn.jsx" />
+        <option value="$PROJECT_DIR$/src/transport/addLinkTr.jsx" />
+        <option value="$PROJECT_DIR$/build/index.html" />
+        <option value="$PROJECT_DIR$/src/components/UploadFiles/Upload.jsx" />
+        <option value="$PROJECT_DIR$/src/components/Music/TrackCard.jsx" />
+        <option value="$PROJECT_DIR$/src/components/UploadFiles/UploadFiles.css" />
+        <option value="$PROJECT_DIR$/src/main_page/sempaiTreeStyle.js" />
+        <option value="$PROJECT_DIR$/src/workerUploader.js" />
+        <option value="$PROJECT_DIR$/src/components/UploadFiles/workerUploader.js" />
+        <option value="$PROJECT_DIR$/public/workerUploader.js" />
+        <option value="$PROJECT_DIR$/src/store/login/reducers.js" />
+        <option value="$PROJECT_DIR$/src/store/player/reducers.js" />
+        <option value="$PROJECT_DIR$/src/App.css" />
+        <option value="$PROJECT_DIR$/.babelrc" />
+        <option value="$PROJECT_DIR$/dist/index.html" />
+        <option value="$PROJECT_DIR$/.env" />
+        <option value="$PROJECT_DIR$/src/index.js" />
+        <option value="$PROJECT_DIR$/src/store/rootReducer.js" />
+        <option value="$PROJECT_DIR$/default.conf" />
+        <option value="$PROJECT_DIR$/src/store/webSocket/reducers.js" />
+        <option value="$PROJECT_DIR$/src/store/favorite/actions.js" />
+        <option value="$PROJECT_DIR$/Dockerfile" />
+        <option value="$PROJECT_DIR$/src/components/AddToFavorite/AddToFavorite.jsx" />
+        <option value="$PROJECT_DIR$/public/index.html" />
+        <option value="$PROJECT_DIR$/src/store/records/actions.js" />
+        <option value="$PROJECT_DIR$/src/main_page/AddLink.jsx" />
+        <option value="$PROJECT_DIR$/.env.production" />
+        <option value="$PROJECT_DIR$/nginx.conf" />
+        <option value="$PROJECT_DIR$/package.json" />
+        <option value="$PROJECT_DIR$/webpack.config.js" />
+        <option value="$PROJECT_DIR$/src/store/webSocket/actions.js" />
+        <option value="$PROJECT_DIR$/src/store/login/actions.js" />
+        <option value="$PROJECT_DIR$/src/store/webWorkers/webWorker.js" />
+        <option value="$PROJECT_DIR$/src/store/gregre.js" />
+        <option value="$PROJECT_DIR$/src/store/api/request.js" />
+        <option value="$PROJECT_DIR$/src/components/Player/Player.jsx" />
+        <option value="$PROJECT_DIR$/.env.development" />
+        <option value="$PROJECT_DIR$/src/store/webWorkers/worker-uploader.js" />
+        <option value="$PROJECT_DIR$/src/components/UploadFiles/UploadFiles.jsx" />
+        <option value="$PROJECT_DIR$/src/App.jsx" />
+        <option value="$PROJECT_DIR$/src/store/api/routes.js" />
+        <option value="$PROJECT_DIR$/src/components/Music/RefreshButton.css" />
+        <option value="$PROJECT_DIR$/src/components/Music/RefreshButton.jsx" />
+        <option value="$PROJECT_DIR$/src/store/player/actions.js" />
+        <option value="$PROJECT_DIR$/src/components/Music/Music.jsx" />
+        <option value="$PROJECT_DIR$/../../src/store/player/actions.js" />
+        <option value="$PROJECT_DIR$/../../src/components/Music/Music.jsx" />
+      </list>
+    </option>
+  </component>
+  <component name="JsBuildToolGruntFileManager" detection-done="true" sorting="DEFINITION_ORDER" />
+  <component name="JsBuildToolPackageJson" detection-done="true" sorting="DEFINITION_ORDER" />
+  <component name="JsGulpfileManager">
+    <detection-done>true</detection-done>
+    <sorting>DEFINITION_ORDER</sorting>
+  </component>
+  <component name="NamedScopeManager">
+    <scope name="Unnamed" pattern="file[sempai.help-front]:*/" />
+  </component>
+  <component name="NodeModulesDirectoryManager">
+    <handled-path value="$PROJECT_DIR$/../node_modules" />
+  </component>
+  <component name="NodePackageJsonFileManager">
+    <packageJsonPaths>
+      <path value="$PROJECT_DIR$/../package.json" />
+    </packageJsonPaths>
+  </component>
+  <component name="ProjectFrameBounds">
+    <option name="x" value="3223" />
+    <option name="width" value="1257" />
+    <option name="height" value="1049" />
+  </component>
+  <component name="ProjectLevelVcsManager">
+    <ConfirmationsSetting value="2" id="Add" />
+  </component>
+  <component name="ProjectView">
+    <navigator proportions="" version="1">
+      <foldersAlwaysOnTop value="true" />
+    </navigator>
+    <panes>
+      <pane id="Scope" />
+      <pane id="ProjectPane">
+        <subPane>
+          <expand>
+            <path>
+              <item name="." type="b2602c69:ProjectViewProjectNode" />
+              <item name="sempai.help-front" type="462c0819:PsiDirectoryNode" />
+            </path>
+          </expand>
+          <select />
+        </subPane>
+      </pane>
+    </panes>
+  </component>
+  <component name="PropertiesComponent">
+    <property name="WebServerToolWindowFactoryState" value="false" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/../sempai.help-back" />
+    <property name="nodejs_package_manager_path" value="npm" />
+    <property name="prettierjs.PrettierConfiguration.Package" value="$PROJECT_DIR$/node_modules/prettier" />
+    <property name="restartRequiresConfirmation" value="false" />
+    <property name="settings.editor.selected.configurable" value="reference.settings.ide.settings.file-colors" />
+    <property name="ts.external.directory.path" value="$APPLICATION_HOME_DIR$/plugins/JavaScriptLanguage/jsLanguageServicesImpl/external" />
+  </component>
+  <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/src/store/api" />
+      <recent name="$PROJECT_DIR$/src/store/records" />
+      <recent name="$PROJECT_DIR$/public" />
+      <recent name="$PROJECT_DIR$/src/store" />
+      <recent name="$PROJECT_DIR$" />
+    </key>
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/src/store/webWorkers" />
+      <recent name="$PROJECT_DIR$/public" />
+      <recent name="$PROJECT_DIR$/src/components/UploadFiles" />
+      <recent name="$PROJECT_DIR$/src/static" />
+      <recent name="$PROJECT_DIR$/src/components/Music" />
+    </key>
+  </component>
+  <component name="RunDashboard">
+    <option name="ruleStates">
+      <list>
+        <RuleState>
+          <option name="name" value="ConfigurationTypeDashboardGroupingRule" />
+        </RuleState>
+        <RuleState>
+          <option name="name" value="StatusDashboardGroupingRule" />
+        </RuleState>
+      </list>
+    </option>
+  </component>
+  <component name="RunManager" selected="JavaScript Debug.chrome">
+    <configuration name="build" type="js.build_tools.npm" factoryName="npm" temporary="true" nameIsGenerated="true">
+      <package-json value="$PROJECT_DIR$/package.json" />
+      <command value="run" />
+      <scripts>
+        <script value="build" />
+      </scripts>
+      <node-interpreter value="project" />
+      <envs />
+    </configuration>
+    <configuration name="start" type="js.build_tools.npm" factoryName="npm" temporary="true" nameIsGenerated="true">
+      <package-json value="$PROJECT_DIR$/package.json" />
+      <command value="run" />
+      <scripts>
+        <script value="start" />
+      </scripts>
+      <node-interpreter value="project" />
+      <envs />
+    </configuration>
+    <list>
+      <item itemvalue="JavaScript Debug.chrome" />
+      <item itemvalue="npm.build" />
+      <item itemvalue="npm.start" />
+    </list>
+    <recent_temporary>
+      <list>
+        <item itemvalue="npm.start" />
+        <item itemvalue="npm.build" />
+      </list>
+    </recent_temporary>
+  </component>
+  <component name="SvnConfiguration">
+    <configuration />
+  </component>
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="5f9165c0-1fac-4052-a09d-a8995e9b7040" name="Default Changelist" comment="" />
+      <created>1535488030278</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1535488030278</updated>
+      <workItem from="1535488032974" duration="269000" />
+      <workItem from="1535488357122" duration="69000" />
+      <workItem from="1535807644104" duration="114000" />
+      <workItem from="1535808852886" duration="1516000" />
+      <workItem from="1535810386672" duration="41142000" />
+      <workItem from="1535897006631" duration="3402000" />
+      <workItem from="1535900455178" duration="259000" />
+      <workItem from="1535900888274" duration="6625000" />
+      <workItem from="1535909824947" duration="7530000" />
+      <workItem from="1536782707345" duration="6000" />
+      <workItem from="1537901363955" duration="3000" />
+      <workItem from="1538215681398" duration="1825000" />
+      <workItem from="1538218114990" duration="259000" />
+      <workItem from="1538218420667" duration="387000" />
+      <workItem from="1538226583587" duration="32294000" />
+      <workItem from="1538333054016" duration="84563000" />
+      <workItem from="1540023072758" duration="12060000" />
+      <workItem from="1540059080172" duration="20000" />
+      <workItem from="1540059281774" duration="11620000" />
+      <workItem from="1540104637882" duration="99701000" />
+      <workItem from="1541164891251" duration="19915000" />
+      <workItem from="1541225180457" duration="3371000" />
+      <workItem from="1541429740859" duration="73714000" />
+      <workItem from="1542047000092" duration="27072000" />
+      <workItem from="1545022200516" duration="5333000" />
+      <workItem from="1545242316228" duration="165000" />
+    </task>
+    <task id="LOCAL-00001" summary="аторизация, компоновка плеера">
+      <created>1535882594886</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1535882594886</updated>
+    </task>
+    <task id="LOCAL-00002" summary="аторизация 30%">
+      <created>1535900668439</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1535900668439</updated>
+    </task>
+    <task id="LOCAL-00003" summary="аторизация 50%">
+      <created>1535919329686</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1535919329686</updated>
+    </task>
+    <task id="LOCAL-00004" summary="Авторизация 80%">
+      <created>1538245365412</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1538245365412</updated>
+    </task>
+    <task id="LOCAL-00005" summary="Добавляет кнопку @Избранное">
+      <created>1538847230754</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1538847230754</updated>
+    </task>
+    <task id="LOCAL-00006" summary="Добавляет кнопку @Избранное">
+      <created>1538905581107</created>
+      <option name="number" value="00006" />
+      <option name="presentableId" value="LOCAL-00006" />
+      <option name="project" value="LOCAL" />
+      <updated>1538905581107</updated>
+    </task>
+    <task id="LOCAL-00007" summary="Добавляет кнопку @Избранное">
+      <created>1538976921470</created>
+      <option name="number" value="00007" />
+      <option name="presentableId" value="LOCAL-00007" />
+      <option name="project" value="LOCAL" />
+      <updated>1538976921470</updated>
+    </task>
+    <task id="LOCAL-00008" summary="Обернул в докер">
+      <created>1539507709530</created>
+      <option name="number" value="00008" />
+      <option name="presentableId" value="LOCAL-00008" />
+      <option name="project" value="LOCAL" />
+      <updated>1539507709530</updated>
+    </task>
+    <task id="LOCAL-00009" summary="добавил аплоад файлов">
+      <created>1540137743009</created>
+      <option name="number" value="00009" />
+      <option name="presentableId" value="LOCAL-00009" />
+      <option name="project" value="LOCAL" />
+      <updated>1540137743009</updated>
+    </task>
+    <task id="LOCAL-00010" summary="Подретушировать аплоад файлов">
+      <created>1540919371229</created>
+      <option name="number" value="00010" />
+      <option name="presentableId" value="LOCAL-00010" />
+      <option name="project" value="LOCAL" />
+      <updated>1540919371229</updated>
+    </task>
+    <task id="LOCAL-00011" summary="Доработал вебпак 70%">
+      <created>1541480307445</created>
+      <option name="number" value="00011" />
+      <option name="presentableId" value="LOCAL-00011" />
+      <option name="project" value="LOCAL" />
+      <updated>1541480307446</updated>
+    </task>
+    <task id="LOCAL-00012" summary="Добавил веб воркера">
+      <created>1541740939373</created>
+      <option name="number" value="00012" />
+      <option name="presentableId" value="LOCAL-00012" />
+      <option name="project" value="LOCAL" />
+      <updated>1541740939373</updated>
+    </task>
+    <task id="LOCAL-00013" summary="Переработал аплоад на вебворкере">
+      <created>1541967601687</created>
+      <option name="number" value="00013" />
+      <option name="presentableId" value="LOCAL-00013" />
+      <option name="project" value="LOCAL" />
+      <updated>1541967601688</updated>
+    </task>
+    <task id="LOCAL-00014" summary="Обновил апи и доделал вебворкера">
+      <created>1542606822104</created>
+      <option name="number" value="00014" />
+      <option name="presentableId" value="LOCAL-00014" />
+      <option name="project" value="LOCAL" />
+      <updated>1542606822104</updated>
+    </task>
+    <option name="localTasksCounter" value="15" />
+    <servers />
+  </component>
+  <component name="TimeTrackingManager">
+    <option name="totallyTimeSpent" value="440618000" />
+  </component>
+  <component name="TodoView">
+    <todo-panel id="selected-file">
+      <is-autoscroll-to-source value="true" />
+    </todo-panel>
+    <todo-panel id="all">
+      <are-packages-shown value="true" />
+      <is-autoscroll-to-source value="true" />
+    </todo-panel>
+  </component>
+  <component name="ToolWindowManager">
+    <frame x="3223" y="0" width="1257" height="1049" extended-state="0" />
+    <editor active="true" />
+    <layout>
+      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.2775974" />
+      <window_info anchor="bottom" id="TODO" order="6" weight="0.32903227" />
+      <window_info anchor="bottom" id="Docker" order="7" show_stripe_button="false" />
+      <window_info anchor="bottom" id="Event Log" order="9" sideWeight="0.37256494" side_tool="true" visible="true" weight="0.2290749" />
+      <window_info anchor="bottom" id="Version Control" order="8" sideWeight="0.4926948" weight="0.3270925" />
+      <window_info anchor="bottom" id="Run" order="2" sideWeight="0.49761146" weight="0.32901832" />
+      <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
+      <window_info active="true" anchor="bottom" id="Terminal" order="10" sideWeight="0.6274351" visible="true" weight="0.2290749" />
+      <window_info id="Favorites" order="3" side_tool="true" />
+      <window_info anchor="bottom" id="Debug" order="3" sideWeight="0.7711039" weight="0.30947137" />
+      <window_info anchor="bottom" id="TypeScript" order="11" sideWeight="0.49761146" weight="0.32901832" />
+      <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" weight="0.25" />
+      <window_info id="npm" order="2" side_tool="true" />
+      <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
+      <window_info anchor="right" id="Commander" internal_type="SLIDING" order="0" type="SLIDING" weight="0.4" />
+      <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
+      <window_info anchor="bottom" id="Messages" order="12" />
+      <window_info anchor="bottom" id="Message" order="0" />
+      <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
+      <window_info anchor="bottom" id="Find" order="1" weight="0.32901832" />
+    </layout>
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="1" />
+  </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State>
+              <option name="RECENTLY_FILTERED_USER_GROUPS">
+                <collection />
+              </option>
+              <option name="RECENTLY_FILTERED_BRANCH_GROUPS">
+                <collection />
+              </option>
+              <option name="COLUMN_ORDER">
+                <list>
+                  <option value="0" />
+                  <option value="1" />
+                  <option value="2" />
+                  <option value="3" />
+                </list>
+              </option>
+            </State>
+          </value>
+        </entry>
+      </map>
+    </option>
+  </component>
+  <component name="VcsContentAnnotationSettings">
+    <option name="myLimit" value="2678400000" />
+  </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="аторизация, компоновка плеера" />
+    <MESSAGE value="аторизация 30%" />
+    <MESSAGE value="аторизация 50%" />
+    <MESSAGE value="Авторизация 80%" />
+    <MESSAGE value="Добавляет кнопку @Избранное" />
+    <MESSAGE value="Обернул в докер" />
+    <MESSAGE value="добавил аплоад файлов" />
+    <MESSAGE value="Подретушировать аплоад файлов" />
+    <MESSAGE value="Доработал вебпак 70%" />
+    <MESSAGE value="Добавил веб воркера" />
+    <MESSAGE value="Переработал аплоад на вебворкере" />
+    <MESSAGE value="Обновил апи и доделал вебворкера" />
+    <option name="LAST_COMMIT_MESSAGE" value="Обновил апи и доделал вебворкера" />
+  </component>
+  <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <breakpoints>
+        <line-breakpoint enabled="true" type="javascript">
+          <url>file://$PROJECT_DIR$/src/registerServiceWorker.js</url>
+          <line>23</line>
+          <option name="timeStamp" value="167" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="javascript">
+          <url>file://$PROJECT_DIR$/node_modules/react-scripts/scripts/start.js</url>
+          <line>57</line>
+          <option name="timeStamp" value="168" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="javascript">
+          <url>file://$PROJECT_DIR$/node_modules/react-scripts/config/env.js</url>
+          <line>71</line>
+          <option name="timeStamp" value="169" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="javascript">
+          <url>file://$PROJECT_DIR$/node_modules/react-scripts/scripts/start.js</url>
+          <line>60</line>
+          <option name="timeStamp" value="171" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="javascript">
+          <url>file://$PROJECT_DIR$/node_modules/react-scripts/scripts/start.js</url>
+          <line>63</line>
+          <option name="timeStamp" value="172" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="javascript">
+          <url>file://$PROJECT_DIR$/src/store/login/actions.js</url>
+          <line>25</line>
+          <option name="timeStamp" value="192" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="javascript">
+          <url>file://$PROJECT_DIR$/src/store/favorite/actions.js</url>
+          <line>9</line>
+          <option name="timeStamp" value="347" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="javascript">
+          <url>file://$PROJECT_DIR$/src/store/favorite/actions.js</url>
+          <line>30</line>
+          <option name="timeStamp" value="348" />
+        </line-breakpoint>
+      </breakpoints>
+      <breakpoints-dialog>
+        <breakpoints-dialog />
+      </breakpoints-dialog>
+      <default-breakpoints>
+        <breakpoint type="dart-exception">
+          <properties />
+        </breakpoint>
+      </default-breakpoints>
+      <option name="time" value="433" />
+    </breakpoint-manager>
+  </component>
+  <component name="editorHistoryManager">
+    <entry file="file://$PROJECT_DIR$/../../package.json" />
+    <entry file="file://$APPLICATION_HOME_DIR$/plugins/JavaScriptLanguage/jsLanguageServicesImpl/external/lib.dom.d.ts">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="156">
+          <caret line="15931" column="32" lean-forward="true" selection-start-line="15931" selection-start-column="32" selection-end-line="15931" selection-end-column="32" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/../../node_modules/socket.io-client/lib/socket.js" />
+    <entry file="file://$PROJECT_DIR$/../../node_modules/fine-uploader-wrappers/traditional.js" />
+    <entry file="file://$PROJECT_DIR$/../../node_modules/fine-uploader-wrappers/s3.js" />
+    <entry file="file://$PROJECT_DIR$/../../node_modules/fine-uploader-wrappers/callback-proxy.js" />
+    <entry file="file://$PROJECT_DIR$/../../node_modules/fine-uploader-wrappers/callback-names.js" />
+    <entry file="file://$PROJECT_DIR$/../../node_modules/fine-uploader-wrappers/azure.js" />
+    <entry file="file://$PROJECT_DIR$/../../node_modules/fine-uploader-wrappers/test/unit/base-wrapper.spec.js" />
+    <entry file="file://$PROJECT_DIR$/../../node_modules/fine-uploader-wrappers/test/unit/sanity.spec.js" />
+    <entry file="file://$PROJECT_DIR$/../../node_modules/fine-uploader-wrappers/base-wrapper.js" />
+    <entry file="file://$PROJECT_DIR$/../../node_modules/fine-uploader/lib/core/azure.js" />
+    <entry file="file://$PROJECT_DIR$/../../node_modules/fine-uploader/lib/core/index.js" />
+    <entry file="file://$PROJECT_DIR$/../../node_modules/fine-uploader/lib/core/s3.js" />
+    <entry file="file://$PROJECT_DIR$/../../node_modules/fine-uploader/s3.fine-uploader/s3.fine-uploader.core.js" />
+    <entry file="file://$PROJECT_DIR$/../../node_modules/fine-uploader/s3.fine-uploader/s3.fine-uploader.js" />
+    <entry file="file://$PROJECT_DIR$/../../node_modules/fine-uploader/lib/core/all.js" />
+    <entry file="file://$PROJECT_DIR$/../../node_modules/fine-uploader/lib/dnd.js" />
+    <entry file="file://$PROJECT_DIR$/../../node_modules/fine-uploader-wrappers/test/unit/tests.bundle.js" />
+    <entry file="file://$PROJECT_DIR$/../../node_modules/fine-uploader-wrappers/test/unit/utils.jsx" />
+    <entry file="file://$PROJECT_DIR$/../../src/registerServiceWorker.js" />
+    <entry file="file://$PROJECT_DIR$/src/store/gregre.js" />
+    <entry file="file://$PROJECT_DIR$/../../src/transport/addLinkTr.jsx" />
+    <entry file="file://$PROJECT_DIR$/../../node_modules/react-error-overlay/lib/index.js" />
+    <entry file="file://$PROJECT_DIR$/../../node_modules/@babel/runtime/helpers/esm/asyncToGenerator.js" />
+    <entry file="file://$PROJECT_DIR$/../../src/store/login/actions.js" />
+    <entry file="file://$PROJECT_DIR$/../../.env.production" />
+    <entry file="file://$PROJECT_DIR$/../../.env.development" />
+    <entry file="file://$PROJECT_DIR$/../../src/store/webWorkers/worker-uploader.js" />
+    <entry file="file://$PROJECT_DIR$/../../src/components/Player/Player.jsx" />
+    <entry file="file://$PROJECT_DIR$/../../src/main_page/alert.jsx" />
+    <entry file="file://$PROJECT_DIR$/../../src/main_page/Home.jsx" />
+    <entry file="file://$PROJECT_DIR$/../../src/main_page/ServerStat.jsx" />
+    <entry file="file://$PROJECT_DIR$/../../src/components/UploadFiles/UploadFiles.jsx" />
+    <entry file="file://$PROJECT_DIR$/../../src/components/AddToFavorite/AddToFavorite.jsx" />
+    <entry file="file://$PROJECT_DIR$/../../src/components/Music/TrackCard.jsx" />
+    <entry file="file://$PROJECT_DIR$/../../src/store/api/routes.js" />
+    <entry file="file://$PROJECT_DIR$/../../src/main_page/ServerStat.css" />
+    <entry file="file://$PROJECT_DIR$/../../src/main_page/sempaiTreeStyle.js" />
+    <entry file="file://$PROJECT_DIR$/../../src/components/AddToFavorite/AddToFavorite.css" />
+    <entry file="file://$PROJECT_DIR$/../../src/components/Music/RefreshButton.css" />
+    <entry file="file://$PROJECT_DIR$/../../src/App.jsx" />
+    <entry file="file://$PROJECT_DIR$/../../src/main_page/Link_1.jsx" />
+    <entry file="file://$PROJECT_DIR$/../../src/store/api/request.js" />
+    <entry file="file://$PROJECT_DIR$/../../node_modules/react-player/lib/Player.js" />
+    <entry file="file://$PROJECT_DIR$/../../src/components/Music/RefreshButton.jsx" />
+    <entry file="file://$PROJECT_DIR$/../../node_modules/js-base64/old/base64-1.7.js" />
+    <entry file="file://$PROJECT_DIR$/../../src/store/player/actions.js" />
+    <entry file="file://$PROJECT_DIR$/../../src/components/Music/Music.jsx" />
+    <entry file="file://$PROJECT_DIR$/../default.conf">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="30">
+          <caret line="2" column="31" lean-forward="true" selection-start-line="2" selection-start-column="31" selection-end-line="2" selection-end-column="31" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/../.env.development">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="60">
+          <caret line="4" lean-forward="true" selection-start-line="4" selection-end-line="4" />
+        </state>
+      </provider>
+    </entry>
+  </component>
+  <component name="masterDetails">
+    <states>
+      <state key="ScopeChooserConfigurable.UI">
+        <settings>
+          <last-edited>Unnamed</last-edited>
+          <splitter-proportions>
+            <option name="proportions">
+              <list>
+                <option value="0.21052632" />
+              </list>
+            </option>
+          </splitter-proportions>
+          <order>
+            <scope name="Unnamed" />
+          </order>
+        </settings>
+      </state>
+    </states>
+  </component>
+</project>

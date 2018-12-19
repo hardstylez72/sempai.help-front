@@ -96,7 +96,6 @@ class UploadFiles extends Component {
 			<div>
 				<Icon className={'upload-start-icon'} type={this.state.uploading ? '' : 'upload'} />
 				{this.state.uploading ? (<Progress type="circle" percent={this.state.progress} width={80} />) : ('')}
-
 			</div>
 		);
 		let children = this.state.paths;
@@ -130,7 +129,6 @@ class UploadFiles extends Component {
 				</div>
 					<div className={'uploaded-file-list'}>
 						<ListGroup>
-
 							{getFileList(fileList)}
 						</ListGroup>
 					</div>

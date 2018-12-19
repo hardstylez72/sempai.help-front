@@ -103,7 +103,6 @@ componentWillUpdate() {
 
 const Wrapper = ({component: Cmponent, login}) => {
 	if (login.authState) {
-
 		return (
 			<Cmponent/>
 		)

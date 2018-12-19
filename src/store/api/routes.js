@@ -2,6 +2,7 @@ window.api = {
 	AUTH: 				       { url: '/api/login/',         	 		method: 'POST' },
 	
 	GET_FOLDER_STRUCT:         { url: '/api/v1/music/all/get/',  		method: 'POST' },
+	REFRESH_FOLDER_STRUCT:     { url: '/api/v1/music/all/refresh/',     method: 'POST' },
 	GET_FAVORITE_STRUCT: 	   { url: '/api/v1/music/favorite/get', 	method: 'POST' },
 	GET_UPLOADED_STRUCT: 	   { url: '/api/v1/music/upload/get/',  	method: 'POST' },
 	

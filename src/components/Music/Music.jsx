@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import {message} from 'antd';
+import {message, Icon} from 'antd';
 import {Treebeard, decorators} from 'react-treebeard';
 import sempaiTreeStyle from '../../main_page/sempaiTreeStyle';
 import store from '../../store/rootStore';
@@ -10,6 +10,7 @@ import { Tab, Tabs } from 'react-bootstrap';
 import './Music.css';
 import TrackCard from './TrackCard';
 import UploadFiles from '../UploadFiles/UploadFiles';
+import RefreshButton from './RefreshButton'
 
 
 const msg = (messageType, messageText) => {
@@ -31,13 +32,15 @@ decorators.Header = ({style, node}) => {
 	const isFile = iconType === 'file';
 	const iconClass = `treebeard-list-${iconType}`;
 	const iconStyle = {marginRight: '5px'};
+	const refreshButton = node.root ? <RefreshButton/> : '';
 
 	return (
 		<div className={'base-treebeard-header'}>
 			<div className={'base-treebeard-title'}>
 
 				<div className={iconClass} style={iconStyle}>
-					{node.name}
+					{node.name} {refreshButton}
+
 				</div>
 			</div>
 		</div>
@@ -134,6 +137,9 @@ class music extends Component {
 	}
 	
 	onToggle(node, toggled) {
+		if (node.root) {
+			return;
+		}
 		if (this.state.cursor) {
 			this.state.cursor.active = false;
 		}
@@ -142,8 +148,12 @@ class music extends Component {
 			node.toggled = toggled;
 		}
 		this.setState({cursor: node});
-		if (node.type !== 'directory') {
-			const self = this;
+		if (node.isDirectory) {
+			(async () => {
+				const folderStruct = store.dispatch(playerActions.getFolderStruct(`${node.parentPath}/${node.name}`));
+				console.log(folderStruct)
+			})();
+		} else {
 			if (this.props.player.play === true && node.name === this.props.player.nowPlayingName) {
 				store.dispatch(playerActions.audioPaused);
 				return;
@@ -151,7 +161,7 @@ class music extends Component {
 				store.dispatch(playerActions.audioPlaying);
 			}
 			store.dispatch(
-				playerActions.playThisSong(node.name, node.path, this.props.player.folderStruct),
+				playerActions.playThisSong(node.name, node.fullPath, this.props.player.folderStruct),
 			);
 		}
 	}

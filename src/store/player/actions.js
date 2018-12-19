@@ -182,9 +182,9 @@ export const playerActions = {
 				});
 		};
 	},
-	getFolderStruct: () => {
+	getFolderStruct: (path) => {
 		return async () => {
-			return await request(window.api.GET_FOLDER_STRUCT)
+			return await request(window.api.GET_FOLDER_STRUCT, path)
 				.then(res => Promise.resolve(res))
 				.catch(err =>  Promise.reject(err));
 		}
