@@ -72,8 +72,8 @@ const request = async (options, data) => {
 			throw new Error('Вам необходимо зарегистрироваться');
 		})
 		.then(res => {
-			if (res.success === '1') {
-				return Promise.resolve(res);
+			if (res.success) {
+				return Promise.resolve(res.data);
 			}
 			return Promise.reject(res.error);
 		})

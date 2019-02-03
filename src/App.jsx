@@ -17,7 +17,6 @@ import { Alert } from 'react-bootstrap';
 import _ from 'lodash';
 import store from './store/rootStore';
 import {loginActions} from './store/login/actions';
-import {webSocketActions} from './store/webSocket/actions'
 
 const ErrorMessage = (messageLog) => {
 	const message = _.get(messageLog, 'error.message', 'Ошибка');
@@ -54,9 +53,8 @@ componentDidMount() {
 	const nowPath = window.location.pathname;
 	this.setState({path: nowPath});
 	(async () => {
-		await store.dispatch(loginActions.authReq());
+		await store.dispatch(loginActions.isUserAuthorised());
 		document.getElementById('preloader').remove();
-		store.dispatch(webSocketActions.register());
 		this.setState({loading: false});
 	})();
 }
@@ -102,11 +100,10 @@ componentWillUpdate() {
   }
 }
 
-const Wrapper = ({component: Cmponent, login}) => {
+const Wrapper = ({component: Component, login}) => {
 	if (login.authState) {
-
 		return (
-			<Cmponent/>
+			<Component/>
 		)
 	} else {
 		return null;
@@ -122,8 +119,9 @@ const PrivateRoute = ({ component: Component, login, state,  ...rest}) => {
 				return null;
 			}
 			if (login.authState) {
-				props.location.pathname = state.path;
+				props.location.pathname = state.path === '/login' ? '/home' : state.path;
 				return <Component {...props} />;
+
 			}
 
 			return <Redirect to={{pathname: "/login"}}/>

@@ -1,15 +1,15 @@
 import React, { Component } from 'react';
 import { Icon, Progress } from 'antd'
 import Dropzone from 'react-dropzone';
-
 import { OverlayTrigger, Popover, ListGroup, ListGroupItem } from 'react-bootstrap';
 import './UploadFiles.css'
 import {message} from 'antd/lib/index';
 import { Select } from 'antd';
 import {connect} from 'react-redux';
+import  worker from '../../store/webWorkers/worker-uploader.js'
+import Gallery from 'react-fine-uploader'
+
 const Option = Select.Option;
-
-
 
 const msg = (messageType, messageText) => {
 	switch (messageType) {
@@ -42,6 +42,7 @@ class UploadFiles extends Component {
 			fileList: [],
 			workerUpload: {},
 			fr: new FileReader(),
+			uploader: worker
 		};
 
 	}
@@ -74,7 +75,6 @@ class UploadFiles extends Component {
 			<div>
 				<Icon className={'upload-start-icon'} type={this.state.uploading ? '' : 'upload'} />
 				{this.state.uploading ? (<Progress type="circle" percent={this.state.progress} width={80} />) : ('')}
-
 			</div>
 		);
 		let children = this.state.paths;
@@ -127,114 +127,43 @@ class UploadFiles extends Component {
 	}
 
 	onDropAccepted(evt) {
-		
+		console.log('Загрузка файлов началась:', evt);
+		const file = evt[0];
+
 		this.setState({progress: 0});
 		this.setState({fileList: []});
-		const uploadFile = (file) => {
-			this.setState({uploading: true});
-			this.setState({curFile: file});
-			const self = this;
-			this.props.socket.emit('START_UPLOAD', {
-				size: file.size,
-				name: file.name,
-				path: self.state.pathToUpload
-			});
-			
-			const fileSize = file.size;
-			const chunkSize = 4096 * 1024; // bytes
-			let offset = 0;
-			let chunkReaderBlock = null;
+		this.setState({uploading: true});
 
-			const readEventHandler = (evt) => {
-				if (evt.target.error == null) {
-					offset += evt.target.result.length;
-					self.props.socket.emit('UPLOADING', {
-						data: evt.target.result.slice(0, offset),
-						curSize: offset,
-						size: self.state.curFile.size,
-						name: self.state.curFile.name
-					});
-				} else {
-					this.setState({uploading: false});
-					self.state.fr.abort();
-					self.props.socket.emit('UPLOAD_ABORTED', {
-						data: evt.target.result.slice(0, offset),
-						curSize: offset,
-						size: self.state.curFile.size,
-						name: self.state.curFile.name
-					});
-					return;
-				}
-				if (offset >= fileSize) {
-					this.setState({uploading: false});
-					self.props.socket.emit('UPLOAD_FINISHED', {
-						data: evt.target.result.slice(0, offset),
-						curSize: offset,
-						size: self.state.curFile.size,
-						name: self.state.curFile.name
-					});
-					return;
-				}
-				chunkReaderBlock(offset, chunkSize, file);
-			};
+		const self = this;
 
-			chunkReaderBlock = (_offset, length, _file) => {
-				if (_file.size < (length + _offset)) {
-					length = _file.size -_offset;
-				}
-				const blob = _file.slice(_offset, length + _offset);
-				self.state.fr.onload = readEventHandler;
-				self.state.fr.readAsBinaryString(blob);
-			};
+		this.state.uploader.postMessage({
+			file: file,
+			userPath: self.state.pathToUpload,
+			api: process.env.REACT_APP_WEBWORKER_UPLOADER_API
+		});
 
-			chunkReaderBlock(offset, chunkSize, file);
+		this.state.uploader.onmessage = async (e) => {
+			console.log(e.data);
+			const result = e.data;
+			if (result.success) {
+				self.setState({
+					progress: result.data.progress,
+					fileList: result.data.fileList
+				});
+			}
 		};
-		try {
-			uploadFile(evt[0]);
-		} catch (e) {
-			console.error(e.message);
-		}
 	}
 
 	componentDidMount() {
-		const self = this;
-		// if (window.Worker) {
-		// 	console.log('Worker available');
-		// 	this.setState({workerUploader:  new Worker('workerUploader.js')});
-		//
-		//
-		// 	const worker = new Worker('workerUploader.js');
-		// 	worker.postMessage('message data to worker');
-		//
-		// 	worker.onmessage = (f,d) => {
-		// 		console.log(f,d)
-		// 	}
-		// }
-		
-		this.props.socket.on('PROGRESS', (data) => {
-			self.setState({progress: data})
-		});
-
-		this.props.socket.on('connect_error', err => {
-			msg('err', `Ошибка при подключении к сокету ${err}`);
-		});
-
-		this.props.socket.on('UPLOAD_ERROR', err => {
-			self.state.fr.abort();
-			msg('err', `${err}`);
-		});
-
-		this.props.socket.on('UPLOAD_SUCCESS', (list) => {
-			msg('ok', `${list.length} Файлов успешно загружно`);
-			this.setState({fileList: list});
-		});
 	}
 
 	componentDidUpdate(prevProps) {
 		if (this.props.paths !== prevProps.paths) {
 			const {paths} = this.props;
-			const data = paths.children.map((el) => <Option key={el.name}>{el.name}</Option>);
-			this.setState({paths: data})
+			if (paths) {
+				const data = paths.children.map((el) => <Option key={el.name}>{el.name}</Option>);
+				this.setState({paths: data})
+			}
 		}
 	}
 }

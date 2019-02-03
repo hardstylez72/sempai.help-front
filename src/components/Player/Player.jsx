@@ -1,9 +1,9 @@
 import React, { Component } from 'react';
 import connect from 'react-redux/es/connect/connect';
-import {bindActionCreators} from 'redux';
-import {playerActions} from '../../store/player/actions';
+import { bindActionCreators } from 'redux';
+import { playerActions } from '../../store/player/actions';
 import ReactPlayer from 'react-player';
-import {Icon} from 'antd';
+import { Icon } from 'antd';
 import store from '../../store/rootStore';
 import './Player.css'
 
@@ -13,7 +13,7 @@ class Player extends Component {
 		return (
 			<div>
 				<ReactPlayer
-					url={`/api/radio/${player.nowPlayingURL}`}
+					url={`/api/v1/track/stream/get/${player.nowPlayingURL}`}
 					volume={player.volume}
 					onEnded={this.currentMediaFileEndedPlaying.bind(this)}
 					playing={player.play}

@@ -18,7 +18,7 @@ export const playerActions = {
 	TRACK_INFO: 'TRACK_INFO',
 	FAVORITE_STRUCT: 'FAVORITE_STRUCT',
 	UPLOADED_STRUCT: 'UPLOADED_STRUCT',
-	ADD_TO_FAVORITE_STRUCT: 'ADD_TO_FAVORITE_STRUCT',
+	ADD_FAVORITE_LIST: 'ADD_FAVORITE_LIST',
 
 	setTrackInfo: (info) => {
 		return store.dispatch({type: 'TRACK_INFO', payload: info});
@@ -33,15 +33,16 @@ export const playerActions = {
 		value = Number(value)/100;
 		return store.dispatch({type: 'VOLUME', payload: value});
 	},
-	setStruct: (struct, favorite) => {
+	setStruct: struct => {
 		return store.dispatch({type: 'FOLDER_STRUCT', payload: struct});
 	},
 	setFavoriteStruct: (favorite) => {
 		return store.dispatch({type: 'FAVORITE_STRUCT', payload: favorite});
 	},
-	addToFavoriteStruct: (favorite) => {
-		const data = store.getState();
-		return store.dispatch({type: 'FAVORITE_STRUCT', payload: favorite});
+	addToFavoriteStruct: (data) => {
+		const storeData = store.getState();
+		console.log('dwdwdwd', storeData);
+		return store.dispatch({type: 'ADD_FAVORITE_LIST', payload: data});
 	},
 	setUpdateStruct: (uploaded) => {
 		return store.dispatch({type: 'UPLOADED_STRUCT', payload: uploaded});
@@ -75,11 +76,7 @@ export const playerActions = {
 						if (isNextTrackFound) {
 							break;
 						}
-						if (
-							isPlayingTrackFound &&
-							el.type === 'file' &&
-							(el.extension === '.flac' || el.extension === '.mp3')
-						) {
+						if (isPlayingTrackFound && !el.isDirectory) {
 							isNextTrackFound = true;
 							nextTrack = el;
 							nextTrack.active = false;
@@ -121,11 +118,7 @@ export const playerActions = {
 						if (isNextTrackFound) {
 							break;
 						}
-						if (
-							isPlayingTrackFound &&
-							el.type === 'file' &&
-							(el.extension === '.flac' || el.extension === '.mp3')
-						) {
+						if (isPlayingTrackFound && !el.isDirectory){
 							isNextTrackFound = true;
 							nextTrack = el;
 							nextTrack.active = false;
@@ -169,80 +162,44 @@ export const playerActions = {
 	},
 	getCoverImage: path => {
 		return async () => {
-			try {
-				const jsonPath = JSON.stringify({path: path});
-				const url = Base64.encodeURI(jsonPath);
-				const img = await request(window.api.GET_IMAGE, url)
-					.then(dataFromServer => {
-						if (dataFromServer.success === '1') {
-                            store.dispatch({type: 'COVER_IMAGE', payload: dataFromServer.data});
-							return Promise.resolve(dataFromServer.data);
-						} else {
-							return Promise.reject('error while downloading cover');
-						}
-                    });
-				return Promise.resolve(img);
-			} catch (err) {
-				console.log('error while downloading cover');
-                return Promise.reject(err);
-			}
+			const jsonPath = JSON.stringify({path: path});
+			const url = Base64.encodeURI(jsonPath);
+			return await request(window.api.GET_IMAGE, url)
+				.then(res => {
+						store.dispatch({type: 'COVER_IMAGE', payload: res});
+						return Promise.resolve(res);
+				})
+				.catch(err => {
+					console.error(`error while downloading cover: ${err.message}`);
+					return Promise.resolve();
+				});
 		};
 	},
-	getFolderStruct: () => {
+	getFolderStruct: (path) => {
 		return async () => {
-			try {
-				const data = await request(window.api.GET_FOLDER_STRUCT)
-					.then(dataFromServer => {
-						if (dataFromServer.success === '1') {
-							return Promise.resolve(dataFromServer.data);
-						} else {
-							return Promise.reject('Ошибка при обмене с сервером');
-						}
-					});
-				return Promise.resolve(data);
-			} catch(err) {
-				return Promise.reject(err);
-			}
+			return await request(window.api.GET_FOLDER_STRUCT, path)
+				.then(async res => res)
+				.catch(err =>  Promise.reject(err));
 		}
 	},
 	getFavTracks: () => {
 		return async () => {
-			try {
-				const data = await getRequest(window.api.GET_FAVORITE_STRUCT)
-					.then(dataFromServer => {
-						if (dataFromServer.success === '1') {
-							return Promise.resolve(dataFromServer.data);
-						} else {
-							return Promise.reject('Ошибка при обмене с сервером');
-						}
-					});
-				return Promise.resolve(data);
-			} catch(err) {
-				return Promise.reject(err);
-			}
+			return await request(window.api.GET_FAVORITE_STRUCT)
+				.then(res => Promise.resolve(res))
+				.catch(err =>  Promise.reject(err));
+		}
+	},
+	getUploadedTracks: () => {
+		return async () => {
+			return await request(window.api.GET_UPLOADED_STRUCT)
+				.then(res => Promise.resolve(res))
+				.catch(err =>  Promise.reject(err));
 		}
 	},
 	addUploadedTracks: (url) => {
 		return async () => {
 			try {
 				const data = await getRequest(url)
-					.then(dataFromServer => {
-						if (dataFromServer.success === '1') {
-							return Promise.resolve(dataFromServer.data);
-						} else {
-							return Promise.reject('Ошибка при обмене с сервером');
-						}
-					});
-				return Promise.resolve(data);
-			} catch(err) {
-				return Promise.reject(err);
-			}
-		}
-	},
-	getUploadedTracks: () => {
-		return async () => {
-			try {
-				const data = await request(window.api.GET_UPLOADED_STRUCT)
 					.then(dataFromServer => {
 						if (dataFromServer.success === '1') {
 							return Promise.resolve(dataFromServer.data);

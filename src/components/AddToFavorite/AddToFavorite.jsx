@@ -1,7 +1,11 @@
 import React, { Component } from 'react';
-import {Icon} from 'antd';
-import {request} from '../../store/api/request'
+import connect from 'react-redux/es/connect/connect';
+import { Icon } from 'antd';
+import { request } from '../../store/api/request'
 import './AddToFavorite.css'
+import {playerActions} from '../../store/player/actions';
+import store from '../../store/rootStore';
+
 
 const getFavState = (included, loading, handlerAdd, handlerDelete) => {
 	if (loading) {
@@ -34,7 +38,6 @@ class AddToFavorite extends Component {
 			track: this.props.track,
 			changedTrack: false
 		};
-		//this.onAddToFavoriteClick = this.onAddToFavoriteClick.bind(this);
 	}
 
 	render() {
@@ -81,18 +84,23 @@ class AddToFavorite extends Component {
 
 	};
 	onAddToFavoriteClick = async () => {
-		try {
-			const {track} = this.props;
-			this.setState({loading: true});
-			await request(window.api.CHANGE_FAVORITE, track);
-			this.setState({loading: false, included: true});
-		} catch (err) {
+		const {track} = this.props;
+		this.setState({loading: true});
+		console.log(this.props);
+		await request(window.api.CHANGE_FAVORITE, track).catch(err => {
 			this.setState({loading: false});
-		}
-
+			console.error(err);
+		});
+		store.dispatch(playerActions.addToFavoriteStruct());
+		this.setState({loading: false, included: true});
 	};
 }
 
 
-
-export default AddToFavorite;
+export default connect(
+	state => ({
+		player: state.player,
+	}),
+	dispatch => ({
+	}),
+)(AddToFavorite);

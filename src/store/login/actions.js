@@ -1,5 +1,6 @@
 import store from '../rootStore';
 import { request, makeRequest } from '../api/request.js'
+import {webSocketActions} from '../webSocket/actions';
 
 export const loginActions = {
 	GET_UID: 'GET_UID',
@@ -30,6 +31,7 @@ export const loginActions = {
 							uuid: res.data.uuid
 						}});
 					});
+				// store.dispatch(webSocketActions.register());
 				store.dispatch(loginActions.isAuthsuccess(true));
 				return Promise.resolve(true);
 			} catch(err) {
@@ -38,10 +40,11 @@ export const loginActions = {
 			}
 		}
 	},
-	authReq: () => {
+	isUserAuthorised: () => {
 		return async () => {
 			try {
 				await request(window.api.AUTH, {ok: 1});
+				//store.dispatch(webSocketActions.register());
 				store.dispatch(loginActions.isAuthsuccess(true));
 			} catch(err) {
 				store.dispatch(loginActions.isAuthsuccess(false));

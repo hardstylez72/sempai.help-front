@@ -26,7 +26,6 @@ module.exports = env => {
 				// },
 				{
 					test: /\.css/,
-					exclude: ['/node_modules/'],
 					use: [
 						MiniCssExtractPlugin.loader,
 						'css-loader',
@@ -47,21 +46,20 @@ module.exports = env => {
 				{
 					test: /\.(js|jsx)$/,
 					exclude: /node_modules/,
-					resolve: {
-						extensions: ['*', '.js', '.jsx']
-					},
 					use: ['babel-loader']
 				},
 			]
 		},
+		resolve: {
+			extensions: ['*', '.js', '.jsx']
+		},
 		plugins: [
 			new HtmlWebpackPlugin({
 				template: './public/index.html',
-				minify: true,
+				//minify: true,
 			}),
 			new MiniCssExtractPlugin({
 				filename: "[name].css",
-				chunkFilename: "[id].css"
 			}),
 			// new OptimizeCssAssetsPlugin({
 			// 	assetNameRegExp: /\.optimize\.css$/g,

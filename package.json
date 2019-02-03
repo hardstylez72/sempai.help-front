@@ -8,12 +8,15 @@
     "axios": "^0.18.0",
     "dotenv": "^6.1.0",
     "element-react": "^1.4.20",
+    "fine-uploader": "^5.16.2",
+    "fine-uploader-wrappers": "^1.0.1",
     "js-base64": "^2.4.8",
     "react": "^16.4.1",
     "react-bootstrap": "^0.32.1",
     "react-color": "^2.14.1",
     "react-dom": "^16.4.1",
     "react-dropzone": "^4.2.11",
+    "react-fine-uploader": "^1.1.1",
     "react-player": "^1.6.4",
     "react-redux": "^5.0.7",
     "react-router-dom": "^4.3.1",
@@ -26,6 +29,7 @@
     "socket.io-client": "^2.1.1"
   },
   "scripts": {
+    "cb": "rm -rf ./dist/ | webpack",
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test --env=jsdom",
