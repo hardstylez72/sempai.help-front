@@ -2,11 +2,12 @@ const makeWorker = require('./webWorker').makeWorker;
 
 const body = `{
 	self.addEventListener('message', async e => {
-	const { file, userPath, api } = e.data;
+
+	const { file, path, api, maxChunkSize } = e.data;
 
 		try {
 			let offset = 0;
-			let chunkSize = (file.size < 1024*1024) ? (file.size) : (1024*1024);
+			let chunkSize = (file.size < maxChunkSize) ? (file.size) : (maxChunkSize);
 			const reader = new FileReaderSync();
 			while (file.size > offset) {
 			
@@ -20,7 +21,9 @@ const body = `{
 					size: Number(file.size),
 					curSize: Number(offset + chunkSize),
 					name: file.name,
-					path: userPath
+					path: path,
+					chunkTotalAmount: Math.ceil(file.size/chunkSize),
+					chunkNo:  Math.ceil((offset + chunkSize)/chunkSize)
 				};
 
 				for (const name in data1) {
@@ -37,9 +40,19 @@ const body = `{
 						return res.json();
 					})
 					.catch(err => {
-						console.log('Воркер фетч ошибка: ', err);
+						//console.log('Воркер фетч ошибка: ', err);
 						throw err;
 					});
+
+				console.log(res);
+				if (res.data.isAborted) {
+				console.log('АБОРТИРУЕМ ЕГО');
+				postMessage({
+					success: 1,
+					isAborted: true
+				});
+					return;
+				}
 				postMessage({
 					success: 1,
 					...res

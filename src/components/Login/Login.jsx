@@ -21,14 +21,14 @@ class Login extends Component {
 
 				<Input
 					className={'login-input'}
-					type={'text'}
+					type={'email'}
 					placeholder={'Login'}
 					size={'small'}
 					onChange={this.onChangeLoginHandler.bind(this)}
 					onPressEnter={this.handleSubmit.bind(this)}/>
 
 				<Input
-					type={'text'}
+					type={'password'}
 					placeholder={'password'}
 					onPressEnter={this.handleSubmit.bind(this)}
 					onChange={this.onChangePwdHandler.bind(this)}

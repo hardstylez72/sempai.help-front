@@ -1,12 +1,13 @@
 import React, { Component } from 'react';
 import { Icon, Progress } from 'antd'
 import Dropzone from 'react-dropzone';
-import { OverlayTrigger, Popover, ListGroup, ListGroupItem } from 'react-bootstrap';
+import { OverlayTrigger, Popover, ListGroup, ListGroupItem, Button, ProgressBar } from 'react-bootstrap';
 import './UploadFiles.css'
-import {message} from 'antd/lib/index';
+import { message } from 'antd/lib/index';
 import { Select } from 'antd';
 import {connect} from 'react-redux';
 import  worker from '../../store/webWorkers/worker-uploader.js'
+import {  request } from '../../store/api/request'
 import Gallery from 'react-fine-uploader'
 
 const Option = Select.Option;
@@ -33,16 +34,14 @@ class UploadFiles extends Component {
 			included: false,
 			track: this.props.track,
 			changedTrack: false,
-			socket: {},
 			progress: 0,
-			curFile: {},
 			paths: [],
 			pathToUpload: '',
 			DragAndDropEnabled: false,
 			fileList: [],
-			workerUpload: {},
-			fr: new FileReader(),
-			uploader: worker
+			file: null,
+			uploader: worker,
+			isUploadAborted: false
 		};
 
 	}
@@ -74,7 +73,20 @@ class UploadFiles extends Component {
 		const uploadButton = (
 			<div>
 				<Icon className={'upload-start-icon'} type={this.state.uploading ? '' : 'upload'} />
-				{this.state.uploading ? (<Progress type="circle" percent={this.state.progress} width={80} />) : ('')}
+				{
+					this.state.uploading ?
+						<div >
+							<Button
+								onClick={this.onAbortUpload.bind(this)}
+								bsStyle="danger"
+								className={"stop-upload-btn"}>
+								Отмена
+							</Button>
+							<Progress  percent={this.state.progress} width={80} />
+						</div>
+					: null
+				}
+
 			</div>
 		);
 		let children = this.state.paths;
@@ -115,6 +127,21 @@ class UploadFiles extends Component {
 		);
 	}
 
+	onAbortUpload() {
+		this.setState({
+			isUploadAborted: true,
+			DragAndDropEnabled: true,
+			uploading: false,
+			file: null
+		});
+
+
+		return request(window.api.UPLOAD_MUSIC_CONTENT, {
+			name: this.state.file.name,
+			cmd: 'ABORT'
+		});
+	}
+
 	onSelectHandler(selectedPath) {
 		if (selectedPath) {
 			this.setState({DragAndDropEnabled: true});
@@ -130,25 +157,59 @@ class UploadFiles extends Component {
 		console.log('Загрузка файлов началась:', evt);
 		const file = evt[0];
 
-		this.setState({progress: 0});
-		this.setState({fileList: []});
-		this.setState({uploading: true});
+		this.setState({
+			uploading: true,
+			DragAndDropEnabled: false,
+			file: file,
+			fileList: [],
+			progress: 0
+		});
+
 
 		const self = this;
 
 		this.state.uploader.postMessage({
 			file: file,
-			userPath: self.state.pathToUpload,
-			api: process.env.REACT_APP_WEBWORKER_UPLOADER_API
+			path: self.state.pathToUpload,
+			api: process.env.REACT_APP_WEBWORKER_UPLOADER_API,
+			maxChunkSize: 1024*1024
 		});
 
 		this.state.uploader.onmessage = async (e) => {
-			console.log(e.data);
 			const result = e.data;
+			console.log('fegegw', result);
 			if (result.success) {
+				if (result.isAborted) {
+					self.setState({
+						isUploadAborted: true,
+						DragAndDropEnabled: true,
+						uploading: false,
+						file: null,
+						progress: 0
+					});
+					return;
+				}
+				if (Number(result.data.progress) === 100) {
+					self.setState({
+						isUploadAborted: true,
+						DragAndDropEnabled: true,
+						uploading: false,
+						file: null
+					});
+
+				}
+
 				self.setState({
 					progress: result.data.progress,
 					fileList: result.data.fileList
+				});
+			} else {
+				self.setState({
+					isUploadAborted: true,
+					DragAndDropEnabled: true,
+					uploading: false,
+					file: null,
+					progress: 0
 				});
 			}
 		};

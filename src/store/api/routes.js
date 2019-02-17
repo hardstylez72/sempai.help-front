@@ -13,5 +13,7 @@ window.api = {
 	CHANGE_FAVORITE:  	 	   { url: '/api/v1/track/favorite/add', 	method: 'POST' },
 	
 	UPDATE_RECORD:  	 	   { url: '/api/addlink/', 		     		method: 'PATCH' },
-	UPLOAD_MUSIC_CONTENT:	   { url: '/api/v1/track/favorite/add', 	method: 'POST' },
+	UPLOAD_MUSIC_CONTENT:	   { url: '/api/v1/music/stream/upload', 	method: 'POST' },
+
+
 };

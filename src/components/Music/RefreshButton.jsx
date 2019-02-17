@@ -35,7 +35,7 @@ class RefreshButton extends Component {
 					.then(data => store.dispatch(playerActions.setStruct(data)));
 			})
 			.catch(() => {
-				this.setState({loading: true});
+				this.setState({loading: false});
 			})
 	}
 
