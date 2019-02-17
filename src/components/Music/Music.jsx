@@ -32,13 +32,13 @@ decorators.Header = ({style, node}) => {
 	const isFile = iconType === 'file';
 	const iconClass = `treebeard-list-${iconType}`;
 	const iconStyle = {marginRight: '5px'};
-	const refreshButton = node.root ? <RefreshButton/> : '';
+	const refreshButton = node.root ? <RefreshButton /> : '';
 
 	return (
 		<div className={'base-treebeard-header'}>
 			<div className={'base-treebeard-title'}>
 
-				<div className={iconClass} style={iconStyle}>
+				<div className={ refreshButton ? 'refresh-button' : `'refresh-button' ${iconClass}`}>
 					{node.name} {refreshButton}
 
 				</div>

@@ -27,6 +27,10 @@
     border-radius: 5px;
 }
 
+.refresh-button {
+    display: inline;
+    color: #2f54eb;
+}
 
 
 @media (min-width: 1000.98px) { 

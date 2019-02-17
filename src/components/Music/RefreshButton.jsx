@@ -10,10 +10,9 @@ const getFavState = (error, loading, clickHandler) => {
 	if (loading) {
 		return <Icon
 			type="loading"
-			className={'refresh-button'}
 		/>
 	}
-	return  <Icon type="reload" className={'refresh-button'} onClick={clickHandler}/>
+	return  <Icon type="reload" onClick={clickHandler}/>
 };
 
 class RefreshButton extends Component {

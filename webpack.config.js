@@ -2,7 +2,6 @@ const path = require('path');
 const HtmlWebpackPlugin = require('html-webpack-plugin'); // Геренерит HTML под это дело
 const MiniCssExtractPlugin = require("mini-css-extract-plugin"); // Собирает css по всему проекту
 const Dotenv = require('dotenv-webpack');
-const OptimizeCssAssetsPlugin = require('optimize-css-assets-webpack-plugin'); // Сжимает CSS
 const CopyWebpackPlugin = require('copy-webpack-plugin');
 require("@babel/polyfill");
 
@@ -16,14 +15,6 @@ module.exports = env => {
 		},
 		module: {
 			rules: [
-				// {
-				// 	test: /\.css/,
-				// 	include: ['/node_modules/'],
-				// 	use: [
-				// 		 MiniCssExtractPlugin.loader,
-				// 		'css-loader',
-				// 	],
-				// },
 				{
 					test: /\.css/,
 					use: [
@@ -55,20 +46,11 @@ module.exports = env => {
 		},
 		plugins: [
 			new HtmlWebpackPlugin({
-				template: './public/index.html',
-				//minify: true,
+				template: './public/index.html'
 			}),
 			new MiniCssExtractPlugin({
 				filename: "[name].css",
 			}),
-			// new OptimizeCssAssetsPlugin({
-			// 	assetNameRegExp: /\.optimize\.css$/g,
-			// 	cssProcessor: require('cssnano'),
-			// 	cssProcessorPluginOptions: {
-			// 		preset: ['default', {discardComments: {removeAll: true}}],
-			// 	},
-			// 	canPrint: true
-			// }),
 			new CopyWebpackPlugin([
 				{from: './public', to: '.'}
 			]),
