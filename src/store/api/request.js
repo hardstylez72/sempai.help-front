@@ -49,7 +49,7 @@ const request = async (options, data) => {
 		},
 		body: JSON.stringify({data: data})
 	})
-		.then(res => {
+		.then(async res => {
 			if (document.cookie !== '') {
 				const cookies = document.cookie.split(';');
 				const isOk = cookies.some(el => {
@@ -59,8 +59,8 @@ const request = async (options, data) => {
 					return key === 'is-token-ok' && value === '1';
 				});
 				if (isOk) {
-					const json = res.json()
-						.then(res => {
+					const json = await res.json()
+						.then(async res => {
 							return res;
 						})
 						.catch(() => {
@@ -80,7 +80,7 @@ const request = async (options, data) => {
 		.catch(err => {
 			console.error('API ERROR: ', err);
 			store.dispatch(messagesActions.logError(err));
-			return Promise.reject(err);
+			throw err;
 		});
 }
 

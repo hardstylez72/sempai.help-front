@@ -172,12 +172,11 @@ class UploadFiles extends Component {
 			file: file,
 			path: self.state.pathToUpload,
 			api: process.env.REACT_APP_WEBWORKER_UPLOADER_API,
-			maxChunkSize: 1024*1024
+			maxChunkSize: Number(process.env.REACT_APP_WEBWORKER_UPLOADER_MAX_CHUNK_SIZE_IN_BYTES)
 		});
 
 		this.state.uploader.onmessage = async (e) => {
 			const result = e.data;
-			console.log('fegegw', result);
 			if (result.success) {
 				if (result.isAborted) {
 					self.setState({

@@ -40,19 +40,22 @@ const body = `{
 						return res.json();
 					})
 					.catch(err => {
-						//console.log('Воркер фетч ошибка: ', err);
+						console.log('Воркер фетч ошибка: ', err);
 						throw err;
 					});
 
 				console.log(res);
-				if (res.data.isAborted) {
-				console.log('АБОРТИРУЕМ ЕГО');
-				postMessage({
-					success: 1,
-					isAborted: true
-				});
-					return;
+				if (res.data) {
+					if (res.data.isAborted) {
+					console.log('АБОРТИРУЕМ ЕГО');
+					postMessage({
+						success: 1,
+						isAborted: true
+					});
+						return;
+					}
 				}
+				
 				postMessage({
 					success: 1,
 					...res

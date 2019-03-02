@@ -1,6 +1,7 @@
 import store from '../rootStore';
 import { request, makeRequest } from '../api/request.js'
 import {webSocketActions} from '../webSocket/actions';
+import createHistory from 'history/createBrowserHistory'
 
 export const loginActions = {
 	GET_UID: 'GET_UID',
@@ -21,23 +22,19 @@ export const loginActions = {
 	},
 	checkAuth: () => {
 		return async () => {
-			try {
 				const {login} = store.getState();
 				await request(window.api.AUTH, login)
-					.then(res => {
-						store.dispatch({type: 'LOGIN_PARAMS', payload: {
-							login: res.data.login,
-							pwd: res.data.pwd,
-							uuid: res.data.uuid
-						}});
+					.then(async res => {
+						console.log('+2222');
+						store.dispatch(loginActions.isAuthsuccess(true));
+						const history = createHistory();
+						console.log('history', history);
+						history.push('/home');
+
+					}).catch(err => {
+						console.log('+111', err);
+						store.dispatch(loginActions.isAuthsuccess(false));
 					});
-				// store.dispatch(webSocketActions.register());
-				store.dispatch(loginActions.isAuthsuccess(true));
-				return Promise.resolve(true);
-			} catch(err) {
-				store.dispatch(loginActions.isAuthsuccess(false));
-				return Promise.reject(false);
-			}
 		}
 	},
 	isUserAuthorised: () => {

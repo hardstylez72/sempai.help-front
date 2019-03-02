@@ -119,7 +119,7 @@ const PrivateRoute = ({ component: Component, login, state,  ...rest}) => {
 				return null;
 			}
 			if (login.authState) {
-				props.location.pathname = state.path === '/login' ? '/home' : state.path;
+				props.location.pathname = state.path;
 				return <Component {...props} />;
 
 			}
