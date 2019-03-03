@@ -1,4 +1,4 @@
-const makeWorker = require('./webWorker').makeWorker;
+const { makeWorker, } = require('./webWorker');
 
 const body = `{
 	self.addEventListener('message', async e => {

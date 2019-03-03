@@ -1,9 +1,9 @@
-import React, { Component } from 'react';
-import { Jumbotron, Grid } from 'react-bootstrap';
+import React, { Component, } from 'react';
+import { Jumbotron, Grid, } from 'react-bootstrap';
 
 class ServerStat extends Component {
     render() {
-        return(
+        return (
             <div>
                 <Grid>
                     <Jumbotron>

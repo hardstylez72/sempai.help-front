@@ -1,14 +1,15 @@
-import React, { Component } from 'react';
-import { Link } from 'react-router-dom';
-import { Jumbotron, Grid, Row, Col, Image, Button } from 'react-bootstrap';
+import React, { Component, } from 'react';
+import { Link, } from 'react-router-dom';
+import { Jumbotron, Grid, Row, Col, Image, Button, } from 'react-bootstrap';
 
 class Home extends Component {
-	constructor() {
-		super();
-		this.state = { tabIndex: 0 };
-	}
+    constructor() {
+        super();
+        this.state = { tabIndex: 0, };
+    }
+
     render() {
-        return(
+        return (
             <div>
                 <Grid>
                     <Jumbotron>
@@ -16,8 +17,8 @@ class Home extends Component {
                     </Jumbotron>
 
 
-                    <Link to="/server_stat">
-                        <Button bsStyle="primary"> Server stat </Button>
+                    <Link to='/server_stat'>
+                        <Button bsStyle='primary'> Server stat </Button>
                     </Link>
                 </Grid>
             </div>

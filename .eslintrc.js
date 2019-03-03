@@ -1,8 +1,7 @@
 module.exports = {
     "env": {
-        "node": true,
-        "commonjs": true,
-        "es6": true
+        "es6": true,
+		"browser" : true,
     },
     "settings": {
         "import/resolver": {
@@ -12,18 +11,28 @@ module.exports = {
         },
     },
     "extends": [
-      "eslint:recommended",
-      "plugin:node/recommended",
+        "eslint:recommended",
+        "plugin:react/recommended",
+		"plugin:jsx-a11y/recommended"
     ],
     "plugins": [
-      "jsdoc"
+        "react",
+		"jsx-a11y"
     ],
     "globals": {
         "Atomics": "readonly",
         "SharedArrayBuffer": "readonly"
     },
+	"parser": "babel-eslint",
     "parserOptions": {
-        "ecmaVersion": 2018
+		"sourceType": "module",
+        "ecmaVersion": 2018,
+		"ecmaFeatures": {
+			"jsx": true,
+			"modules": true,
+			"spread" : true,
+			"restParams" : true
+		}
     },
     "rules": {
 
@@ -79,7 +88,7 @@ module.exports = {
       "array-callback-return": "error",
       "block-scoped-var": "error",
       "class-methods-use-this": "error",
-      "complexity": ["error", 2],
+      "complexity": ["error", 5],
       "consistent-return": "error",
       "curly": ["error", "all"],
       "default-case": "error",
@@ -218,7 +227,7 @@ module.exports = {
       "yield-star-spacing": "off",
       "template-curly-spacing": "off",
       "symbol-description": "off",
-      "sort-imports": "error",
+      "sort-imports": "off",
       "rest-spread-spacing": ["error", "never"],
       "require-yield": "off",
 
@@ -340,34 +349,57 @@ module.exports = {
         "switch-colon-spacing": ["error", {"after": true, "before": false}],
         "spaced-comment": ["error", "always"],
 
-      // NodeJs Rules
-      "node/exports-style": ["error", "module.exports"],
-        "node/no-missing-require": "off",
-      "node/prefer-global/buffer": ["error", "always"],
-      "node/prefer-global/console": ["error", "always"],
-      "node/prefer-global/process": ["error", "never"],
-      "node/prefer-global/url-search-params": ["error", "always"],
-      "node/prefer-global/url": ["error", "always"],
+        //React Rules
+		"react/jsx-uses-react": 1,
+		"react/jsx-uses-vars": 1,
+        "react/boolean-prop-naming": 1,
+        "react/default-props-match-prop-types": 1,
+        "react/button-has-type": 1,
+        "react/forbid-prop-types": 1,
+        "react/forbid-elements": [1, { "forbid": ["button"] }],
+        "react/forbid-dom-props": [1, { "forbid": ["style"] }],
+        "react/forbid-component-props": 0,
+        "react/display-name": [1, { "ignoreTranspilerName": true }],
+        "react/destructuring-assignment": [1, 'always'],
+        "react/no-did-mount-set-state": 1,
 
-        // JSDoc Rules
-      "jsdoc/check-examples": 1,
-      "jsdoc/check-param-names": 1,
-      "jsdoc/check-tag-names": 1,
-      "jsdoc/check-types": 1,
-      "jsdoc/newline-after-description": 1,
-      "jsdoc/no-undefined-types": 1,
-      "jsdoc/require-description": 1,
-      "jsdoc/require-description-complete-sentence": 1,
-      "jsdoc/require-example": 1,
-      "jsdoc/require-hyphen-before-param-description": 1,
-      "jsdoc/require-param": 1,
-      "jsdoc/require-param-description": 1,
-      "jsdoc/require-param-name": 1,
-      "jsdoc/require-param-type": 1,
-      "jsdoc/require-returns": 1,
-      "jsdoc/require-returns-check": 1,
-      "jsdoc/require-returns-description": 1,
-      "jsdoc/require-returns-type": 1,
-      "jsdoc/valid-types": 1
+
+
+
+        //Jsx rules
+        "jsx-a11y/accessible-emoji": "error",
+        "jsx-a11y/alt-text": "error",
+        "jsx-a11y/anchor-is-valid": "error",
+		"jsx-a11y/anchor-has-content": "error",
+		"jsx-a11y/aria-activedescendant-has-tabindex": "error",
+		"jsx-a11y/aria-props": "error",
+		"jsx-a11y/aria-proptypes": "error",
+		"jsx-a11y/aria-role": "error",
+		"jsx-a11y/aria-unsupported-elements": "error",
+		"jsx-a11y/click-events-have-key-events": "error",
+		"jsx-a11y/heading-has-content": "error",
+		"jsx-a11y/html-has-lang": "error",
+		"jsx-a11y/iframe-has-title": "error",
+		"jsx-a11y/img-redundant-alt": "error",
+		"jsx-a11y/interactive-supports-focus": "error",
+		"jsx-a11y/label-has-for": "error",
+		"jsx-a11y/media-has-caption": "error",
+		"jsx-a11y/mouse-events-have-key-events": "error",
+		"jsx-a11y/no-access-key": "error",
+		"jsx-a11y/no-autofocus": "error",
+		"jsx-a11y/no-distracting-elements": "error",
+		"jsx-a11y/no-interactive-element-to-noninteractive-role": "error",
+		"jsx-a11y/no-noninteractive-element-interactions": "error",
+		"jsx-a11y/no-noninteractive-element-to-interactive-role": "error",
+		"jsx-a11y/no-noninteractive-tabindex": "error",
+		"jsx-a11y/no-onchange": "error",
+		"jsx-a11y/no-redundant-roles": "error",
+		"jsx-a11y/no-static-element-interactions": "error",
+		"jsx-a11y/role-has-required-aria-props": "error",
+
+
+
+
+
     }
 };

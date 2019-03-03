@@ -1,16 +1,15 @@
-const putNewArticle = (url, data) => {
-    return new Promise((resolve, reject) => {
-        fetch(url, {
-            method: 'put',
-            headers: {
-                'Accept': 'application/json, text/plain, */*',
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify({data}),
-        })
+const putNewArticle = (url, data) => new Promise((resolve, reject) => {
+    fetch(url, {
+        method : 'put',
+        headers: {
+            Accept        : 'application/json, text/plain, */*',
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ data, }),
+    })
         .then(res => res.json())
         .then(dataFromServer => {
-            if (dataFromServer.success === '1') {
+            if ('1' === dataFromServer.success) {
                 resolve();
             } else {
                 reject('Ошибка при обмене с сервером');
@@ -19,24 +18,28 @@ const putNewArticle = (url, data) => {
         .catch(err => {
             reject(err);
         });
-    })
-};
+});
 
 
-const getArticles = (url, amount, offset, filter) => {
-    return new Promise((resolve, reject) => {
-        fetch(url, {
-            method: 'post',
-            headers: {
-                'Accept': 'application/json, text/plain, */*',
-                'Content-Type': 'application/json',
+const getArticles = (url, amount, offset, filter) => new Promise((resolve, reject) => {
+    fetch(url, {
+        method : 'post',
+        headers: {
+            Accept        : 'application/json, text/plain, */*',
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+            data: {
+                amount,
+                offset,
+                filter,
             },
-            body: JSON.stringify({data: {amount, offset, filter}}),
-        })
+        }),
+    })
         .then(res => res.json())
         .then(dataFromServer => {
-            if (dataFromServer.success === '1') {
-                resolve(dataFromServer.data.filter(el => el.deleted === false));
+            if ('1' === dataFromServer.success) {
+                resolve(dataFromServer.data.filter(el => false === el.deleted));
             } else {
                 reject('Ошибка при обмене с сервером');
             }
@@ -44,22 +47,20 @@ const getArticles = (url, amount, offset, filter) => {
         .catch(err => {
             reject(err);
         });
-    })
-};
+});
 
-const deleteArticle = (url, id) => {
-    return new Promise((resolve, reject) => {
-        fetch(url, {
-            method: 'delete',
-            headers: {
-                'Accept': 'application/json, text/plain, */*',
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify({data: {id}}),
-        })
+const deleteArticle = (url, id) => new Promise((resolve, reject) => {
+    fetch(url, {
+        method : 'delete',
+        headers: {
+            Accept        : 'application/json, text/plain, */*',
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ data: { id, }, }),
+    })
         .then(res => res.json())
         .then(dataFromServer => {
-            if (dataFromServer.success === '1') {
+            if ('1' === dataFromServer.success) {
                 resolve();
             } else {
                 reject('Ошибка при обмене с сервером');
@@ -68,22 +69,20 @@ const deleteArticle = (url, id) => {
         .catch(err => {
             reject(err);
         });
-    })
-};
+});
 
-const updateArticle = (url, data) => {
-    return new Promise((resolve, reject) => {
-        fetch(url, {
-            method: 'patch',
-            headers: {
-                'Accept': 'application/json, text/plain, */*',
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify({data: data}),
-        })
+const updateArticle = (url, data) => new Promise((resolve, reject) => {
+    fetch(url, {
+        method : 'patch',
+        headers: {
+            Accept        : 'application/json, text/plain, */*',
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ data, }),
+    })
         .then(res => res.json())
         .then(dataFromServer => {
-            if (dataFromServer.success === '1') {
+            if ('1' === dataFromServer.success) {
                 resolve();
             } else {
                 reject('Ошибка при обмене с сервером');
@@ -92,16 +91,13 @@ const updateArticle = (url, data) => {
         .catch(err => {
             reject(err);
         });
-    })
-};
-
-
-
+});
 
 
 module.exports.putNewArticle = putNewArticle;
 module.exports.getArticles = getArticles;
 module.exports.deleteArticle = deleteArticle;
 module.exports.updateArticle = updateArticle;
-// module.exports.getFolderStruct = getFolderStruct;
+
+// Module.exports.getFolderStruct = getFolderStruct;
 
