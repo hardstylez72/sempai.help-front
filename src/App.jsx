@@ -70,27 +70,27 @@ class App extends Component {
         return (
             <div>
                 <Router>
-                    <div className={'content-container'}>
-                        <div className={'messages-container'}>
+                    <div className={ 'content-container' }>
+                        <div className={ 'messages-container' }>
                             {ErrorMessage(messageLog)}
                             {InfoMessage(messageLog)}
                             {WarnMessage(messageLog)}
                             {SuccessMessage(messageLog)}
                         </div>
-                        <Wrapper component={Navbar} login={login}/>
-                        <Route path='/login' component={Login}/>
+                        <Wrapper component={ Navbar } login={ login }/>
+                        <Route path='/login' component={ Login }/>
                         <Switch>
-                            <PrivateRoute path='/main' component={Home}  login={login} state={this.state}/>
-                            <PrivateRoute path='/res' component={Resource}  login={login} state={this.state}/>
-                            <PrivateRoute path='/server_stat' component={ServerStat}  login={login} state={this.state}/>
-                            <PrivateRoute path='/test' component={addLink}  login={login} state={this.state}/>
-                            <PrivateRoute path='/music' component={music}  login={login} state={this.state}/>
-                            <PrivateRoute component={Home} login={login} state={this.state}/> {/* Придумать отлов 404 поумнее*/}
+                            <PrivateRoute path='/main' component={ Home } login={ login } state={ this.state }/>
+                            <PrivateRoute path='/res' component={ Resource } login={ login } state={ this.state }/>
+                            <PrivateRoute path='/server_stat' component={ ServerStat } login={ login } state={ this.state }/>
+                            <PrivateRoute path='/test' component={ addLink } login={ login } state={ this.state }/>
+                            <PrivateRoute path='/music' component={ music } login={ login } state={ this.state }/>
+                            <PrivateRoute component={ Home } login={ login } state={ this.state }/> {/* Придумать отлов 404 поумнее*/}
                         </Switch>
-                        <div  className={'footer-container'}>
-                            <Wrapper component={Footer}  login={login}/>
+                        <div className={ 'footer-container' }>
+                            <Wrapper component={ Footer } login={ login }/>
                         </div>
-                        <div id={'footer-background'}/>
+                        <div id={ 'footer-background' }/>
 
                         {/* <Route path="/webm" component={Webm} /> */}
                     </div>

@@ -19,8 +19,8 @@ class Webm extends Component {
                 <Grid>
                     <Jumbotron>
                         <h2> Webm </h2>
-                        {this.state.customers.map(customer => <li key={customer.id}>{customer.firstName} {customer.lastName}</li>)}
-                        <video whidth='300' height='200'  controls>
+                        {this.state.customers.map(customer => <li key={ customer.id }>{customer.firstName} {customer.lastName}</li>)}
+                        <video whidth='300' height='200' controls>
                             <source src='vid.mp4'/>
                         </video>
                     </Jumbotron>

@@ -13,7 +13,7 @@ const getFavState = (error, loading, clickHandler) => {
         />;
     }
 
-    return  <Icon type='reload' onClick={clickHandler}/>;
+    return  <Icon type='reload' onClick={ clickHandler }/>;
 };
 
 class RefreshButton extends Component {
@@ -47,8 +47,8 @@ class RefreshButton extends Component {
         const { loading, error, } = this.state;
 
         return (
-            <div className={'refresh-button'}>
-                <OverlayTrigger placement='right' overlay={tooltip}>
+            <div className={ 'refresh-button' }>
+                <OverlayTrigger placement='right' overlay={ tooltip }>
                     {getFavState(
                         error,
                         loading,

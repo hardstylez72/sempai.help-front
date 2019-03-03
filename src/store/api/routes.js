@@ -43,7 +43,7 @@ window.api = {
         url   : '/api/addlink/',
         method: 'PATCH',
     },
-    UPLOAD_MUSIC_CONTENT:	{
+    UPLOAD_MUSIC_CONTENT: {
         url   : '/api/v1/music/stream/upload',
         method: 'POST',
     },

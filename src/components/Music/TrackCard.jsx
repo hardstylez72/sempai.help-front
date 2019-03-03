@@ -13,29 +13,28 @@ class TrackCard extends Component {
         const { player, } = this.props;
 
         return (
-            <div className={'cover-contaiter'}>
+            <div className={ 'cover-contaiter' }>
                 <div>
-                    <div className={'cover--img-container'}>
+                    <div className={ 'cover--img-container' }>
                         {
                             player.cover ?
-                                <img className={'cover-img'} src={player.cover}/> :
+                                <img className={ 'cover-img' } src={ player.cover }/> :
 						 <span/>
                         }
                     </div>
-                    <div className={'track-name-info'}>
+                    <div className={ 'track-name-info' }>
                         <b>Трек:</b> {player.nowPlayingName ? player.nowPlayingName : ''}
                     </div>
-                    <div className={'track-card-controls-container'}>
-                        <div className={'tarck-card-controls'}>
-                            <AddToFavorite track={player.nowPlayingName}/>
+                    <div className={ 'track-card-controls-container' }>
+                        <div className={ 'tarck-card-controls' }>
+                            <AddToFavorite track={ player.nowPlayingName }/>
                             <Icon
-                                onClick={this.onDownloadClickHandler.bind(this)}
+                                onClick={ this.onDownloadClickHandler.bind(this) }
                                 type='download'
-                                style={{
+                                style={ {
                                     fontSize: 20,
                                     color   : '#08c',
-                                }}
-                            />
+                                } }/>
                         </div>
                     </div>
                 </div>

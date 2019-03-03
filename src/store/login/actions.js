@@ -27,16 +27,13 @@ export const loginActions = {
         const { login, } = store.getState();
 
         await request(window.api.AUTH, login)
-            .then(async res => {
-                console.log('+2222');
+            .then(async () => {
                 store.dispatch(loginActions.isAuthsuccess(true));
                 const history = createHistory();
 
-                console.log('history', history);
                 history.push('/home');
             })
             .catch(err => {
-                console.log('+111', err);
                 store.dispatch(loginActions.isAuthsuccess(false));
             });
     },

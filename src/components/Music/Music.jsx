@@ -32,13 +32,13 @@ decorators.Header = ({ style, node, }) => {
     const isFile = 'file' === iconType;
     const iconClass = `treebeard-list-${iconType}`;
     const iconStyle = { marginRight: '5px', };
-    const refreshButton = node.root ? <RefreshButton /> : '';
+    const refreshButton = node.root ? <RefreshButton/> : '';
 
     return (
-        <div className={'base-treebeard-header'}>
-            <div className={'base-treebeard-title'}>
+        <div className={ 'base-treebeard-header' }>
+            <div className={ 'base-treebeard-title' }>
 
-                <div className={ refreshButton ? 'refresh-button' : `'refresh-button' ${iconClass}`}>
+                <div className={ refreshButton ? 'refresh-button' : `'refresh-button' ${iconClass}` }>
                     {node.name} {refreshButton}
 
                 </div>
@@ -64,45 +64,42 @@ class music extends Component {
         return (
             <div>
                 <div className='general-content'>
-                    <Tabs defaultActiveKey={1} id='uncontrolled-tab-example'>
-                        <Tab eventKey={1} title='Коллекция'>
-                            <div className={'treebeard-contaiter'}>
+                    <Tabs defaultActiveKey={ 1 } id='uncontrolled-tab-example'>
+                        <Tab eventKey={ 1 } title='Коллекция'>
+                            <div className={ 'treebeard-contaiter' }>
                                 <Treebeard
-                                    className={'treebeard'}
-                                    data={player.folderStruct}
-                                    onToggle={this.onToggle}
-                                    decorators={decorators}
-                                    style={sempaiTreeStyle}
-                                />
+                                    className={ 'treebeard' }
+                                    data={ player.folderStruct }
+                                    onToggle={ this.onToggle }
+                                    decorators={ decorators }
+                                    style={ sempaiTreeStyle }/>
                             </div>
                         </Tab>
-                        <Tab eventKey={2} title='Любимое'>
-                            <div className={'treebeard-contaiter'}>
+                        <Tab eventKey={ 2 } title='Любимое'>
+                            <div className={ 'treebeard-contaiter' }>
                                 <Treebeard
-                                    className={'treebeard'}
-                                    data={player.favorite}
-                                    onToggle={this.onToggle}
-                                    decorators={decorators}
-                                    style={sempaiTreeStyle}
-                                />
+                                    className={ 'treebeard' }
+                                    data={ player.favorite }
+                                    onToggle={ this.onToggle }
+                                    decorators={ decorators }
+                                    style={ sempaiTreeStyle }/>
                             </div>
                         </Tab>
-                        <Tab eventKey={3} title='Свое'>
-                            <div className={'treebeard-contaiter'}>
+                        <Tab eventKey={ 3 } title='Свое'>
+                            <div className={ 'treebeard-contaiter' }>
                                 <Treebeard
-                                    className={'treebeard'}
-                                    data={player.uploaded}
-                                    onToggle={this.onToggle}
-                                    decorators={decorators}
-                                    style={sempaiTreeStyle}
-                                />
+                                    className={ 'treebeard' }
+                                    data={ player.uploaded }
+                                    onToggle={ this.onToggle }
+                                    decorators={ decorators }
+                                    style={ sempaiTreeStyle }/>
                             </div>
                         </Tab>
-                        <Tab eventKey={4} title='Загрузка'>
-                            <UploadFiles paths={player.folderStruct}/>
+                        <Tab eventKey={ 4 } title='Загрузка'>
+                            <UploadFiles paths={ player.folderStruct }/>
                         </Tab>
                     </Tabs>;
-                    <TrackCard player={player}/>
+                    <TrackCard player={ player }/>
                 </div>
             </div>
         );

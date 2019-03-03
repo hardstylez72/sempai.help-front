@@ -26,7 +26,7 @@ class alertError extends Component {
     render() {
         if (this.state.show) {
             return (
-                <Alert bsStyle='danger' onDismiss={this.handleDismiss}>
+                <Alert bsStyle='danger' onDismiss={ this.handleDismiss }>
                     <h4>Oh snap! You got an error!</h4>
                     <p>
                 Change this and that and try again. Duis mollis, est non commodo
@@ -36,13 +36,13 @@ class alertError extends Component {
                     <p>
                         <Button bsStyle='danger'>Take this action</Button>
                         <span> or </span>
-                        <Button onClick={this.handleDismiss}>Hide Alert</Button>
+                        <Button onClick={ this.handleDismiss }>Hide Alert</Button>
                     </p>
                 </Alert>
             );
         }
 
-        return <Button onClick={this.handleShow}>Show Alert</Button>;
+        return <Button onClick={ this.handleShow }>Show Alert</Button>;
     }
 }
 

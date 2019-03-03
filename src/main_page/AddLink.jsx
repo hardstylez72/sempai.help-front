@@ -191,55 +191,48 @@ class addLink extends Component {
         return (
             <Jumbotron>
                 <Grid>
-                    <Button type='submit' onClick={this.handleClickBtnCreatePost}>
+                    <Button type='submit' onClick={ this.handleClickBtnCreatePost }>
 						Создать запись
                     </Button>
                     <Table
                         className='table-links'
                         hideOnSinglePage='true'
-                        columns={columns}
-                        dataSource={this.state.articles}
-                    />
+                        columns={ columns }
+                        dataSource={ this.state.articles }/>
                     <Modal
-                        onOk={this.handleClick}
+                        onOk={ this.handleClick }
                         title='Создание статьи'
-                        visible={this.state.createPostVisible}
-                        onCancel={this.handleCancel}
-                    >
+                        visible={ this.state.createPostVisible }
+                        onCancel={ this.handleCancel }>
                         <Form>
                             <FormItem
-                                required={true}>
+                                required={ true }>
                                 <div className='link-input'>
                                     <TextArea
                                         placeholder='http://'
-                                        autosize={{
+                                        autosize={ {
                                             minRows: 1,
                                             maxRows: 7,
-                                        }}
-                                        onChange={this.handleChangeUrl}
-                                    />
+                                        } }
+                                        onChange={ this.handleChangeUrl }/>
                                 </div>
                                 <div className='short-descr-input'>
                                     <TextArea
                                         placeholder='Описание'
-                                        autosize={{
+                                        autosize={ {
                                             minRows: 1,
                                             maxRows: 2,
-                                        }}
-                                        onChange={this.handleChangeAbstract}
-                                    />
+                                        } }
+                                        onChange={ this.handleChangeAbstract }/>
                                 </div>
                                 <div className='descr-input'>
                                     <TextArea
                                         placeholder='Подробное описание'
-                                        autosize={{
+                                        autosize={ {
                                             minRows: 2,
                                             maxRows: 8,
-                                        }}
-                                        onChange={this.handleChangeDescr}
-
-                                        // Value={this.state.descrValue} //todo исправить
-                                    />
+                                        } }
+                                        onChange={ this.handleChangeDescr }/>
                                 </div>
                             </FormItem>
                         </Form>

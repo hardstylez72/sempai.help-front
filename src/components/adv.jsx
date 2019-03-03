@@ -110,13 +110,13 @@ class Adv extends Component {
         const { imagePreviewUrl, } = this.state;
 
         if (imagePreviewUrl) {
-            imagePreview = <img src={imagePreviewUrl} />;
+            imagePreview = <img src={ imagePreviewUrl }/>;
         }
 
         return (
             <Grid>
                 <Jumbotron>
-                    <div  onFocus={this.onFocus}>
+                    <div onFocus={ this.onFocus }>
                         <h1>Выбор рекламного банера</h1>
                     </div>
                 </Jumbotron>
@@ -127,16 +127,15 @@ class Adv extends Component {
                     </div>
 
                     <Dropzone
-                        disabled={this.state.blockDropZone}
+                        disabled={ this.state.blockDropZone }
                         accept='image/jpeg, image/png, image/gif'
-                        maxSize = '1000000'
+                        maxSize='1000000'
                         className='dropZone'
                         acceptClassName='dropZone-accept'
                         activeClassName='dropZone-active'
                         rejectClassName='dropZone-reject'
-                        onDropAccepted={this.onDropAccepted}
-                        onDropRejected={this.onDropRejected}
-                    >
+                        onDropAccepted={ this.onDropAccepted }
+                        onDropRejected={ this.onDropRejected }>
                         {this.state.info}
                     </Dropzone>
                     {imagePreview}

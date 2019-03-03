@@ -51,8 +51,7 @@ class addLink_btn extends Component {
                             bsSize='large'
                             componentClass='textarea'
                             placeholder='Enter description'
-                            onChange={this.handleChangeUrl}
-                        />
+                            onChange={ this.handleChangeUrl }/>
                     </FormGroup>
 
                     <FormGroup controlId='formInlineEmail'>
@@ -61,11 +60,10 @@ class addLink_btn extends Component {
                             bsSize='large'
                             componentClass='textarea'
                             placeholder='Enter description'
-                            onChange={this.handleChangeDescr}
-                        />
+                            onChange={ this.handleChangeDescr }/>
                     </FormGroup>
                 </Form>
-                <Button type='submit' onClick={this.handleClick}>
+                <Button type='submit' onClick={ this.handleClick }>
 					Отпавить
                 </Button>
             </Grid>

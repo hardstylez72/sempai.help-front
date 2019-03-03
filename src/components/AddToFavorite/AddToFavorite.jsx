@@ -17,15 +17,13 @@ const getFavState = (included, loading, handlerAdd, handlerDelete) => {
 
     return included ?
         <Icon
-            onClick={handlerDelete}
+            onClick={ handlerDelete }
             type='check-circle'
-            className={'delete-to-favorite-btn'}
-        />	 :
+            className={ 'delete-to-favorite-btn' }/>	 :
         <Icon
-            onClick={handlerAdd}
+            onClick={ handlerAdd }
             type='plus-circle'
-            className={'add-to-favorite-btn'}
-        />;
+            className={ 'add-to-favorite-btn' }/>;
 };
 
 class AddToFavorite extends Component {

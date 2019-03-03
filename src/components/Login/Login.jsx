@@ -18,29 +18,25 @@ class Login extends Component {
             return null;
         }
 
-        return (
-            <div className={'login-container'}>
+        return <div className={ 'login-container' }>
 
-                <Input
-                    className={'login-input'}
-                    type={'email'}
-                    placeholder={'Login'}
-                    size={'small'}
-                    onChange={this.onChangeLoginHandler.bind(this)}
-                    onPressEnter={this.handleSubmit.bind(this)}/>
+            <Input
+                className={ 'login-input' }
+                type={ 'email' }
+                placeholder={ 'Login' }
+                size={ 'small' }
+                onChange={ this.onChangeLoginHandler.bind(this) }
+                onPressEnter={ this.handleSubmit.bind(this) }/>
+            <Input
+                type={ 'password' }
+                placeholder={ 'password' }
+                onPressEnter={ this.handleSubmit.bind(this) }
+                onChange={ this.onChangePwdHandler.bind(this) }
+                size={ 'small' }/>
+            <Button onClick={ this.handleSubmit.bind(this) }  type='primary' className='login-form-button'>Log in
+            </Button>
 
-                <Input
-                    type={'password'}
-                    placeholder={'password'}
-                    onPressEnter={this.handleSubmit.bind(this)}
-                    onChange={this.onChangePwdHandler.bind(this)}
-                    size={'small'}/>
-                <Button onClick={this.handleSubmit.bind(this)}  type='primary' className='login-form-button'>
-					Log in
-                </Button>
-
-            </div>
-        );
+        </div>;
     }
 
 	handleSubmit = () => {

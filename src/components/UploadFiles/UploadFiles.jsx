@@ -58,10 +58,10 @@ class UploadFiles extends Component {
             if (Array.isArray(list)) {
                 return list.map(el => {
                     if (el.success) {
-                        return <ListGroupItem  bsStyle='success'>{el.file} ОК</ListGroupItem>;
+                        return <ListGroupItem bsStyle='success'>{el.file} ОК</ListGroupItem>;
                     }
 
-                    return <ListGroupItem  bsStyle='danger'>{el.file} ОШИБКА</ListGroupItem>;
+                    return <ListGroupItem bsStyle='danger'>{el.file} ОШИБКА</ListGroupItem>;
                 });
             }
 
@@ -70,17 +70,17 @@ class UploadFiles extends Component {
 
         const uploadButton =
 			<div>
-			    <Icon className={'upload-start-icon'} type={this.state.uploading ? '' : 'upload'} />
+			    <Icon className={ 'upload-start-icon' } type={ this.state.uploading ? '' : 'upload' } />
 			    {
 			        this.state.uploading ?
 			            <div >
 			                <Button
-			                    onClick={this.onAbortUpload.bind(this)}
+			                    onClick={ this.onAbortUpload.bind(this) }
 			                    bsStyle='danger'
-			                    className={'stop-upload-btn'}>
+			                    className={ 'stop-upload-btn' }>
 								Отмена
 			                </Button>
-			                <Progress  percent={this.state.progress} width={80} />
+			                <Progress  percent={ this.state.progress } width={ 80 } />
 			            </div> :
 			            null
 			    }
@@ -91,31 +91,29 @@ class UploadFiles extends Component {
 
         return (
             <div>
-                <div className={'upload-container'}>
+                <div className='upload-container'>
                     <Select
-                        className={'select-download-folder'}
+                        className='select-download-folder'
                         placeholder='Выбери папку'
-                        onChange={this.onSelectHandler.bind(this)}
-                    >
+                        onChange={ this.onSelectHandler.bind(this) }>
                         {children}
                     </Select>
-                    <OverlayTrigger  placement='right' trigger={[ 'hover', 'focus', ]} overlay={popover}>
+                    <OverlayTrigger placement='right' trigger={ [ 'hover', 'focus', ] } overlay={ popover }>
                         <Dropzone
-                            disabled={!DragAndDropEnabled}
-                            multiple={false}
+                            disabled={ !DragAndDropEnabled }
+                            multiple={ false }
                             className='dropZone'
                             acceptClassName='dropZone-accept'
                             activeClassName='dropZone-active'
                             rejectClassName='dropZone-reject'
                             accept='application/zip'
-                            onDropAccepted={this.onDropAccepted.bind(this)}
-                            onDropRejected={this.onDropRejected.bind(this)}
-                        >
+                            onDropAccepted={ this.onDropAccepted.bind(this) }
+                            onDropRejected={ this.onDropRejected.bind(this) }>
                             {uploadButton}
                         </Dropzone>
                     </OverlayTrigger>
                 </div>
-                <div className={'uploaded-file-list'}>
+                <div className={ 'uploaded-file-list' }>
                     <ListGroup>
                         {getFileList(fileList)}
                     </ListGroup>
@@ -221,7 +219,7 @@ class UploadFiles extends Component {
             const { paths, } = this.props;
 
             if (paths) {
-                const data = paths.children.map(el => <Option key={el.name}>{el.name}</Option>);
+                const data = paths.children.map(el => <Option key={ el.name }>{el.name}</Option>);
 
                 this.setState({ paths: data, });
             }

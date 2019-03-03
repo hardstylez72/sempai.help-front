@@ -14,106 +14,96 @@ class Player extends Component {
         return (
             <div>
                 <ReactPlayer
-                    url={`/api/v1/track/stream/get/${player.nowPlayingURL}`}
-                    volume={player.volume}
-                    onEnded={this.currentMediaFileEndedPlaying.bind(this)}
-                    playing={player.play}
-                    width={0}
-                    height={0}
-                    ref={this.playerRef}
-                    onProgress={this.onProgress.bind(this)}
-                    onDuration={this.onDuration.bind(this)}
-                    progressInterval={50}
-                />
-                <div className={'player-container'} id={'player-background'}>
-                    <div className={'player-header'}>
+                    url={ `/api/v1/track/stream/get/${player.nowPlayingURL}` }
+                    volume={ player.volume }
+                    onEnded={ this.currentMediaFileEndedPlaying.bind(this) }
+                    playing={ player.play }
+                    width={ 0 }
+                    height={ 0 }
+                    ref={ this.playerRef }
+                    onProgress={ this.onProgress.bind(this) }
+                    onDuration={ this.onDuration.bind(this) }
+                    progressInterval={ 50 }/>
+                <div className={ 'player-container' } id={ 'player-background' }>
+                    <div className={ 'player-header' }>
                         {player.nowPlayingName ? player.nowPlayingName : 'Включи песню'}
                     </div>
-                    <div className={'player-content'}>
+                    <div className={ 'player-content' }>
                         <div
-                            className={'player-btn-container'}
-						  	onClick={() => {
+                            className={ 'player-btn-container' }
+						  	onClick={ () => {
                                 player.play ? startPlay() : stopPlay();
-                            }}
-                        >
+                            } }>
                             {player.play ?
                                 <Icon
                                     type='pause-circle-o'
-                                    className={'player-btn'}
-                                    style={{
+                                    className={ 'player-btn' }
+                                    style={ {
                                         fontSize: 46,
                                         color   : '#08c',
-                                    }}
-                                />							 :
+                                    } }/>							 :
                                 <Icon
                                     type='play-circle-o'
-                                    className={'player-btn'}
-                                    style={{
+                                    className={ 'player-btn' }
+                                    style={ {
                                         fontSize: 46,
                                         color   : '#08c',
-                                    }}
-                                />
+                                    } }/>
                             }
                         </div>
                         <div
-                            className={'player-btn-container'}
-                            onClick={() => {
+                            className={ 'player-btn-container' }
+                            onClick={ () => {
                                 store.dispatch(playerActions.playThisSong(
                                     player.prevTrack.name,
                                     player.prevTrack.path,
                                     player.folderStruct,
                                 ),);
-                            }}
-                        >
+                            } }>
                             <Icon
                                 type='backward'
-                                className={'player-btn'}
-                                style={{
+                                className={ 'player-btn' }
+                                style={ {
                                     fontSize: 46,
                                     color   : '#08c',
-                                }}
-                            />
+                                } }/>
                         </div>
                         <div
-                            className={'player-btn-container'}
-                            onClick={() => {
+                            className={ 'player-btn-container' }
+                            onClick={ () => {
                                 store.dispatch(playerActions.playThisSong(
                                     player.nextTrack.name,
                                     player.nextTrack.path,
                                     player.folderStruct,
                                 ),);
-                            }}
-                        >
+                            } }>
                             <Icon
                                 type='forward'
-                                className={'player-btn'}
-                                style={{
+                                className={ 'player-btn' }
+                                style={ {
                                     fontSize: 46,
                                     color   : '#08c',
-                                }}
-                            />
+                                } }/>
                         </div>
-                        <div className={'player-volume-slider'}>
+                        <div className={ 'player-volume-slider' }>
                             <input
-                                className={'volume-changer'}
+                                className={ 'volume-changer' }
                                 type='range'
                                 min='0'
                                 max='100'
-                                onChange={this.onVolumeChange.bind(this)}
-                                value={Number(player.volume) * 100}
-                            />
+                                onChange={ this.onVolumeChange.bind(this) }
+                                value={ Number(player.volume) * 100 }/>
                         </div>
                     </div>
-                    <div className={'player-footer'} >
+                    <div className={ 'player-footer' } >
                         <input
                             type='range'
                             min='0'
-                            max={player.duration}
-                            onMouseDown={this.onSeekMouseDown.bind(this)}
-                            onChange={this.onSeekChange.bind(this)}
-                            onMouseUp={this.onSeekMouseUp.bind(this)}
-                            value={Math.round(player.trackInfo.playedSeconds)}
-                        />
+                            max={ player.duration }
+                            onMouseDown={ this.onSeekMouseDown.bind(this) }
+                            onChange={ this.onSeekChange.bind(this) }
+                            onMouseUp={ this.onSeekMouseUp.bind(this) }
+                            value={ Math.round(player.trackInfo.playedSeconds) }/>
                         {player.trackInfo.playedSeconds ? Math.round(player.trackInfo.playedSeconds) : ''}/
                         {player.duration ? Math.round(player.duration) : ''}
                     </div>
